@@ -1,0 +1,94 @@
+{{page-title "ThetaboardUi"}}
+
+<div class="wrapper ">
+  <div class="sidebar" data-color="purple" data-background-color="white">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+    <div class="logo">
+      <a href="" class="simple-text logo-mini">
+        TB
+      </a>
+
+      <a href="" class="simple-text logo-normal">
+        ThetaBoard
+      </a>
+    </div>
+
+    <div class="sidebar-wrapper">
+      <ul class="nav">
+        <li class="nav-item active  ">
+          <a class="nav-link" href="#0">
+            <i class="tim-icons icon-chart-pie-36"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#1">
+            <i class="tim-icons icon-chart-pie-36"></i>
+            <p>Guardian</p>
+          </a>
+        </li>
+
+        <!-- your sidebar here -->
+      </ul>
+    </div>
+  </div>
+  <div class="main-panel">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <div class="container-fluid">
+        <div class="navbar-wrapper">
+
+          <a class="navbar-brand" href="#Dashboard">Dashboard</a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#pablo">
+                <i class="tim-icons icon-bell-55"></i>  Notifications
+              </a>
+            </li>
+            <!-- your navbar here -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="content">
+      <div class="container-fluid">
+        {{outlet}}
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container-fluid">
+        <nav class="float-left">
+          <ul>
+            <li>
+              <a href="https://github.com/JoannaDrx/thetaboard">
+                Theta Board
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="copyright float-right">
+          Made with <i class="tim-icons icon-heart-2"></i> by
+          <a href="" target="_blank">Joanna Dreux</a>,
+          <a href="" target="_blank">Maurin Lenglart</a>
+        </div>
+
+        <!-- your footer here -->
+      </div>
+    </footer>
+  </div>
+</div>

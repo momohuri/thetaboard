@@ -1,0 +1,53 @@
+{{page-title "Dashboard"}}
+
+<div class="content">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Holdings </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th>Type</th>
+                <th>Address</th>
+                <th>Reward Address</th>
+                <th>Amount</th>
+                <th class="text-right">In $</th>
+              </tr>
+              </thead>
+              <tbody>
+              {{#each @model.wallet_info as |balance|}}
+                <tr>
+                  <td class="text-center">
+                    <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
+                         class="img-fluid rounded-circle" style="width: 20px;">
+                  </td>
+                  <td>{{balance.type}}</td>
+                  <td>
+                    <a href="https://explorer.thetatoken.org/account/{{balance.address}}">
+                    {{balance.address}}
+                    </a>
+                  </td>
+                  <td>
+                    <a href="https://explorer.thetatoken.org/account/{{balance.reward_address}}">
+                      {{balance.reward_address}}
+                    </a>
+                  </td>
+                  <td>{{balance.amount}}</td>
+                  <td class="text-right">&dollar; {{balance.value}}</td>
+                </tr>
+              {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
