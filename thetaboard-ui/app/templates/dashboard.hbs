@@ -14,8 +14,8 @@
               <tr>
                 <th class="text-center">#</th>
                 <th>Type</th>
-                <th>Address</th>
-                <th>Reward Address</th>
+                <th>Wallet Address</th>
+                <th>Node Address</th>
                 <th>Amount</th>
                 <th class="text-right">In $</th>
               </tr>
@@ -29,13 +29,13 @@
                   </td>
                   <td>{{balance.type}}</td>
                   <td>
-                    <a href="https://explorer.thetatoken.org/account/{{balance.address}}">
-                    {{balance.address}}
+                    <a href="https://explorer.thetatoken.org/account/{{balance.wallet_address}}">
+                    {{balance.wallet_address}}
                     </a>
                   </td>
                   <td>
-                    <a href="https://explorer.thetatoken.org/account/{{balance.reward_address}}">
-                      {{balance.reward_address}}
+                    <a href="https://explorer.thetatoken.org/account/{{balance.node_address}}">
+                      {{balance.node_address}}
                     </a>
                   </td>
                   <td>{{balance.amount}}</td>

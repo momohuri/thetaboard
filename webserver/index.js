@@ -31,7 +31,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     //     currency: "theta/tfuel",
     //     value: 0, // value in $$$
     //     type: "wallet/guardian/edge",
-    //     address: "0x000" // theta address
+    //     wallet_address: "0x000" // theta address
     //     reward_address: "0x000" // theta address if staked tfuel/theta
     // }
 
@@ -49,16 +49,16 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
             "amount": balances['thetawei'] / 100000000000000000,
             "type": "wallet",
             "value": balances['thetawei'] / 100000000000000000 * theta_price,
-            "address": wallet_adr,
-            "reward_address": null,
+            "wallet_address": wallet_adr,
+            "node_address": null,
             "currency": "theta"
         });
         response.push({
             "amount": balances['tfuelwei'] / 100000000000000000,
             "type": "wallet",
             "value": balances['tfuelwei'] / 100000000000000000 * tfuel_price,
-            "address": wallet_adr,
-            "reward_address": null,
+            "wallet_address": wallet_adr,
+            "node_address": null,
             "currency": "tfuel"
         });
 
@@ -69,8 +69,8 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
                 "amount": x["amount"] / 100000000000000000,
                 "type": "guardian",
                 "value": x["amount"] / 100000000000000000 * theta_price,
-                "address": x["holder"],
-                "reward_address": x["source"],
+                "wallet_address": x["source"],
+                "node_address": x["holder"],
                 "currency": "theta"
             }
         }));

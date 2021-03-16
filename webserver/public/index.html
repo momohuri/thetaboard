@@ -1,116 +1,48 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Hello, world!</title>
-    <!-- Required meta tags -->
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>ThetaboardUi</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+<meta name="thetaboard-ui/config/environment" content="%7B%22modulePrefix%22%3A%22thetaboard-ui%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22auto%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22thetaboard-ui%22%2C%22version%22%3A%220.0.0%2B00074572%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D" />
+
+    <link integrity="" rel="stylesheet" href="/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
+
     <!--  Fonts and icons  -->
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
     <!-- Black Dashboard CSS -->
-    <link href="../thetaboard-ui/public/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-</head>
-<body>
-<div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
-        <!--
-          Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    <link href="/assets/css/black-dashboard-aa8c3f630ab2aaf7139c480f6bd4a3f1.css?v=1.0.0" rel="stylesheet" />
 
-          Tip 2: you can also add an image using data-image tag
-      -->
-        <div class="logo">
-            <a href="" class="simple-text logo-mini">
-                TB
-            </a>
+    
+  </head>
+  <body>
+    
 
-            <a href="" class="simple-text logo-normal">
-                ThetaBoard
-            </a>
-        </div>
 
-        <div class="sidebar-wrapper">
-            <ul class="nav">
-                <li class="nav-item active  ">
-                    <a class="nav-link" href="#0">
-                        <i class="tim-icons icon-chart-pie-36"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery.min-f3b6c5cd5d69b8a59975ab84f7e2b7cf.js" type="text/javascript" integrity="sha256-Tt/FX6kikrA+RcCNdDGPeiKl1OszW2A0DmU8iIEo8To= sha512-rR0b1PvG4ISFvXwMEa+qd5LGsMGeCzJU7YPVRM4aMj0XW+L0h1TOkeMntvZKfKX7XPDCMa6Z5S6tJvPAjFZHGw==" ></script>
+    <script src="/assets/js/core/popper.min-05de4f8b367886f16fb40b8e0117a55d.js" type="text/javascript" integrity="sha256-GRvdOkmXjYfh1yVDFFC69I91Az9/aHuYLdnBAiFZJHE= sha512-2Is1G3KKON3kBzwmc5ar/VRcetiUcl4ajojXB0ifNl1/K8WUiYc8SMqooxw/wD+NB8xD9r8sbo1C1rwesK7RWQ==" ></script>
+    <script src="/assets/js/core/bootstrap.min-2d91571be909bb269c1e6dc2e7bfcca0.js" type="text/javascript" integrity="sha256-guCyiaWnGFsormFwGjNuA04nI/U+sFlTgvi5knkzhp0= sha512-cBOzW0OQqxZ49CNwHNiQWXlqzkbaO4t5sYqKR8bQpjLW1LnDr3SpYEYF4gpZzRUlTZSitUc0w1P1yDUloACKtw==" ></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.jquery.min-e7596cbb2ddf5a16112df3072b5a1d69.js" integrity="sha256-jOMdzJUYy5ErLOYSsiX4Q+86aDEifuTX/lj0eP2nA8k= sha512-WwxxD9i7yXOSBeFOfC3CvGA7wY7u6wF1aM1UnPGglX6GBiaHx13ORULF9zMNcxu/nXsVvrpoJL4Bw1/0mhgKhA==" ></script>
+    <!-- Chartist JS -->
+    <script src="/assets/js/plugins/chartjs.min-f7dd3d69db7c4fcf73ac6207416ab9f9.js" integrity="sha256-rtyPsqGq7IRGpoZrO6ii3lW2sNZo3el/rKsDpgk+wU0= sha512-jJdgLbKs1KYE7m2NDkkmynuYAnHOYH2f5S44KbdVOH5gk0/MfUv2PDGw6Bsf98dyiC+b+qn9YNle1g8PsVzCIg==" ></script>
+    <!--  Notifications Plugin    -->
+    <script src="/assets/js/plugins/bootstrap-notify-6038f990a452aeadec19bcba15701222.js" integrity="sha256-uIL6QeCukRDu3jVrwPfPsI24+3aT/ulQzz1H5jQxkFg= sha512-VfcKv9W0l++mYHBhotpcjqjYhbCREmlBYvEV/0xyrxrpXdZo5ZMfQFUomy8+SyVVvyyjDEckxhoTikU8EVN4Kw==" ></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/assets/js/black-dashboard-5d30a90bfac146c42890dd4b1af60e0c.js?v=1.0.0" type="text/javascript"></script>
 
-                <!-- your sidebar here -->
-            </ul>
-        </div>
-    </div>
-    <div class="main-panel">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-            <div class="container-fluid">
-                <div class="navbar-wrapper">
+    <script src="/assets/vendor-898ff210a2466fe44464d8d6c22e35f8.js" integrity="sha256-2LMslXVDP9DYcOlSDgQ7bg2XQZvfICtmbUpKPeKWABY= sha512-Q81ITJbWMoDueW6oMlDZPv5H3e3zjg8acWKTeZK6OuS70NclnbWUeL5129bySK6Flx5CGqqb39W83fOrmSGZyA==" ></script>
+    <script src="/assets/thetaboard-ui-6694b43ae7127fb54bf2b4885eeafa7f.js" integrity="sha256-YWnVAhCsQXuf+sZdz7HW2aHhyWmpyEUX4079Nm5JQwY= sha512-BpwTVmbMgDSlzDnARq56wi51K7d/e3CPVPg6TpQVA7DRMe9aueghea7RtyLdgIvbfkbZc+6N4hJum9b2WEsamg==" ></script>
 
-                    <a class="navbar-brand" href="#Dashboard">Dashboard</a>
-                    <a class="navbar-brand" href="#Guardian">Guardian</a>
-                </div>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                    <span class="navbar-toggler-icon icon-bar"></span>
-                </button>
-
-                <div class="collapse navbar-collapse justify-content-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pablo">
-                                <i class="tim-icons icon-bell-55"></i>  Notifications
-                            </a>
-                        </li>
-                        <!-- your navbar here -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- End Navbar -->
-        <div class="content">
-            <div class="container-fluid">
-                <!-- your content here -->
-            </div>
-        </div>
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a href="https://github.com/JoannaDrx/thetaboard">
-                                Theta Board
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="copyright float-right">
-                    Made with <i class="tim-icons icon-heart-2"></i> by
-                    <a href="" target="_blank">Joanna Dreux</a>,
-                    <a href="" target="_blank">Maurin Lenglart</a>
-                </div>
-
-                <!-- your footer here -->
-            </div>
-        </footer>
-    </div>
-</div>
-<!--   Core JS Files   -->
-<script src="../thetaboard-ui/public/assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="../thetaboard-ui/public/assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="../thetaboard-ui/public/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-<script src="../thetaboard-ui/public/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-<!-- Chartist JS -->
-<script src="../thetaboard-ui/public/assets/js/plugins/chartjs.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="../thetaboard-ui/public/assets/js/plugins/bootstrap-notify.js"></script>
-<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../thetaboard-ui/public/assets/js/black-dashboard.js?v=1.0.0" type="text/javascript"></script></body>
+    
+  </body>
 </html>
