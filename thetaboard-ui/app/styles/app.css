@@ -1,0 +1,26 @@
+#wallet-connection-notif {
+    position: absolute;
+    z-index: 0; 
+    margin: 10% 10% 0; 
+    text-align: center; 
+    font-size: 30px; 
+    padding: 47px;
+}
+
+.main-loader {
+    width: 45px; 
+    margin: 43px 0;
+}
+
+.rotate {
+    animation: rotation 2s infinite linear;
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }

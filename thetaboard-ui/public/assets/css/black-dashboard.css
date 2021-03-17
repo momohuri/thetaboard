@@ -16819,7 +16819,7 @@ hr {
 }
 
 .table-responsive {
-  overflow: scroll;
+  overflow: auto;
   padding-bottom: 10px;
 }
 

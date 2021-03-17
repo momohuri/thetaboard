@@ -1,8 +1,15 @@
 import Route from '@ember/routing/route';
+import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
+import * as thetajs from '@thetalabs/theta-js';
 
 export default class DashboardRoute extends Route {
   async model() {
-    const response = await fetch('/wallet-info/0xa60f2744347d68f46822c89bdfbacfcc3e46f1b0');
+    let provider = new thetajs.providers.HttpProvider(
+      thetajs.networks.ChainIds.Mainnet
+    );
+    await ThetaWalletConnect.connect();
+    const accounts = await ThetaWalletConnect.requestAccounts();
+    const response = await fetch('/wallet-info/' + accounts[0]);
     const wallet_info = await response.json();
     return { wallet_info };
   }

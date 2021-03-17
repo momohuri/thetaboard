@@ -11,6 +11,8 @@
     {{content-for "head"}}
 
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/thetaboard-ui.css">
+    
 
     <!--  Fonts and icons  -->
     <!--     Fonts and icons     -->
@@ -23,6 +25,12 @@
     {{content-for "head-footer"}}
   </head>
   <body>
+    <div class="alert alert-primary alert-with-icon" id="wallet-connection-notif" data-notify="container">
+      <span data-notify="message">Authentication in progress...</p>
+        <img class="main-loader rotate" src="{{rootURL}}assets/img/theta-logo.png"/>
+        <p>Make sure you are connected to the Theta Wallet extention.</span>
+    </div>
+    
     {{content-for "body"}}
 
 
