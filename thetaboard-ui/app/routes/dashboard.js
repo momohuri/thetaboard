@@ -11,7 +11,6 @@ export default class DashboardRoute extends Route {
     const accounts = await ThetaWalletConnect.requestAccounts();
     const response = await fetch('/wallet-info/' + accounts[0]);
     const wallet_info = await response.json();
-    debugger
     return { wallet_info };
   }
 }
