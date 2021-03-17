@@ -15,13 +15,13 @@ const HTTP_PORT = 8000
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
 });
-// Root endpoint
+// Endpoint for ember files
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 
-// Root endpoint
+// wallet infos
 app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     const wallet_adr = req.params.wallet_addr;
 
@@ -80,6 +80,29 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         res.status(400).send(error.message);
     }
 });
+
+
+// guardian node infos
+
+app.get('/guardian/status', async (req, res) => {
+    const util = require('util');
+    const exec = util.promisify(require('child_process').exec);
+    try {
+        const {stdout, stderr} = await exec("~/bin/thetacli query status");
+        if (stderr) {
+            res.json({"status": "error", "msg": stderr})
+        } else {
+            const status = JSON.parse(stdout);
+            if (status["syncing"]) {
+                res.json({"status": "syncing", "msg": status})
+            } else {
+                res.json({"status": "ready", "msg": status})
+            }
+        }
+    } catch (e) {
+        res.json({"status": "error", "msg": e})
+    }
+})
 
 
 // Default response for any other request
