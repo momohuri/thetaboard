@@ -38,8 +38,8 @@
                       {{balance.node_address}}
                     </a>
                   </td>
-                  <td>{{balance.amount}}</td>
-                  <td class="text-right">&dollar; {{balance.value}}</td>
+                  <td>{{format-number balance.amount}}</td>
+                  <td class="text-right">&dollar; {{format-number balance.value}}</td>
                 </tr>
               {{/each}}
               </tbody>
