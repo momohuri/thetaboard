@@ -65,5 +65,9 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@thetalabs/theta-js": "0.0.42",
+    "@thetalabs/theta-wallet-connect": "0.0.15"
   }
 }
