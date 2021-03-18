@@ -4,7 +4,7 @@ const path = require('path');
 const got = require('got');
 
 const db = require("./database/database_interface.js")
-
+const wei_divider = 1000000000000000000;
 
 const app = express();
 const server = http.createServer(app);
@@ -46,17 +46,19 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         const holding = await got(`https://explorer.thetatoken.org:9000/api/account/${wallet_adr}`);
         const balances = JSON.parse(holding.body).body.balance;
         response.push({
-            "amount": balances['thetawei'] / 100000000000000000,
+            "amount": balances['thetawei'] / wei_divider,
             "type": "wallet",
-            "value": balances['thetawei'] / 100000000000000000 * theta_price,
+            "value": balances['thetawei'] / wei_divider * theta_price,
+            "market_price": theta_price,
             "wallet_address": wallet_adr,
             "node_address": null,
             "currency": "theta"
         });
         response.push({
-            "amount": balances['tfuelwei'] / 100000000000000000,
+            "amount": balances['tfuelwei'] / wei_divider,
             "type": "wallet",
-            "value": balances['tfuelwei'] / 100000000000000000 * tfuel_price,
+            "value": balances['tfuelwei'] / wei_divider * tfuel_price,
+            "market_price": tfuel_price,
             "wallet_address": wallet_adr,
             "node_address": null,
             "currency": "tfuel"
@@ -66,9 +68,10 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         const staked_query = await got(`https://explorer.thetatoken.org:9000/api/stake/${wallet_adr}`);
         response.push(...JSON.parse(staked_query.body).body.sourceRecords.map((x) => {
             return {
-                "amount": x["amount"] / 100000000000000000,
+                "amount": x["amount"] / wei_divider,
                 "type": "guardian",
-                "value": x["amount"] / 100000000000000000 * theta_price,
+                "value": x["amount"] / wei_divider * theta_price,
+                "market_price": 0,
                 "wallet_address": x["source"],
                 "node_address": x["holder"],
                 "currency": "theta"
