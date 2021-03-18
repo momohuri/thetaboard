@@ -41,7 +41,7 @@
                   </td>
                   <td>{{format-number balance.market_price style='currency' currency='USD'}}</td>
                   <td>{{format-number balance.amount}}</td>
-                  <td class="text-right">&dollar; {{format-number balance.value}}</td>
+                  <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
                 </tr>
               {{/each}}
               </tbody>
