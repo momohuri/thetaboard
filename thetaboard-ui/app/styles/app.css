@@ -7,6 +7,10 @@
     padding: 47px;
 }
 
+.wallet-total-amount {
+  font-size: 25px;
+}
+
 .main-loader {
     width: 45px; 
     margin: 43px 0;
@@ -24,3 +28,26 @@
       transform: rotate(359deg);
     }
   }
+
+.notification.ready {
+  background: #00bf9a;
+  border-color: #00bf9a;
+}
+
+.notification.syncing {
+  background: #ff9f89;
+  border-color: #ff9f89;
+}
+
+.notification.error {
+  background: #a80707;
+  border-color: #a80707;
+}
+
+div[data-notify="container"] span[data-notify="title"] {
+  font-weight: bold;
+  font-size: 18px;
+}
+div[data-notify="container"] span[data-notify="message"] {
+  font-size: 16px;
+}

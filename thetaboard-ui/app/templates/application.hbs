@@ -60,11 +60,18 @@
 
         <div class="collapse navbar-collapse justify-content-end">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#pablo">
-                <i class="tim-icons icon-bell-55"></i>  Notifications
-              </a>
-            </li>
+            <li class="dropdown nav-item">
+                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <div class="notification d-none d-lg-block d-xl-block {{@model.status}}"></div>
+                  <i class="tim-icons icon-sound-wave"></i>
+                  <p class="d-lg-none">
+                    Notifications
+                  </p>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                  {{guardian-status-notification guardianStatus=@model}}
+                </ul>
+              </li>
             <!-- your navbar here -->
           </ul>
         </div>
