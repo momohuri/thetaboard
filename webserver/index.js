@@ -93,15 +93,17 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 // guardian node infos
 
 const fs = require('fs');
+const os = require("os");
+const find = require('find-process');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const spawn = require('child_process').spawn;
+const rfs = require("rotating-file-stream");
 
 // set machine id as password of GN so it persists after docker restart.
 const theta_mainnet_folder = "/home/node/theta_mainnet"
 const guardian_password = fs.readFileSync('/etc/machine-id', {encoding: 'utf8', flag: 'r'});
 app.get('/guardian/status', async (req, res) => {
-    const find = require('find-process');
-    const util = require('util');
-    const exec = util.promisify(require('child_process').exec);
-
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
 
@@ -129,45 +131,61 @@ app.get('/guardian/status', async (req, res) => {
     }
 });
 
-let job = null;//keeping the job in memory to kill it
+app.get('/guardian/start', async (req, res) => {
+    try {
+        const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+        if (theta_process.length > 0) {
+            res.json({"error": "Process already started", "success": false});
+        } else if (os.totalmem() < 4175540224) {
+            res.json({"error": "Need at least 4GB of ram", "success": false});
+        } else {
+            const logStream = rfs.createStream("./guardian_logs.log", {
+                size: "1M", // rotate every 1 MegaBytes written
+                interval: "1d", // rotate daily
+                maxFiles: 10,
+                path: "logs"
 
-app.get('/guardian/start', (req, res) => {
-    const spawn = require('child_process').spawn;
-    const rfs = require("rotating-file-stream");
+            });
+            const job = spawn(`${theta_mainnet_folder}/bin/theta`,
+                ["start", `--config=${theta_mainnet_folder}/node`, `--password=${guardian_password}`],
+                {
+                    detached: true,// can't run the process detached because of the logs streaming
 
+                })
+            job.stdout.pipe(logStream);
+            job.stderr.pipe(logStream);
+            job.on('error', (error) => {
+                console.log(error);
+            });
+            res.json({"error": null, "success": true});
+        }
+    } catch (e) {
+        res.json({"error": e, "success": false});
+    }
+});
 
-    const logStream = rfs.createStream("./guardian_logs.log", {
-        size: "1M", // rotate every 10 MegaBytes written
-        interval: "10m", // rotate daily
-        maxFiles: 1,
-        path: "logs"
+app.get('/guardian/stop', async (req, res) => {
+    try {
+        const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+        if (theta_process.length === 0) {
+            res.json({"error": "No process found", "success": false});
+        } else {
+            theta_process.map((x) => {
+                process.kill(x['pid']);
+            });
+            res.json({"error": null, "success": true});
 
-    });
-    const errLogStream = rfs.createStream("./error_guardian_logs.log", {
-        size: "1M", // rotate every 10 MegaBytes written
-        interval: "10m", // rotate daily
-        maxFiles: 1,
-        path: "logs"
-    });
-    job = spawn(`${theta_mainnet_folder}/bin/theta`,
-        ["start", `--config=${theta_mainnet_folder}/node`, `--password=${guardian_password}`],
-        {
-            detached: true, //if not detached and your main process dies, the child will be killed too
-        })
-    job.stdout.pipe(logStream);
-    job.stderr.pipe(logStream);
-    job.on('error', (error) => {
-        console.log(error);
-    })
-    job.on('close', (code) => {
-        job = null
-        //send socket informations about the job ending
-    })
-    res.json({"error": null, "success": true});
+        }
+    } catch (e) {
+        res.json({"error": e, "success": false});
+    }
 });
 
 app.get('/guardian/logs', (req, res) => {
     const readStream = fs.createReadStream('./logs/guardian_logs.log');
+    readStream.on("error", () => {
+        res.send("No logs")
+    });
     readStream.pipe(res);
 });
 
