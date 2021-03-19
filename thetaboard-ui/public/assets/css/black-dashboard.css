@@ -83,7 +83,7 @@ section {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;
   color: #525f7f;
@@ -2077,7 +2077,7 @@ pre code {
   width: 100%;
   height: calc(2.25rem + 2px);
   padding: 0.5rem 0.7rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.428571;
   color: rgba(255, 255, 255, 0.8);
@@ -2613,7 +2613,7 @@ textarea.form-control.is-invalid {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 11px 40px;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   line-height: 1.35em;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -14693,7 +14693,7 @@ fieldset[disabled] .btn-link.active {
 .form-control {
   border-color: #2b3553;
   border-radius: 0.4285rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -16742,7 +16742,7 @@ hr {
 
 .table>thead>tr>th {
   border-bottom-width: 1px;
-  font-size: 12px;
+  font-size: 16px;
   text-transform: uppercase;
   font-weight: 700;
   border: 0;
@@ -17499,7 +17499,7 @@ table.tablesorter thead tr .headerSortDown {
   position: relative;
   text-transform: uppercase;
   cursor: pointer;
-  font-size: 0.62475rem;
+  font-size: 1rem;
   padding: 10px 8px;
   line-height: 1.625rem;
 }
@@ -20175,7 +20175,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card label {
-  font-size: 0.75rem;
+  font-size: 1.3rem;
   margin-bottom: 5px;
 }
 

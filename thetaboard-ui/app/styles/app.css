@@ -1,3 +1,7 @@
+.btn-left {
+  margin-right: 15px;
+}
+
 #wallet-connection-notif {
     position: absolute;
     z-index: 0; 
@@ -44,10 +48,22 @@
   border-color: #a80707;
 }
 
-div[data-notify="container"] span[data-notify="title"] {
-  font-weight: bold;
-  font-size: 18px;
+.card-body-stake {
+  text-align: center;
 }
-div[data-notify="container"] span[data-notify="message"] {
-  font-size: 16px;
+
+.stakes-activity {
+  margin: 40px auto 0;
+}
+
+input.border-color{
+  border: 1px solid #bdbdc4;
+}
+
+#stake-amount {
+  font-size: 28px;
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+  height: 55px;
 }
