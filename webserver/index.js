@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app);
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8000
+const HTTP_PORT = 8000;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
@@ -76,7 +76,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
                 "amount": x["amount"] / wei_divider,
                 "type": "guardian",
                 "value": x["amount"] / wei_divider * theta_price,
-                "market_price": 0,
+                "market_price": theta_price,
                 "wallet_address": x["source"],
                 "node_address": x["holder"],
                 "currency": "theta"
@@ -92,25 +92,84 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
 // guardian node infos
 
+const fs = require('fs');
+
+// set machine id as password of GN so it persists after docker restart.
+const theta_mainnet_folder = "/home/node/theta_mainnet"
+const guardian_password = fs.readFileSync('/etc/machine-id', {encoding: 'utf8', flag: 'r'});
 app.get('/guardian/status', async (req, res) => {
+    const find = require('find-process');
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
+
     try {
-        const {stdout, stderr} = await exec("~/bin/thetacli query status");
+        const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
+
         if (stderr) {
-            res.json({"status": "error", "msg": stderr})
+            res.json({"status": "error", "msg": stderr});
         } else {
             const status = JSON.parse(stdout);
             if (status["syncing"]) {
-                res.json({"status": "syncing", "msg": status})
+                res.json({"status": "syncing", "msg": status});
             } else {
-                res.json({"status": "ready", "msg": status})
+                res.json({"status": "ready", "msg": status});
             }
         }
     } catch (e) {
-        res.json({"status": "error", "msg": e})
+        try {
+            const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+            if (theta_process.length > 0) {
+                res.json({"status": "syncing", "msg": "process up"});
+            } else {
+                res.json({"status": "error", "msg": e});
+            }
+        } catch (e) {
+            res.json({"status": "error", "msg": e});
+        }
     }
-})
+});
+
+let job = null;//keeping the job in memory to kill it
+
+app.get('/guardian/start', (req, res) => {
+    const spawn = require('child_process').spawn;
+    const rfs = require("rotating-file-stream");
+
+
+    const logStream = rfs.createStream("./guardian_logs.log", {
+        size: "1M", // rotate every 10 MegaBytes written
+        interval: "10m", // rotate daily
+        maxFiles: 1,
+        path: "logs"
+
+    });
+    const errLogStream = rfs.createStream("./error_guardian_logs.log", {
+        size: "1M", // rotate every 10 MegaBytes written
+        interval: "10m", // rotate daily
+        maxFiles: 1,
+        path: "logs"
+    });
+    job = spawn(`${theta_mainnet_folder}/bin/theta`,
+        ["start", `--config=${theta_mainnet_folder}/node`, `--password=${guardian_password}`],
+        {
+            detached: true, //if not detached and your main process dies, the child will be killed too
+        })
+    job.stdout.pipe(logStream);
+    job.stderr.pipe(logStream);
+    job.on('error', (error) => {
+        console.log(error);
+    })
+    job.on('close', (code) => {
+        job = null
+        //send socket informations about the job ending
+    })
+    res.json({"error": null, "success": true});
+});
+
+app.get('/guardian/logs', (req, res) => {
+    const readStream = fs.createReadStream('./logs/guardian_logs.log');
+    readStream.pipe(res);
+});
 
 
 // Default response for any other request
