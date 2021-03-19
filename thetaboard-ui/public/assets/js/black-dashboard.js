@@ -79,7 +79,7 @@ $(document).ready(function() {
 
   var scroll_start = 0;
   var startchange = $('.row');
-  var offset = startchange.offset();
+  var offset = startchange.offset() || 0;
   var scrollElement = navigator.platform.indexOf('Win') > -1 ? $(".ps") : $(window);
   scrollElement.scroll(function() {
 

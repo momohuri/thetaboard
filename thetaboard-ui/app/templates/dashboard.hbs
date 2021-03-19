@@ -22,7 +22,7 @@
               </tr>
               </thead>
               <tbody>
-              {{#each @model.wallet_info as |balance|}}
+              {{#each @model.wallet as |balance|}}
                 <tr>
                   <td class="text-center">
                     <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
@@ -47,7 +47,7 @@
               </tbody>
             </table>
             <div style="text-align: right;">
-              {{wallet-total wallet=@model.wallet_info}}
+              {{wallet-total wallet=@model.wallet}}
             </div>
           </div>
         </div>

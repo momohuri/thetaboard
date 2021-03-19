@@ -2,10 +2,16 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const got = require('got');
-
 const db = require("./database/database_interface.js")
 const wei_divider = 1000000000000000000;
-
+/* smart sandbox
+uncomment the process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'; line to avoid certificat error when using smart sandbox
+NOT useful for Mainnet config
+*/
+const theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+//MAINNET
+// const theta_explorer_api_domain = "https://explorer.thetatoken.org:9000"
 const app = express();
 const server = http.createServer(app);
 app.use(express.static('public'));
@@ -38,12 +44,11 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     const response = [];
     try {
         // get price
-        const prices = await got('https://explorer.thetatoken.org:9000/api/price/all');
+        const prices = await got(`${theta_explorer_api_domain}/api/price/all`);
         const tfuel_price = JSON.parse(prices.body).body[0]['price'];
         const theta_price = JSON.parse(prices.body).body[1]['price'];
-
         // get theta holding
-        const holding = await got(`https://explorer.thetatoken.org:9000/api/account/${wallet_adr}`);
+        const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`);
         const balances = JSON.parse(holding.body).body.balance;
         response.push({
             "amount": balances['thetawei'] / wei_divider,
@@ -65,7 +70,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         });
 
         // get staked theta
-        const staked_query = await got(`https://explorer.thetatoken.org:9000/api/stake/${wallet_adr}`);
+        const staked_query = await got(`${theta_explorer_api_domain}/api/stake/${wallet_adr}`);
         response.push(...JSON.parse(staked_query.body).body.sourceRecords.map((x) => {
             return {
                 "amount": x["amount"] / wei_divider,
@@ -78,7 +83,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
             }
         }));
 
-        res.json(response)
+        res.json({wallet: response})
     } catch (error) {
         res.status(400).send(error.message);
     }
