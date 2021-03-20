@@ -15,5 +15,8 @@
     "md5": "^2.3.0",
     "rotating-file-stream": "^2.1.5",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "dateformat": "^4.5.1"
   }
 }

@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const got = require('got');
+const db = require("./database/database_interface.js")
+const dateFormat = require("dateformat");
 const wei_divider = 1000000000000000000;
 /* smart sandbox
 uncomment the process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'; line to avoid certificat error when using smart sandbox
@@ -82,7 +84,34 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
             }
         }));
 
-        res.json({wallet: response})
+        // get transaction history
+        const transaction_history = [];
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=5&pageNumber=1&limitNumber=50&isEqualType=false`);
+        
+        transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
+            return {
+                "in_or_out": wallet_adr.toUpperCase() == x["data"]["inputs"][0]["address"].toUpperCase() ? "out" : "in",
+                "type": x["type"],
+                "txn_hash": x["hash"],
+                "block": x["block_height"],
+                "timestamp": dateFormat(new Date(Number(x["timestamp"]) * 1000), "isoDateTime"),
+                "status": x["status"],
+                "from_wallet_address": x["data"]["inputs"][0]["address"],
+                "to_wallet_address": x["data"]["outputs"][0]["address"],
+                "value":[{
+                        "type": "theta",
+                        "amount": x["data"]["outputs"][0]["coins"]["thetawei"] / wei_divider,
+                        "value": x["data"]["outputs"][0]["coins"]["thetawei"] / wei_divider * theta_price
+                    }, {
+                        "type": "tfuel",
+                        "amount": x["data"]["outputs"][0]["coins"]["tfuelwei"] / wei_divider,
+                        "value": x["data"]["outputs"][0]["coins"]["tfuelwei"] / wei_divider* tfuel_price
+                    }
+                ]
+            }
+        }));
+
+        res.json({wallet: response, transactions: transaction_history})
     } catch (error) {
         res.status(400).send(error.message);
     }
