@@ -67,3 +67,28 @@ input.border-color{
   text-align: center;
   height: 55px;
 }
+
+.a-elipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.coin-amount {
+  font-weight: 600;
+}
+
+.coin-value {
+  font-size: 15px;
+}
+
+td#in-or-out {
+  width: 85px;
+  padding: 0 20px;
+}

@@ -13,12 +13,12 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th>Type</th>
-                <th>Wallet Address</th> 
-                <th>Node Address</th>
-                <th>Market Price</th>
-                <th>Amount</th>
-                <th class="text-right">In $</th>
+                <th class="text-center d-sm-none d-md-table-cell">Type</th>
+                <th class="text-center">Wallet Address</th> 
+                <th class="text-center d-sm-none d-md-table-cell">Node Address</th>
+                <th class="text-center d-sm-none d-md-none d-lg-table-cell">Market Price</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">In $</th>
               </tr>
               </thead>
               <tbody>
@@ -28,19 +28,19 @@
                     <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
                          class="img-fluid rounded-circle" style="width: 20px;">
                   </td>
-                  <td>{{balance.type}}</td>
-                  <td>
-                    <a href="https://explorer.thetatoken.org/account/{{balance.wallet_address}}">
+                  <td class="text-center d-sm-none d-md-table-cell">{{balance.type}}</td>
+                  <td class="text-center ">
+                    <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.wallet_address}}">
                     {{balance.wallet_address}}
                     </a>
                   </td>
-                  <td>
-                    <a href="https://explorer.thetatoken.org/account/{{balance.node_address}}">
+                  <td class="text-center d-sm-none d-md-table-cell">
+                    <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.node_address}}">
                       {{balance.node_address}}
                     </a>
                   </td>
-                  <td>{{format-number balance.market_price style='currency' currency='USD'}}</td>
-                  <td>{{format-number balance.amount}}</td>
+                  <td class="text-center d-sm-none d-md-none d-lg-table-cell">{{format-number balance.market_price style='currency' currency='USD'}}</td>
+                  <td class="text-center">{{format-number balance.amount}}</td>
                   <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
                 </tr>
               {{/each}}
@@ -53,7 +53,11 @@
         </div>
       </div>
     </div>
-
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{transaction-history transactions=@model.transactions}}
+     </div>
   </div>
   <div class="row">
     <div class="col-md-4">
