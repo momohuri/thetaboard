@@ -24,7 +24,7 @@ Docker should have at least 4gb of runtime memory
 (Windows Only) Make installed
  - https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows
 
-###Starting the Thetaboard + Guardian Node
+### Starting the Thetaboard + Guardian Node
 get the make file , then run the start command
 ```shell
 curl https://github.com/momohuri/thetaboard/blob/main/Makefile --output ./Makefile
@@ -36,4 +36,4 @@ Done, you can now visit : http://localhost:8080
 If you want to run multiples dockers on your machine you can set individual names using the following variable: <br>
 `NODE_PASSWORD=A-SECRET-PASSWRD DOCKER_NAME='REPLACE_THIS' make start_docker ` <br>
 You can restart your docker using:
-`DOCKER_NAME='REPLACE_THIS' make start_thetaboard `
+` make restart_thetaboard `

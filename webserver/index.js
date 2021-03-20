@@ -101,7 +101,7 @@ const rfs = require("rotating-file-stream");
 
 // set machine id as password of GN so it persists after docker restart.
 const theta_mainnet_folder = "/home/node/theta_mainnet"
-const guardian_password = fs.readFileSync('/home/node/app/pwd.txt', {encoding: 'utf8', flag: 'r'});
+const guardian_password = process.env.NODE_PASSWORD || "MY_SECRET_NODE_PASSWORD"
 app.get('/guardian/status', async (req, res) => {
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
@@ -188,6 +188,9 @@ app.get('/guardian/logs', (req, res) => {
     readStream.pipe(res);
 });
 
+app.get('/guardian/update', async (req, res)=>{
+//todo
+});
 
 // Default response for any other request
 app.use(function (req, res) {
