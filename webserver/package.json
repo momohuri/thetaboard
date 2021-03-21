@@ -9,11 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "await-spawn": "^4.0.1",
     "express": "^4.17.1",
     "find-process": "^1.4.4",
     "got": "^11.8.2",
-    "md5": "^2.3.0",
     "rotating-file-stream": "^2.1.5",
+    "stream-stream": "^1.2.6"
   },
   "devDependencies": {
     "dateformat": "^4.5.1"

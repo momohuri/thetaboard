@@ -118,8 +118,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 });
 
 
-// guardian node infos
-
+// guardian node APIs
 const fs = require('fs');
 const os = require("os");
 const find = require('find-process');
@@ -127,10 +126,11 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const spawn = require('child_process').spawn;
 const rfs = require("rotating-file-stream");
+const await_spawn = require('await-spawn');
 
 // set machine id as password of GN so it persists after docker restart.
-const theta_mainnet_folder = "/home/node/theta_mainnet"
-const guardian_password = process.env.NODE_PASSWORD || "MY_SECRET_NODE_PASSWORD"
+const theta_mainnet_folder = "/home/node/theta_mainnet";
+const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
 app.get('/guardian/status', async (req, res) => {
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
@@ -147,7 +147,7 @@ app.get('/guardian/status', async (req, res) => {
         }
     } catch (e) {
         try {
-            const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+            const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
             if (theta_process.length > 0) {
                 res.json({"status": "syncing", "msg": "process up"});
             } else {
@@ -161,7 +161,7 @@ app.get('/guardian/status', async (req, res) => {
 
 app.get('/guardian/start', async (req, res) => {
     try {
-        const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+        const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length > 0) {
             res.json({"error": "Process already started", "success": false});
         } else if (os.totalmem() < 4175540224) {
@@ -175,7 +175,7 @@ app.get('/guardian/start', async (req, res) => {
 
             });
             const job = spawn(`${theta_mainnet_folder}/bin/theta`,
-                ["start", `--config=${theta_mainnet_folder}/node`, `--password=${guardian_password}`],
+                ["start", `--config=${theta_mainnet_folder}/guardian_mainnet/node`, `--password=${guardian_password}`],
                 {
                     detached: true,// can't run the process detached because of the logs streaming
 
@@ -194,7 +194,7 @@ app.get('/guardian/start', async (req, res) => {
 
 app.get('/guardian/stop', async (req, res) => {
     try {
-        const theta_process = await find('name', '/home/node/theta_mainnet/bin/theta');
+        const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length === 0) {
             res.json({"error": "No process found", "success": false});
         } else {
@@ -217,18 +217,66 @@ app.get('/guardian/logs', (req, res) => {
     readStream.pipe(res);
 });
 
+app.get('/guardian/summary', async (req, res) => {
+    let version = null;
+    try{
+        version = await exec(`${theta_mainnet_folder}/bin/theta version`);
+    } catch (e){}
+
+    try {
+        const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query guardian`);
+        if (stderr) {
+            res.json({"success": false, "msg": stderr, "version": version});
+        } else {
+            const summary = JSON.parse(stdout);
+            res.json({"success": true, "msg": summary, "version": version});
+        }
+    } catch (e) {
+        res.json({"success": false, "msg": e, "version": version});
+    }
+});
+
 app.get('/guardian/update', async (req, res) => {
-    //todo
+    try {
+        fs.rmSync(`${theta_mainnet_folder}/bin/theta`, {'force': true});
+        fs.rmSync(`${theta_mainnet_folder}/bin/thetacli`, {'force': true});
+        // get latest urls
+        const config = await got(`https://mainnet-data.thetatoken.org/config?is_guardian=true`);
+        const theta = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`);
+        const thetacli = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`);
+        // DLL files
+        const wget_config =  await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/config.yaml`, config.body]);
+        const wget_theta = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/bin/theta`, theta.body]);
+        const wget_thetacli = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/bin/thetacli`, thetacli.body]);
+        // put correct auth
+        await_spawn(`chmod`, [`+x`, `${theta_mainnet_folder}/bin/thetacli`]);
+        await_spawn(`chmod`, [`+x`, `${theta_mainnet_folder}/bin/theta`]);
+        res.json({"error": null, "success": true});
+    } catch (e) {
+        res.json({"error": e, "success": false});
+    }
 });
 
-app.get('/guardian/address', async (req, res) => {
-    //todo
-});
+app.get('/guardian/download_snapshot', async (req, res) => {
+    try {
+        const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
+        if (theta_process.length > 0) {
+            res.json({"msg": "Process is running", "success": false});
+        } else {
+            -explorer
+            fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/key`, {recursive: true});
+            fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/db`, {recursive: true});
+            fs.rmSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
+            const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`);
+            const wget = spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
+            wget.stdout.pipe(res);
+            wget.stderr.pipe(res);
+        }
+    } catch (e) {
+        res.json({"msg": e, "success": false});
+    }
 
-app.get('/guardian/restart_sync', async (req, res) => {
-    //todo
 });
-
 
 // Default response for any other request
 app.use(function (req, res) {
