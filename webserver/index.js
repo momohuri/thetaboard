@@ -9,7 +9,6 @@ uncomment the process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'; line to avoid c
 NOT useful for Mainnet config
 */
 // const theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
-// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 //MAINNET
 const theta_explorer_api_domain = "https://explorer.thetatoken.org:9000"
 const app = express();
@@ -44,11 +43,11 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     const response = [];
     try {
         // get price
-        const prices = await got(`${theta_explorer_api_domain}/api/price/all`);
+        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
         const tfuel_price = JSON.parse(prices.body).body[0]['price'];
         const theta_price = JSON.parse(prices.body).body[1]['price'];
         // get theta holding
-        const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`);
+        const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`, {https: {rejectUnauthorized: false}});
         const balances = JSON.parse(holding.body).body.balance;
         response.push({
             "amount": balances['thetawei'] / wei_divider,
@@ -70,7 +69,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         });
 
         // get staked theta
-        const staked_query = await got(`${theta_explorer_api_domain}/api/stake/${wallet_adr}`);
+        const staked_query = await got(`${theta_explorer_api_domain}/api/stake/${wallet_adr}`, {https: {rejectUnauthorized: false}});
         response.push(...JSON.parse(staked_query.body).body.sourceRecords.map((x) => {
             return {
                 "amount": x["amount"] / wei_divider,
@@ -85,7 +84,8 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
         // get transaction history
         const transaction_history = [];
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=5&pageNumber=1&limitNumber=50&isEqualType=true`);
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=5&pageNumber=1&limitNumber=50&isEqualType=true`,
+            {https: {rejectUnauthorized: false}});
 
         transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
             const input = x["data"].inputs ? x["data"]["inputs"][0] : x["data"]["proposer"];
@@ -220,9 +220,10 @@ app.get('/guardian/logs', (req, res) => {
 
 app.get('/guardian/summary', async (req, res) => {
     let version = null;
-    try{
+    try {
         version = await exec(`${theta_mainnet_folder}/bin/theta version`);
-    } catch (e){}
+    } catch (e) {
+    }
 
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query guardian`);
@@ -242,11 +243,11 @@ app.get('/guardian/update', async (req, res) => {
         fs.rmSync(`${theta_mainnet_folder}/bin/theta`, {'force': true});
         fs.rmSync(`${theta_mainnet_folder}/bin/thetacli`, {'force': true});
         // get latest urls
-        const config = await got(`https://mainnet-data.thetatoken.org/config?is_guardian=true`);
-        const theta = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`);
-        const thetacli = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`);
+        const config = await got(`https://mainnet-data.thetatoken.org/config?is_guardian=true`, {https: {rejectUnauthorized: false}});
+        const theta = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`, {https: {rejectUnauthorized: false}});
+        const thetacli = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`, {https: {rejectUnauthorized: false}});
         // DLL files
-        const wget_config =  await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/config.yaml`, config.body]);
+        const wget_config = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/config.yaml`, config.body]);
         const wget_theta = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/bin/theta`, theta.body]);
         const wget_thetacli = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/bin/thetacli`, thetacli.body]);
         // put correct auth
@@ -267,7 +268,7 @@ app.get('/guardian/download_snapshot', async (req, res) => {
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/key`, {recursive: true});
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/db`, {recursive: true});
             fs.rmSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
-            const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`);
+            const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`, {https: {rejectUnauthorized: false}});
             const wget = spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
             wget.stdout.pipe(res);
             wget.stderr.pipe(res);
