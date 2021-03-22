@@ -7,6 +7,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th class="text-center">Type</th> 
             <th class="text-center">TXN Hash</th> 
             <th class="text-center d-sm-none d-md-table-cell">Block</th>
             <th class="text-center d-sm-none d-md-none d-lg-table-cell">Age</th>
@@ -19,6 +20,7 @@
         <tbody>
           {{#each transactionList as |transaction|}}
             <tr>
+            <td class="text-center">{{transaction.type}}</td>
             <td class="text-center">
               <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/txs/{{transaction.txn_hash}}">{{transaction.txn_hash}}</a>
             </td>

@@ -4,14 +4,11 @@ const path = require('path');
 const got = require('got');
 const dateFormat = require("dateformat");
 const wei_divider = 1000000000000000000;
-/* smart sandbox
-uncomment the process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'; line to avoid certificat error when using smart sandbox
-NOT useful for Mainnet config
-*/
-// const theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
-//MAINNET
-const theta_explorer_api_domain = "https://explorer.thetatoken.org:9000"
+let theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
 const app = express();
+//Create Router
+var router = express.Router()
+//Create Server
 const server = http.createServer(app);
 app.use(express.static('public'));
 // Server port
@@ -25,6 +22,22 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
+// a middleware function with no mount path. This code is executed for every request to the router
+app.use(function (req, res, next) {
+    if (req.query && req.query.env) {
+        if (req.query.env == 'testnet') {
+            theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:9000";
+            process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+        } else if (req.query.env == 'smart-contracts'){
+            console.log('smart contract:', );
+            theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
+            process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+        }
+    } else {
+        theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
+    }
+    next()
+})
 
 // wallet infos
 app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
@@ -84,7 +97,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
         // get transaction history
         const transaction_history = [];
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=5&pageNumber=1&limitNumber=50&isEqualType=true`,
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=50&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
 
         transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
