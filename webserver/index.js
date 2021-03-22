@@ -8,10 +8,10 @@ const wei_divider = 1000000000000000000;
 uncomment the process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'; line to avoid certificat error when using smart sandbox
 NOT useful for Mainnet config
 */
-const theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+// const theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
+// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 //MAINNET
-// const theta_explorer_api_domain = "https://explorer.thetatoken.org:9000"
+const theta_explorer_api_domain = "https://explorer.thetatoken.org:9000"
 const app = express();
 const server = http.createServer(app);
 app.use(express.static('public'));
@@ -167,6 +167,10 @@ app.get('/guardian/start', async (req, res) => {
         } else if (os.totalmem() < 4175540224) {
             res.json({"error": "Need at least 4GB of ram", "success": false});
         } else {
+            if(!fs.existsSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`)){
+                const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`);
+                spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
+            }
             const logStream = rfs.createStream("./guardian_logs.log", {
                 size: "1M", // rotate every 1 MegaBytes written
                 interval: "1d", // rotate daily
