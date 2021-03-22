@@ -167,10 +167,7 @@ app.get('/guardian/start', async (req, res) => {
         } else if (os.totalmem() < 4175540224) {
             res.json({"error": "Need at least 4GB of ram", "success": false});
         } else {
-            if(!fs.existsSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`)){
-                const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`);
-                spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
-            }
+            // TODO: test if snapshot file exists or not. Download if needed
             const logStream = rfs.createStream("./guardian_logs.log", {
                 size: "1M", // rotate every 1 MegaBytes written
                 interval: "1d", // rotate daily
@@ -267,7 +264,6 @@ app.get('/guardian/download_snapshot', async (req, res) => {
         if (theta_process.length > 0) {
             res.json({"msg": "Process is running", "success": false});
         } else {
-            -explorer
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/key`, {recursive: true});
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/db`, {recursive: true});
             fs.rmSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
