@@ -54,8 +54,8 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     try {
         // get price
         const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
-        const tfuel_price = JSON.parse(prices.body).body[0]['price'];
-        const theta_price = JSON.parse(prices.body).body[1]['price'];
+        const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0]['price'];
+        const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
         // get theta holding
         const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`, {https: {rejectUnauthorized: false}});
         const balances = JSON.parse(holding.body).body.balance;
@@ -94,34 +94,46 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
         // get transaction history
         const transaction_history = [];
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=20&isEqualType=false`,
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=50&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
 
         transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
-            const input = x["data"].inputs ? x["data"]["inputs"][0] : x["data"]["proposer"];
+            let from, to, values = null;
             if (x["type"] == 0) {
-                let output = x["data"]["outputs"].filter(x => x['address'] === wallet_adr)[0];
-                x["data"]["outputs"] = [output];
+                from = x["data"]["proposer"];
+                to = x["data"]["outputs"].filter(x => x['address'].toUpperCase() === wallet_adr.toUpperCase())[0];
+                values = to;
+            } else if (x["type"] == 10) {
+                from = x["data"]["source"];
+                to = x["data"]["holder"];
+                values = from;
+            } else if (x["type"] == 2) {
+                from = x["data"]["inputs"][0];
+                to = x["data"]["outputs"][0]
+                values = to;
             }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> transaction for stack deposit, transfer and coinbase + fix market price
             return {
-                "in_or_out": wallet_adr.toUpperCase() == input["address"].toUpperCase() ? "out" : "in",
+                "in_or_out": wallet_adr.toUpperCase() == from["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],
                 "txn_hash": x["hash"],
                 "block": x["block_height"],
                 "timestamp": dateFormat(new Date(Number(x["timestamp"]) * 1000), "isoDateTime"),
                 "status": x["status"],
-                "from_wallet_address": input["address"],
-                "to_wallet_address": x["data"]["outputs"][0]["address"],
+                "from_wallet_address": from["address"],
+                "to_wallet_address": to["address"],
                 "value": [{
                     "type": "theta",
-                    "amount": x["data"]["outputs"][0]["coins"]["thetawei"] / wei_divider,
-                    "value": x["data"]["outputs"][0]["coins"]["thetawei"] / wei_divider * theta_price
+                    "amount": values["coins"]["thetawei"] / wei_divider,
+                    "value": values["coins"]["thetawei"] / wei_divider * theta_price
                 }, {
                     "type": "tfuel",
-                    "amount": x["data"]["outputs"][0]["coins"]["tfuelwei"] / wei_divider,
-                    "value": x["data"]["outputs"][0]["coins"]["tfuelwei"] / wei_divider * tfuel_price
+                    "amount": values["coins"]["tfuelwei"] / wei_divider,
+                    "value": values["coins"]["tfuelwei"] / wei_divider * tfuel_price
                 }
                 ]
             }
