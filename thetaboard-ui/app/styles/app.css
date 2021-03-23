@@ -2,6 +2,11 @@
   margin-right: 15px;
 }
 
+.loading-a {
+  color: white;
+  text-decoration: underline;
+}
+
 #wallet-connection-notif {
     position: absolute;
     z-index: 0; 

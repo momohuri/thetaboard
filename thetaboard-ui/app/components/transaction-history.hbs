@@ -48,14 +48,15 @@
             </td>
           </tr>
           {{else}}
-            <p>No transactions</p>
+            <p>No transaction</p>
           {{/each}}
         </tbody>
       </table>
-
+      {{#if showPagination}}
       <PaginationPager @pager={{true}} @count={{pagination.totalPageNumber}} @current={{pagination.currentPageNumber}} @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|" >
         {{pagination.currentPageNumber}} of {{pagination.totalPageNumber}}
       </PaginationPager>
+      {{/if}}
     </div>
   </div>
 </div>

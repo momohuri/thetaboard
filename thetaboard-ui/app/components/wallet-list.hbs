@@ -38,6 +38,8 @@
                 <td class="text-center">{{format-number balance.amount}}</td>
                 <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
             </tr>
+            {{else}}
+            <p>No Wallet</p>
             {{/each}}
             </tbody>
         </table>

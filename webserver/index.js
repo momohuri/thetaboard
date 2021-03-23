@@ -58,6 +58,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
         // get theta holding
         const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`, {https: {rejectUnauthorized: false}});
+
         const balances = JSON.parse(holding.body).body.balance;
         response.push({
             "amount": balances['thetawei'] / wei_divider,
@@ -94,7 +95,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
         res.json({wallets: response})
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json(error.response.body);
     }
 });
 
@@ -170,7 +171,7 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
 
         res.json({transactions: transaction_history, pagination: pagination })
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).json(error.response.body);
     }
 });
 

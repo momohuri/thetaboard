@@ -12,8 +12,8 @@ export default class WalletRoute extends Route {
     const transactions = await this.thetaSdk.getTransactions(account);
     return {
       wallets: walletInfo.wallets,
-      transactions: transactions.transactions,
-      pagination: transactions.pagination,
+      transactions: transactions.transactions ? transactions.transactions : [],
+      pagination: transactions.pagination ? transactions.pagination : {},
     };
   }
 }
