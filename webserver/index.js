@@ -112,11 +112,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
                 to = x["data"]["outputs"][0]
                 values = to;
             }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> transaction for stack deposit, transfer and coinbase + fix market price
+            
             return {
                 "in_or_out": wallet_adr.toUpperCase() == from["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],
