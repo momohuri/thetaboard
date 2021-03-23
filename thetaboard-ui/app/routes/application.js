@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import * as thetajs from '@thetalabs/theta-js';
+import { getOwner } from '@ember/application';
 
 export default class ApplicationRoute extends Route {
   queryParams = {
@@ -8,24 +8,15 @@ export default class ApplicationRoute extends Route {
     },
   };
 
-  async model(params, transition) {
-    if (params && params.env) {
-      if (params.env === 'testnet') {
-        params.queryParams = '?env=testnet';
-        params.thetaNetwork = thetajs.networks.ChainIds.Testnet;
-      } else if (params.env === 'smart-contracts') {
-        params.queryParams = '?env=smart-contracts';
-        params.thetaNetwork = thetajs.networks.ChainIds.TestnetSapphire;
-      }
-    } else {
-      params = {
-        queryParams: '',
-        thetaNetwork: thetajs.networks.ChainIds.Mainnet,
-        env: '',
-      };
-    }
-    transition.data = params;
-    const response = await fetch('/guardian/status' + params.queryParams);
+  get envManager() {
+    return getOwner(this).lookup('service:env-manager');
+  }
+
+  async model(params) {
+    this.envManager.setParameters(params);
+    const response = await fetch(
+      '/guardian/status' + this.envManager.config.queryParams
+    );
     const gardianStatus = await response.json();
     return gardianStatus;
   }

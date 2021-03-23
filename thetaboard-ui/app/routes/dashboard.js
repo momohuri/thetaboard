@@ -1,16 +1,21 @@
 import Route from '@ember/routing/route';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 import * as thetajs from '@thetalabs/theta-js';
+import { getOwner } from '@ember/application';
 
 export default class DashboardRoute extends Route {
-  async model(params, transition) {
+  get envManager() {
+    return getOwner(this).lookup('service:env-manager');
+  }
+
+  async model() {
     let provider = new thetajs.providers.HttpProvider(
-      transition.data.thetaNetwork
+      this.envManager.config.thetaNetwork
     );
     await ThetaWalletConnect.connect();
     const accounts = await ThetaWalletConnect.requestAccounts();
     const response = await fetch(
-      '/wallet-info/' + accounts[0] + transition.data.queryParams
+      '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
     );
     const walletInfo = await response.json();
     return walletInfo;

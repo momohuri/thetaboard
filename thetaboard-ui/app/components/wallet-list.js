@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class TransactionHistoryComponent extends Component {
+export default class WalletListComponent extends Component {
   constructor(...args) {
     super(...args);
   }
@@ -12,8 +12,8 @@ export default class TransactionHistoryComponent extends Component {
     return this.envManager.config.explorerEndpoint;
   }
 
-  get transactionList() {
-    let { transactions } = this.args;
-    return transactions;
+  get walletList() {
+    let { wallets } = this.args;
+    return wallets;
   }
 }

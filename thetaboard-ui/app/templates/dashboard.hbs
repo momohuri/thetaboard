@@ -3,61 +3,7 @@
 <div class="content">
   <div class="row">
     <div class="col-lg-12 col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title"> Holdings </h4>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-              <tr>
-                <th class="text-center">#</th>
-                <th class="text-center d-none d-sm-none d-md-table-cell">Type</th>
-                <th class="text-center">Wallet Address</th>
-                <th class="text-center d-none d-sm-none d-md-table-cell">Node Address</th>
-                <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Market Price</th>
-                <th class="text-center">Amount</th>
-                <th class="text-center">In $</th>
-              </tr>
-              </thead>
-              <tbody>
-              {{#each @model.wallet as |balance|}}
-                <tr>
-                  <td class="text-center">
-                    <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
-                         class="img-fluid rounded-circle" style="width: 20px;">
-                  </td>
-                  <td class="text-center d-none d-sm-none d-md-table-cell">{{balance.type}}</td>
-                  <td class="text-center ">
-                    <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.wallet_address}}">
-                    {{balance.wallet_address}}
-                    </a>
-                  </td>
-                  <td class="text-center d-none d-sm-none d-md-table-cell">
-                    <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.node_address}}">
-                      {{balance.node_address}}
-                    </a>
-                  </td>
-                  <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{format-number balance.market_price style='currency' currency='USD'}}</td>
-                  <td class="text-center">{{format-number balance.amount}}</td>
-                  <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
-                </tr>
-              {{/each}}
-              </tbody>
-            </table>
-            <div class="alert alert-warning">
-              <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                <i class="tim-icons icon-simple-remove"></i>
-              </button>
-              <span><b> Warning - </b> Sometimes the guardian will not show up. Don't be alarmed refreshing your page will be enough.</span>
-            </div>
-            <div style="text-align: right;">
-              {{wallet-total wallet=@model.wallet}}
-            </div>
-          </div>
-        </div>
-      </div>
+      {{wallet-list wallets=@model.wallets}}
     </div>
   </div>
   <div class="row">
