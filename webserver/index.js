@@ -3,13 +3,13 @@ const http = require('http');
 const path = require('path');
 const got = require('got');
 const dateFormat = require("dateformat");
+
 const wei_divider = 1000000000000000000;
 let theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
 const app = express();
-//Create Router
-var router = express.Router()
-//Create Server
+const router = express.Router();
 const server = http.createServer(app);
+
 app.use(express.static('public'));
 // Server port
 const HTTP_PORT = 8000;
@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     if (req.query && req.query.env) {
         if (req.query.env == 'testnet') {
             theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:9000";
-        } else if (req.query.env == 'smart-contracts'){
+        } else if (req.query.env == 'smart-contracts') {
             theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
         }
     } else {
@@ -104,7 +104,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
                 x["data"]["outputs"] = [output];
             }
 
-            
+
             return {
                 "in_or_out": wallet_adr.toUpperCase() == input["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],
@@ -148,7 +148,13 @@ const await_spawn = require('await-spawn');
 const theta_mainnet_folder = "/home/node/theta_mainnet";
 const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
 app.get('/guardian/status', async (req, res) => {
+    let version = null;
     try {
+        try {
+            version = await exec(`${theta_mainnet_folder}/bin/thetacli query version`);
+        } catch (e) {
+        }
+
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
 
         if (stderr) {
@@ -156,21 +162,21 @@ app.get('/guardian/status', async (req, res) => {
         } else {
             const status = JSON.parse(stdout);
             if (status["syncing"]) {
-                res.json({"status": "syncing", "msg": status});
+                res.json({"status": "syncing", "msg": status, "version": version});
             } else {
-                res.json({"status": "ready", "msg": status});
+                res.json({"status": "ready", "msg": status, "version": version});
             }
         }
     } catch (e) {
         try {
             const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
             if (theta_process.length > 0) {
-                res.json({"status": "syncing", "msg": "process up"});
+                res.json({"status": "syncing", "msg": {"process": "process up"}, "version": version});
             } else {
-                res.json({"status": "error", "msg": e});
+                res.json({"status": "error", "msg": e, "version": version});
             }
         } catch (e) {
-            res.json({"status": "error", "msg": e});
+            res.json({"status": "error", "msg": e, "version": version});
         }
     }
 });
@@ -235,12 +241,6 @@ app.get('/guardian/logs', (req, res) => {
 });
 
 app.get('/guardian/summary', async (req, res) => {
-    let version = null;
-    try {
-        version = await exec(`${theta_mainnet_folder}/bin/theta version`);
-    } catch (e) {
-    }
-
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query guardian`);
         if (stderr) {
@@ -274,6 +274,16 @@ app.get('/guardian/update', async (req, res) => {
         res.json({"error": e, "success": false});
     }
 });
+
+app.get('/guardian/latest_snapshot', async (req , res) =>{
+    try{
+        const { birthtime } = fs.statSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
+        res.json({"success": true, "date": birthtime})
+    }catch (e) {
+        res.json({"success":false, "error": e});
+    }
+
+})
 
 app.get('/guardian/download_snapshot', async (req, res) => {
     try {
