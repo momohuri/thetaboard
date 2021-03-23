@@ -101,3 +101,48 @@ td#in-or-out img {
     min-width: 170px;
     text-indent: 10%;
 }
+
+nav[aria-label="Page navigation"] .pager {
+  padding: 0;
+  text-align: center;
+}
+
+nav[aria-label="Page navigation"] .pager li {
+  background-color: #e14eca;
+  background-image: linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca);
+  background-size: 210% 210%;
+  background-position: top right;
+  border-color: #e14eca;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-width: 2px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  margin: 4px 1px;
+  border-radius: 0.4285rem;
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  line-height: 1.35em;
+}
+
+nav[aria-label="Page navigation"] .pager li a {
+  color: white;
+}
+
+nav[aria-label="Page navigation"] .pager li.disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  cursor: default;
+}
+
+nav[aria-label="Page navigation"] .pager li.pager-inner {
+  cursor: default;
+  background: transparent;
+}

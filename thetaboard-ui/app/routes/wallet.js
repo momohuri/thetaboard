@@ -14,10 +14,18 @@ export default class WalletRoute extends Route {
     );
     await ThetaWalletConnect.connect();
     const accounts = await ThetaWalletConnect.requestAccounts();
-    const response = await fetch(
+    const walletInfoResult = await fetch(
       '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
     );
-    const walletInfo = await response.json();
-    return walletInfo;
+    const walletInfo = await walletInfoResult.json();
+    const transactionsResult = await fetch(
+      '/wallet-transactions/' + accounts[0] + this.envManager.config.queryParams
+    );
+    const transactions = await transactionsResult.json();
+    return {
+      wallets: walletInfo.wallets,
+      transactions: transactions.transactions,
+      pagination: transactions.pagination,
+    };
   }
 }

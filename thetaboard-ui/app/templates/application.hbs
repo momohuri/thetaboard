@@ -16,30 +16,9 @@
         ThetaBoard
       </a>
     </div>
-
+  
     <div class="sidebar-wrapper">
-      <ul class="nav">
-        <li class="nav-item active">
-          <LinkTo class="nav-link" @route="dashboard">
-            <i class="tim-icons icon-chart-pie-36"></i>
-            <p>Dashboard</p>
-          </LinkTo>
-        </li>
-        <li class="nav-item">
-          <LinkTo class="nav-link" @route="wallet">
-            <i class="tim-icons icon-chart-pie-36"></i>
-            <p>Wallet</p>
-          </LinkTo>
-        </li>
-        <li class="nav-item">
-          <LinkTo class="nav-link" @route="guardian">
-            <i class="tim-icons icon-chart-pie-36"></i>
-            <p>Guardian</p>
-          </LinkTo>
-        </li>
-
-        <!-- your sidebar here -->
-      </ul>
+      {{menu}}
     </div>
   </div>
   <div class="main-panel">

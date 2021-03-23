@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each transactionList as |transaction|}}
+          {{#each transactions as |transaction|}}
             <tr>
             <td class="text-center">{{transaction.type}}</td>
             <td class="text-center">
@@ -52,6 +52,10 @@
           {{/each}}
         </tbody>
       </table>
+
+      <PaginationPager @pager={{true}} @count={{pagination.totalPageNumber}} @current={{pagination.currentPageNumber}} @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|" >
+        {{pagination.currentPageNumber}} of {{pagination.totalPageNumber}}
+      </PaginationPager>
     </div>
   </div>
 </div>

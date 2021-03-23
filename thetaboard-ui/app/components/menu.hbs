@@ -1,0 +1,10 @@
+<ul class="nav">
+    {{#each menuItemList as |menuItem|}}
+    <li class="nav-item {{if menuItem.classActive "active"}}">
+        <LinkTo @class="nav-link" @route="{{menuItem.name}}">
+        <i class="tim-icons icon-chart-pie-36"></i>
+        <p class="menu-item">{{menuItem.name}}</p>
+        </LinkTo>
+    </li>
+    {{/each}}
+</ul>

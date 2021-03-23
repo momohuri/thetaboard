@@ -14,10 +14,7 @@ export default class DashboardRoute extends Route {
     );
     await ThetaWalletConnect.connect();
     const accounts = await ThetaWalletConnect.requestAccounts();
-    const response = await fetch(
-      '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
-    );
-    const walletInfo = await response.json();
-    return walletInfo;
+
+    return {};
   }
 }

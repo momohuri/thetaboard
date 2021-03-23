@@ -38,9 +38,8 @@ app.use(function (req, res, next) {
 
 // wallet infos
 app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
-    const wallet_adr = '0xa60F2744347D68f46822c89bdFbacfcc3e46F1b0';
-    // const wallet_adr = req.params.wallet_addr;
-
+    const wallet_adr = req.params.wallet_addr;
+    
     // balances should be of hte following format:
     // {
     //     amount: 0,
@@ -93,12 +92,45 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
             }
         }));
 
+        res.json({wallets: response})
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+
+// wallet transactions
+app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
+    const wallet_adr = req.params.wallet_addr;
+    
+    // balances should be of hte following format:
+    // {
+    //     amount: 0,
+    //     currency: "theta/tfuel",
+    //     value: 0, // value in $$$
+    //     type: "wallet/guardian/edge",
+    //     wallet_address: "0x000" // theta address
+    //     reward_address: "0x000" // theta address if staked tfuel/theta
+    // }
+
+    const response = [];
+    try {
+        // get price
+        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
+        const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0]['price'];
+        const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
+
         // get transaction history
         const transaction_history = [];
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=50&isEqualType=false`,
+        let pageNumber = req.query.pageNumber ? req.query.pageNumber.toString() : '1';
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=15&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
-
-        transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
+        const transaction_list = JSON.parse(transaction_history_query.body);
+        const pagination = {
+            currentPageNumber: transaction_list.currentPageNumber,
+            totalPageNumber: transaction_list.totalPageNumber
+        };
+        transaction_history.push(...transaction_list.body.map((x) => {
             let from, to, values = null;
             if (x["type"] == 0) {
                 from = x["data"]["proposer"];
@@ -136,7 +168,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
             }
         }));
 
-        res.json({wallet: response, transactions: transaction_history})
+        res.json({transactions: transaction_history, pagination: pagination })
     } catch (error) {
         res.status(400).send(error.message);
     }
