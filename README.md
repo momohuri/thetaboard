@@ -31,7 +31,7 @@ Docker with at least 4gb and Make available (installation is only needed on Wind
 **Step1**: Get the make file , then run the start command <br>
 
 ```shell
-curl https://github.com/momohuri/thetaboard/blob/main/Makefile --output ./Makefile
+curl -L https://raw.githubusercontent.com/momohuri/thetaboard/main/Makefile
 NODE_PASSWORD='A-SECRET-PASSWRD' make start_thetaboard
 ```
 **Step2**: Done!  you can now visit : http://localhost:8080
@@ -57,6 +57,7 @@ How to install pre-req on Mac:
 
 How to install pre-req on Linux:
 - Step 1 install Docker: https://docs.docker.com/engine/install/ubuntu/ <br>
+- Step 2 install Make: 
 
 
 
