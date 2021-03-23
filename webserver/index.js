@@ -192,7 +192,9 @@ app.get('/guardian/status', async (req, res) => {
     let version = null;
     try {
         try {
-            version = await exec(`${theta_mainnet_folder}/bin/thetacli query version`);
+            version = await exec(`${theta_mainnet_folder}/bin/theta version`);
+
+            version = version.stdout.split('\n');
         } catch (e) {
         }
 
