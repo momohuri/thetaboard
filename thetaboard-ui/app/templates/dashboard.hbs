@@ -13,10 +13,10 @@
               <thead>
               <tr>
                 <th class="text-center">#</th>
-                <th class="text-center d-sm-none d-md-table-cell">Type</th>
+                <th class="text-center d-none d-sm-none d-md-table-cell">Type</th>
                 <th class="text-center">Wallet Address</th>
-                <th class="text-center d-sm-none d-md-table-cell">Node Address</th>
-                <th class="text-center d-sm-none d-md-none d-lg-table-cell">Market Price</th>
+                <th class="text-center d-none d-sm-none d-md-table-cell">Node Address</th>
+                <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Market Price</th>
                 <th class="text-center">Amount</th>
                 <th class="text-center">In $</th>
               </tr>
@@ -28,18 +28,18 @@
                     <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
                          class="img-fluid rounded-circle" style="width: 20px;">
                   </td>
-                  <td class="text-center d-sm-none d-md-table-cell">{{balance.type}}</td>
+                  <td class="text-center d-none d-sm-none d-md-table-cell">{{balance.type}}</td>
                   <td class="text-center ">
                     <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.wallet_address}}">
                     {{balance.wallet_address}}
                     </a>
                   </td>
-                  <td class="text-center d-sm-none d-md-table-cell">
+                  <td class="text-center d-none d-sm-none d-md-table-cell">
                     <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{balance.node_address}}">
                       {{balance.node_address}}
                     </a>
                   </td>
-                  <td class="text-center d-sm-none d-md-none d-lg-table-cell">{{format-number balance.market_price style='currency' currency='USD'}}</td>
+                  <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{format-number balance.market_price style='currency' currency='USD'}}</td>
                   <td class="text-center">{{format-number balance.amount}}</td>
                   <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
                 </tr>

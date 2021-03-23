@@ -9,11 +9,11 @@
           <tr>
             <th class="text-center">Type</th> 
             <th class="text-center">TXN Hash</th> 
-            <th class="text-center d-sm-none d-md-table-cell">Block</th>
-            <th class="text-center d-sm-none d-md-none d-lg-table-cell">Age</th>
-            <th class="text-center d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
-            <th class="text-center"></th>
-            <th class="text-center d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
+            <th class="text-center d-none d-sm-none d-md-table-cell">Block</th>
+            <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Age</th>
+            <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
+            <th class="text-center d-none"></th>
+            <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
             <th class="text-center">Value</th>
           </tr>
         </thead>
@@ -24,20 +24,20 @@
             <td class="text-center">
               <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/txs/{{transaction.txn_hash}}">{{transaction.txn_hash}}</a>
             </td>
-            <td class="text-center d-sm-none d-md-table-cell">{{transaction.block}}</td>
-            <td class="text-center d-sm-none d-md-none d-lg-table-cell">{{moment-from transaction.timestamp}}</td>
-            <td class="text-center d-sm-none d-md-none d-lg-none d-xl-table-cell">
+            <td class="text-center d-none d-sm-none d-md-table-cell">{{transaction.block}}</td>
+            <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{moment-from transaction.timestamp}}</td>
+            <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{transaction.from_wallet_address}}">
                 {{transaction.from_wallet_address}}
               </a>
             </td>
-            <td class="text-center" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
-            <td class="text-center d-sm-none d-md-none d-lg-none d-xl-table-cell">
+            <td class="text-center d-none" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
+            <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="https://smart-contracts-sandbox-explorer.thetatoken.org/account/{{transaction.to_wallet_address}}">
                 {{transaction.to_wallet_address}}
               </a>
             </td>
-            <td class="text-left" style="min-width: 245px;">
+            <td class="text-left td-value">
               {{#each transaction.value as |coin|}}
                 <div>
                   <img src="assets/img/logo/{{coin.type}}.png" class="img-fluid rounded-circle" style="width: 20px;"/>

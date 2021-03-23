@@ -38,7 +38,8 @@ app.use(function (req, res, next) {
 
 // wallet infos
 app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
-    const wallet_adr = req.params.wallet_addr;
+    const wallet_adr = '0xa60F2744347D68f46822c89bdFbacfcc3e46F1b0';
+    // const wallet_adr = req.params.wallet_addr;
 
     // balances should be of hte following format:
     // {
@@ -112,7 +113,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
                 to = x["data"]["outputs"][0]
                 values = to;
             }
-            
+
             return {
                 "in_or_out": wallet_adr.toUpperCase() == from["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],

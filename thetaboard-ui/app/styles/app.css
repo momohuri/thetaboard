@@ -12,7 +12,7 @@
 }
 
 .wallet-total-amount {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .main-loader {
@@ -85,10 +85,19 @@ input.border-color{
 }
 
 .coin-value {
-  font-size: 15px;
+  font-size: 12px;
 }
 
 td#in-or-out {
-  width: 85px;
+  width: 70px;
   padding: 0 20px;
+}
+
+td#in-or-out img {
+  min-width: 30px;
+}
+
+.td-value {
+    min-width: 170px;
+    text-indent: 10%;
 }
