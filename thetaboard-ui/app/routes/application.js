@@ -8,16 +8,11 @@ export default class ApplicationRoute extends Route {
     },
   };
 
-  get envManager() {
-    return getOwner(this).lookup('service:env-manager');
+  get thetaSdk() {
+    return getOwner(this).lookup('service:theta-sdk');
   }
 
-  async model(params) {
-    this.envManager.setParameters(params);
-    const response = await fetch(
-      '/guardian/status' + this.envManager.config.queryParams
-    );
-    const gardianStatus = await response.json();
-    return gardianStatus;
+  model(params) {
+    return this.thetaSdk.getGardianStatus(params);
   }
 }
