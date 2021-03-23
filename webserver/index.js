@@ -27,11 +27,8 @@ app.use(function (req, res, next) {
     if (req.query && req.query.env) {
         if (req.query.env == 'testnet') {
             theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:9000";
-            process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
         } else if (req.query.env == 'smart-contracts'){
-            console.log('smart contract:', );
             theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
-            process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
         }
     } else {
         theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
@@ -97,11 +94,17 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 
         // get transaction history
         const transaction_history = [];
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=50&isEqualType=false`,
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=1&limitNumber=20&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
 
         transaction_history.push(...JSON.parse(transaction_history_query.body).body.map((x) => {
             const input = x["data"].inputs ? x["data"]["inputs"][0] : x["data"]["proposer"];
+            if (x["type"] == 0) {
+                let output = x["data"]["outputs"].filter(x => x['address'] === wallet_adr)[0];
+                x["data"]["outputs"] = [output];
+            }
+
+            
             return {
                 "in_or_out": wallet_adr.toUpperCase() == input["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],
