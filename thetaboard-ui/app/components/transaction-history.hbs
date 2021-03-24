@@ -12,7 +12,7 @@
             <th class="text-center d-none d-sm-none d-md-table-cell">Block</th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Age</th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
-            <th class="text-center d-none"></th>
+            <th class="text-center d-none d-sm-table-cell"></th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
             <th class="text-center">Value</th>
           </tr>
@@ -31,7 +31,7 @@
                 {{transaction.from_wallet_address}}
               </a>
             </td>
-            <td class="text-center d-none" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
+            <td class="text-center d-none d-sm-table-cell" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.to_wallet_address}}">
                 {{transaction.to_wallet_address}}
