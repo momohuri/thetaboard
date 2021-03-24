@@ -1,0 +1,38 @@
+
+<div class="card card-chart">
+  <div class="card-header ">
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <h2 class="card-title">Price</h2>
+      </div>
+      <div class="col-sm-6">
+        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+          <label class="btn btn-sm btn-primary btn-simple active" id="0" {{on "click" (fn this.updateTimeRange 'year')}}>
+            <input type="radio" name="options" checked="">
+            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Year</span>
+            <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-single-02"></i>
+                        </span>
+          </label>
+          <label class="btn btn-sm btn-primary btn-simple" id="1" {{on "click" (fn this.updateTimeRange 'month')}}>
+            <input type="radio" class="d-none d-sm-none" name="options">
+            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Month</span>
+            <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-gift-2"></i>
+                        </span>
+          </label>
+          <label class="btn btn-sm btn-primary btn-simple" id="2" {{on "click" (fn this.updateTimeRange 'week')}} >
+            <input type="radio" class="d-none" name="options">
+            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Week</span>
+            <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-tap-02"></i>
+                        </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" style="position: relative; height:40vh; ">
+    <canvas id="lineChartExample" {{did-insert this.setupChart}}></canvas>
+  </div>
+</div>
