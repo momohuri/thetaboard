@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8001;
+const HTTP_PORT = 8000;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
