@@ -11,9 +11,9 @@
     
 <meta name="thetaboard-ui/config/environment" content="%7B%22modulePrefix%22%3A%22thetaboard-ui%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22auto%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22thetaboard-ui%22%2C%22version%22%3A%220.0.0%2Bf326c1cb%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D" />
 
-    <link integrity="" rel="stylesheet" href="/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css"/>
-    <link integrity="" rel="stylesheet" href="/assets/thetaboard-ui-7a69fa5a27e60ae18ddb2e507879d831.css"/>
-    
+    <link integrity="" rel="stylesheet" href="/assets/vendor.css"/>
+    <link integrity="" rel="stylesheet" href="/assets/thetaboard-ui.css"/>
+
 
     <!--  Fonts and icons  -->
     <!--     Fonts and icons     -->
@@ -21,8 +21,8 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"/>
 
     <!-- Black Dashboard CSS -->
-    <link href="/assets/css/black-dashboard-13e47607e17062c28a36183b54363226.css?v=1.0.0" rel="stylesheet" />
-    <link href="/assets/css/nucleo-icons-394dc8c2af0a0ee7d7174619b543e2bd.css?v=1.0.0" rel="stylesheet" />
+    <link href="/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <link href="/assets/css/nucleo-icons.css?v=1.0.0" rel="stylesheet" />
 
 
     
@@ -30,28 +30,29 @@
   <body>
     <div class="alert alert-primary alert-with-icon" id="wallet-connection-notif">
       <span data-notify="message">Authentication in progress, this can take a while...</span><br/>
-        <img class="main-loader rotate" src="/assets/img/theta-logo-ca107e70adddbde1c72a6ddf998b61d0.png"/>
+        <img class="main-loader rotate" src="/assets/img/theta-logo.png"/>
         <br/>
-        <span data-notify="message">Make sure you are connected to the Theta Wallet extention.</span>
+        <span data-notify="message">Make sure you are connected to the <a class="loading-a" href="https://chrome.google.com/webstore/detail/theta-wallet/ckelpdlfgochnkdgikcgbimdcfgpkhgk" target="_blank">Theta Wallet extention</a>.<br/>Click <a class="loading-a" href="https://chrome.google.com/webstore/detail/theta-wallet/ckelpdlfgochnkdgikcgbimdcfgpkhgk" target="_blank">here</a> to download it.</span>
     </div>
-    
+
     
 
 
     <!--   Core JS Files   -->
-    <script src="/assets/js/core/jquery.min-f3b6c5cd5d69b8a59975ab84f7e2b7cf.js" type="text/javascript" integrity="sha256-Tt/FX6kikrA+RcCNdDGPeiKl1OszW2A0DmU8iIEo8To= sha512-rR0b1PvG4ISFvXwMEa+qd5LGsMGeCzJU7YPVRM4aMj0XW+L0h1TOkeMntvZKfKX7XPDCMa6Z5S6tJvPAjFZHGw==" ></script>
-    <script src="/assets/js/core/popper.min-05de4f8b367886f16fb40b8e0117a55d.js" type="text/javascript" integrity="sha256-GRvdOkmXjYfh1yVDFFC69I91Az9/aHuYLdnBAiFZJHE= sha512-2Is1G3KKON3kBzwmc5ar/VRcetiUcl4ajojXB0ifNl1/K8WUiYc8SMqooxw/wD+NB8xD9r8sbo1C1rwesK7RWQ==" ></script>
-    <script src="/assets/js/core/bootstrap.min-2d91571be909bb269c1e6dc2e7bfcca0.js" type="text/javascript" integrity="sha256-guCyiaWnGFsormFwGjNuA04nI/U+sFlTgvi5knkzhp0= sha512-cBOzW0OQqxZ49CNwHNiQWXlqzkbaO4t5sYqKR8bQpjLW1LnDr3SpYEYF4gpZzRUlTZSitUc0w1P1yDUloACKtw==" ></script>
-    <script src="/assets/js/plugins/perfect-scrollbar.jquery.min-e7596cbb2ddf5a16112df3072b5a1d69.js" integrity="sha256-jOMdzJUYy5ErLOYSsiX4Q+86aDEifuTX/lj0eP2nA8k= sha512-WwxxD9i7yXOSBeFOfC3CvGA7wY7u6wF1aM1UnPGglX6GBiaHx13ORULF9zMNcxu/nXsVvrpoJL4Bw1/0mhgKhA==" ></script>
+    <script src="/assets/js/core/jquery.min.js" type="text/javascript" integrity="sha256-Tt/FX6kikrA+RcCNdDGPeiKl1OszW2A0DmU8iIEo8To= sha512-rR0b1PvG4ISFvXwMEa+qd5LGsMGeCzJU7YPVRM4aMj0XW+L0h1TOkeMntvZKfKX7XPDCMa6Z5S6tJvPAjFZHGw==" ></script>
+    <script src="/assets/js/core/popper.min.js" type="text/javascript" integrity="sha256-GRvdOkmXjYfh1yVDFFC69I91Az9/aHuYLdnBAiFZJHE= sha512-2Is1G3KKON3kBzwmc5ar/VRcetiUcl4ajojXB0ifNl1/K8WUiYc8SMqooxw/wD+NB8xD9r8sbo1C1rwesK7RWQ==" ></script>
+    <script src="/assets/js/core/bootstrap.min.js" type="text/javascript" integrity="sha256-guCyiaWnGFsormFwGjNuA04nI/U+sFlTgvi5knkzhp0= sha512-cBOzW0OQqxZ49CNwHNiQWXlqzkbaO4t5sYqKR8bQpjLW1LnDr3SpYEYF4gpZzRUlTZSitUc0w1P1yDUloACKtw==" ></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js" integrity="sha256-jOMdzJUYy5ErLOYSsiX4Q+86aDEifuTX/lj0eP2nA8k= sha512-WwxxD9i7yXOSBeFOfC3CvGA7wY7u6wF1aM1UnPGglX6GBiaHx13ORULF9zMNcxu/nXsVvrpoJL4Bw1/0mhgKhA==" ></script>
     <!-- Chartist JS -->
-    <script src="/assets/js/plugins/chartjs.min-f7dd3d69db7c4fcf73ac6207416ab9f9.js" integrity="sha256-rtyPsqGq7IRGpoZrO6ii3lW2sNZo3el/rKsDpgk+wU0= sha512-jJdgLbKs1KYE7m2NDkkmynuYAnHOYH2f5S44KbdVOH5gk0/MfUv2PDGw6Bsf98dyiC+b+qn9YNle1g8PsVzCIg==" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/chartjs.min.js" integrity="sha256-7yU1PU7LfPSvmiClogNC6F5oLT7UxEm4bAqhMAqpyNg= sha512-wp6uQPuxW3y2dPx5nxhTHA/IepwpORKuAskHuoS2cvId6XaxbWPFPcgjlsfDFCY/JIZGOpR3iFWb7httbxHCgg==" ></script>
     <!--  Notifications Plugin    -->
-    <script src="/assets/js/plugins/bootstrap-notify-6038f990a452aeadec19bcba15701222.js" integrity="sha256-uIL6QeCukRDu3jVrwPfPsI24+3aT/ulQzz1H5jQxkFg= sha512-VfcKv9W0l++mYHBhotpcjqjYhbCREmlBYvEV/0xyrxrpXdZo5ZMfQFUomy8+SyVVvyyjDEckxhoTikU8EVN4Kw==" ></script>
+    <script src="/assets/js/plugins/bootstrap-notify.js" integrity="sha256-uIL6QeCukRDu3jVrwPfPsI24+3aT/ulQzz1H5jQxkFg= sha512-VfcKv9W0l++mYHBhotpcjqjYhbCREmlBYvEV/0xyrxrpXdZo5ZMfQFUomy8+SyVVvyyjDEckxhoTikU8EVN4Kw==" ></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/assets/js/black-dashboard-29fa4e96e5d1930f8c01b8b4e17adba5.js?v=1.0.0" type="text/javascript"></script>
+    <script src="/assets/js/black-dashboard.js?v=1.0.0" type="text/javascript"></script>
 
-    <script src="/assets/vendor-33c5eddf8428b14c5b1756a4663d64f7.js" integrity="sha256-wXMxr+XvqTCcaQQhF+of+5ON6s0tVAb8U6GAsH0BkG4= sha512-RCz7DdcvA5MMisy3UbiykSNuqUFKjOfy9hYvQhd2Ec89a5S6FmAWANliWyHR39/ajaZupw0AmoGHuzaqNatDmw==" ></script>
-    <script src="/assets/thetaboard-ui-d54c5cece0149f4e096f624232f08e80.js" integrity="sha256-awoEJuNaDeXa1nkfcH0ycjTeiwTIBALgoSBnodInlQI= sha512-IPlbdFhsKL8cYSogce8Lw6LSOLTX5AZnNdUl21MnCHiXQfxF4lAPJTCWk4JI0WcDh47EhLaMOjUKq/0Qt/KIQg==" ></script>
+    <script src="/assets/vendor.js" integrity="sha256-+hEIomehx/TQR/Jn4Ymkp6R4iVMS1x68ko4HXe63NAE= sha512-Jw6GXW64XUgaAUTgJdctThHZSUCVjp55NU3z3FMxTphOKM96q/Sw6xTGVTwUvFnsDn9ojEm9yexD68Wwe+9K8Q==" ></script>
+    <script src="/assets/thetaboard-ui.js" integrity="sha256-sYw3B/7T0uEkXvHoq/vTQpR7RB2KNvK3QVepTBzgpsw= sha512-0bp/9yz8myu46f2OILVPo1tMh0ol94fzIAK5vDaLfd7xcabSCU9JJatx+5HM2odhPPBVppUc6h/wxAk6uwVmXg==" ></script>
 
 
     

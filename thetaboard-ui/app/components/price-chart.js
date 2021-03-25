@@ -32,6 +32,7 @@ export default class PriceChartComponent extends Component {
       datasets: [{
         label: "Theta",
         pointStyle: 'point',
+        yAxisID: 'theta',
         radius: 0,
         borderColor: '#21edba',
         pointBackgroundColor: '#21edba',
@@ -39,6 +40,7 @@ export default class PriceChartComponent extends Component {
       },
         {
           label: "Tfuel",
+          yAxisID: 'tfuel',
           pointStyle: 'point',
           radius: 0,
           borderColor: '#FFA500',
@@ -76,9 +78,9 @@ export default class PriceChartComponent extends Component {
             return moment(new Date(tooltipItem[0].label)).format('LL')
           },
           label: (tooltipItem, data) => {
-            if(Number(tooltipItem.yLabel)>0.01){
+            if (Number(tooltipItem.yLabel) > 0.01) {
               return formatter.format(Number(tooltipItem.yLabel));
-            } else{
+            } else {
               return `$${Number(tooltipItem.yLabel)}`
             }
 
@@ -96,7 +98,8 @@ export default class PriceChartComponent extends Component {
       responsive: true,
       scales: {
         yAxes: [{
-          type: 'logarithmic',
+          id: "theta",
+          type: 'linear',
           ticks: {
             min: 0,
             beginAtZero: true,
@@ -105,7 +108,20 @@ export default class PriceChartComponent extends Component {
               return formatter.format(Number(value.toString()));
             }
           },
-        }],
+        },
+          {
+            id: "tfuel",
+            type: 'linear',
+            position: 'right',
+            ticks: {
+              min: 0,
+              beginAtZero: true,
+              maxTicksLimit: 10,
+              callback: function (value, index, values) {
+                return formatter.format(Number(value.toString()));
+              }
+            },
+          }],
 
         xAxes: [{
           type: 'time',
