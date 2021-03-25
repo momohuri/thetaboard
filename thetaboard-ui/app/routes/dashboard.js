@@ -17,7 +17,7 @@ export default class DashboardRoute extends Route {
     const oneYearBack = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0];
     const today = new Date().toISOString().split('T')[0];
     const historic_price = await fetch(
-      `http://www.thetascan.io/api/price/?start_date=${oneYearBack}&end_date=${today}`
+      `https://www.thetascan.io/api/price/?start_date=${oneYearBack}&end_date=${today}`
     );
     return {"historic_price": await historic_price.json()};
   }
