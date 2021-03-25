@@ -306,13 +306,13 @@ app.get('/guardian/summary', async (req, res) => {
     try {
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query guardian`);
         if (stderr) {
-            res.json({"success": false, "msg": stderr, "version": version});
+            res.json({"success": false, "msg": stderr});
         } else {
             const summary = JSON.parse(stdout);
-            res.json({"success": true, "msg": summary, "version": version});
+            res.json({"success": true, "msg": summary});
         }
     } catch (e) {
-        res.json({"success": false, "msg": e, "version": version});
+        res.json({"success": false, "msg": e});
     }
 });
 
