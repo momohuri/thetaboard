@@ -6,7 +6,7 @@ endif
 start_thetaboard:
 	docker pull maurinl/thetaboard:latest
 	docker volume create ${GUARDIANNAME}THETABOARD
-	docker run -d --name ${GUARDIANNAME}THETABOARD -p$(port) -e NODE_PASSWORD="${NODE_PASSWORD}" -v ${USERNAME}THETABOARD:/home/node/theta_mainnet maurinl/thetaboard
+	docker run -d --name ${GUARDIANNAME}THETABOARD -p$(port) -e NODE_PASSWORD="${NODE_PASSWORD}" -v ${GUARDIANNAME}THETABOARD:/home/node/theta_mainnet maurinl/thetaboard
 	docker port ${GUARDIANNAME}THETABOARD 8000
 
 
