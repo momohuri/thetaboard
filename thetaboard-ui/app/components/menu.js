@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 
 export default class MenuComponent extends Component {
-  menuItems = ['dashboard', 'wallet', 'guardian'];
+  menuItems = [{'name': 'dashboard', 'icon': 'icon-chart-pie-36'},
+    {'name': 'wallet', 'icon': ' icon-single-02'},
+    {'name': 'guardian', 'icon': 'icon-atom'}]
   @service router;
 
   get routeName() {
@@ -14,8 +16,9 @@ export default class MenuComponent extends Component {
     finalList.push(
       ...this.menuItems.map((x) => {
         return {
-          name: x,
-          classActive: this.routeName === x,
+          name: x.name,
+          classActive: this.routeName === x.name,
+          icon: x.icon
         };
       })
     );
