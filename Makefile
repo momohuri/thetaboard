@@ -19,7 +19,7 @@ kill_thetaboard:
 
 # DEV target only
 run_dev_mode:
-	docker run -d --name ${GUARDIANNAME}THETABOARD -e NODE_PASSWORD="${NODE_PASSWORD}" \
+	docker run -d --name ${GUARDIANNAME}THETABOARD -e NODE_PASSWORD="${NODE_PASSWORD}" -e PUBLIC=true\
 	 -v ${USERNAME}THETABOARD:/home/node/theta_mainnet \
 	 -v $(shell pwd)/webserver:/home/node/app/webserver_test2 \
 	 -p8000:8000 -p8001:8001 maurinl/thetaboard

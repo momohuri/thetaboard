@@ -12,34 +12,30 @@ const server = http.createServer(app);
 
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8000;
+const HTTP_PORT = 8001;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
-});
-// Endpoint for ember files
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 // a middleware function with no mount path. This code is executed for every request to the router
 app.use(function (req, res, next) {
     if (req.query && req.query.env) {
-        if (req.query.env == 'testnet') {
+        if (req.query.env === 'testnet') {
             theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:9000";
-        } else if (req.query.env == 'smart-contracts') {
+        } else if (req.query.env === 'smart-contracts') {
             theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
         }
     } else {
         theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
     }
-    next()
+    next();
 })
 
 // wallet infos
 app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     const wallet_adr = req.params.wallet_addr;
-    
+
     // balances should be of hte following format:
     // {
     //     amount: 0,
@@ -103,7 +99,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 // wallet transactions
 app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
     const wallet_adr = req.params.wallet_addr;
-    
+
     // balances should be of hte following format:
     // {
     //     amount: 0,
@@ -169,7 +165,7 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
             }
         }));
 
-        res.json({transactions: transaction_history, pagination: pagination })
+        res.json({transactions: transaction_history, pagination: pagination})
     } catch (error) {
         res.status(400).json(error.response.body);
     }
@@ -189,6 +185,8 @@ const await_spawn = require('await-spawn');
 // set machine id as password of GN so it persists after docker restart.
 const theta_mainnet_folder = "/home/node/theta_mainnet";
 const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
+const is_demo = "PUBLIC" in process.env && process.env.PUBLIC;
+
 app.get('/guardian/status', async (req, res) => {
     let version = null;
     try {
@@ -201,21 +199,28 @@ app.get('/guardian/status', async (req, res) => {
 
         const {stdout, stderr} = await exec(`${theta_mainnet_folder}/bin/thetacli query status`);
 
+        const theta_process_pid = await find('name', `${theta_mainnet_folder}/bin/theta`);
+        const theta_process_uptime = await exec(`ps -p ${theta_process_pid[0].pid} -o etimes`);
+        const uptime = Number(theta_process_uptime.stdout.split('\n')[1]);
+
         if (stderr) {
-            res.json({"status": "error", "msg": stderr});
+            res.json({"status": "error", "msg": stderr, "uptime": uptime});
         } else {
             const status = JSON.parse(stdout);
             if (status["syncing"]) {
-                res.json({"status": "syncing", "msg": status, "version": version});
+                res.json({"status": "syncing", "msg": status, "version": version, "uptime": uptime});
             } else {
-                res.json({"status": "ready", "msg": status, "version": version});
+                res.json({"status": "ready", "msg": status, "version": version, "uptime": uptime});
             }
         }
     } catch (e) {
         try {
             const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
             if (theta_process.length > 0) {
-                res.json({"status": "syncing", "msg": {"process": "process up"}, "version": version});
+                const theta_process_pid = await find('name', `${theta_mainnet_folder}/bin/theta`);
+                const theta_process_uptime = await exec(`ps -p ${theta_process_pid[0].pid} -o etimes`);
+                const uptime = Number(theta_process_uptime.stdout.split('\n')[1]);
+                res.json({"status": "syncing", "msg": {"process": "process up"}, "version": version, "uptime": uptime});
             } else {
                 res.json({"status": "error", "msg": e, "version": version});
             }
@@ -260,6 +265,9 @@ app.get('/guardian/start', async (req, res) => {
 });
 
 app.get('/guardian/stop', async (req, res) => {
+    if (is_demo) {
+        return res.json({"error": "Not authorized", "success": false});
+    }
     try {
         const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length === 0) {
@@ -299,6 +307,9 @@ app.get('/guardian/summary', async (req, res) => {
 });
 
 app.get('/guardian/update', async (req, res) => {
+    if (is_demo) {
+        return res.json({"error": "Not authorized", "success": false});
+    }
     try {
         fs.rmSync(`${theta_mainnet_folder}/bin/theta`, {'force': true});
         fs.rmSync(`${theta_mainnet_folder}/bin/thetacli`, {'force': true});
@@ -319,12 +330,12 @@ app.get('/guardian/update', async (req, res) => {
     }
 });
 
-app.get('/guardian/latest_snapshot', async (req , res) =>{
-    try{
-        const { birthtime } = fs.statSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
+app.get('/guardian/latest_snapshot', async (req, res) => {
+    try {
+        const {birthtime} = fs.statSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
         res.json({"success": true, "date": birthtime})
-    }catch (e) {
-        res.json({"success":false, "error": e});
+    } catch (e) {
+        res.json({"success": false, "error": e});
     }
 
 })
@@ -351,7 +362,7 @@ app.get('/guardian/download_snapshot', async (req, res) => {
 
 // Default response for any other request
 app.use(function (req, res) {
-    res.status(404);
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 
