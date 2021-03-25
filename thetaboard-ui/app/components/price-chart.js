@@ -20,7 +20,7 @@ export default class PriceChartComponent extends Component {
     } else {
       historic_data = this.args.historic_price;
     }
-    const labels = Object.keys(historic_data).map((x) => new Date(x));
+    const labels = Object.keys(historic_data).map((x) => moment(x, "YYYY-MM-DD"));
     const ctx = document.getElementById("lineChartExample").getContext("2d");
     const gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -55,15 +55,10 @@ export default class PriceChartComponent extends Component {
     const element = document.getElementById("lineChartExample");
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
-
-      // These options are needed to round to whole numbers if that's what you want.
-      //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-      //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      currency: 'USD'
     });
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
-
       legend: {
         display: true,
         position: 'bottom',
@@ -71,7 +66,6 @@ export default class PriceChartComponent extends Component {
           usePointStyle: true
         }
       },
-
       tooltips: {
         callbacks: {
           title: (tooltipItem, data) => {
@@ -134,7 +128,6 @@ export default class PriceChartComponent extends Component {
       }
     };
     const ctx = element.getContext("2d");
-
     const data = this.chartData
     this.historic_data_chart = new Chart(ctx, {
       type: 'line',
