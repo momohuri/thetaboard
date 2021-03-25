@@ -102,6 +102,7 @@ export default class PriceChartComponent extends Component {
           type: 'linear',
           ticks: {
             min: 0,
+            fontColor: "#21edba",
             beginAtZero: true,
             maxTicksLimit: 10,
             callback: function (value, index, values) {
@@ -115,6 +116,7 @@ export default class PriceChartComponent extends Component {
             position: 'right',
             ticks: {
               min: 0,
+              fontColor: "#FFA500",
               beginAtZero: true,
               maxTicksLimit: 10,
               callback: function (value, index, values) {
