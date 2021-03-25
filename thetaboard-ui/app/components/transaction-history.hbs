@@ -6,32 +6,34 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
-          <tr>
-            <th class="text-center">Type</th> 
-            <th class="text-center">TXN Hash</th> 
-            <th class="text-center d-none d-sm-none d-md-table-cell">Block</th>
-            <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Age</th>
-            <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
-            <th class="text-center d-none d-sm-table-cell"></th>
-            <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
-            <th class="text-center">Value</th>
-          </tr>
+        <tr>
+          <th class="text-center">Type</th>
+          <th class="text-center">TXN Hash</th>
+          <th class="text-center d-none d-sm-none d-md-table-cell">Block</th>
+          <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Age</th>
+          <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
+          <th class="text-center d-none d-sm-table-cell"></th>
+          <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
+          <th class="text-center">Value</th>
+        </tr>
         </thead>
         <tbody>
-          {{#each transactions as |transaction|}}
-            <tr>
+        {{#each transactions as |transaction|}}
+          <tr>
             <td class="text-center">{{transaction.type}}</td>
             <td class="text-center">
               <a class="a-elipsis" href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}">{{transaction.txn_hash}}</a>
             </td>
             <td class="text-center d-none d-sm-none d-md-table-cell">{{transaction.block}}</td>
-            <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{moment-from transaction.timestamp}}</td>
+            <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{moment-from
+                    transaction.timestamp}}</td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.from_wallet_address}}">
                 {{transaction.from_wallet_address}}
               </a>
             </td>
-            <td class="text-center d-none d-sm-table-cell" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
+            <td class="text-center d-none d-sm-table-cell" id="in-or-out"><img
+                    src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.to_wallet_address}}">
                 {{transaction.to_wallet_address}}
@@ -40,22 +42,27 @@
             <td class="text-left td-value">
               {{#each transaction.value as |coin|}}
                 <div>
-                  <img src="assets/img/logo/{{coin.type}}.png" class="img-fluid rounded-circle" style="width: 20px;"/>
+                  {{#if (eq coin.type 'theta')}}
+                    <img src=" {{rootURL}}assets/img/theta.png" class="img-fluid rounded-circle" style="width: 20px;" alt=""/>
+                  {{else}}
+                    <img src=" {{rootURL}}assets/img/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;" alt=""/>
+                  {{/if}}
                   <span class="coin-amount">{{format-number coin.amount}} <span class="capitalize">{{coin.type}}</span> </span>
                   <span class="coin-value">[{{format-number coin.value style='currency' currency='USD'}}]</span>
                 </div>
               {{/each}}
             </td>
           </tr>
-          {{else}}
-            <p>No transaction</p>
-          {{/each}}
+        {{else}}
+          <p>No transaction</p>
+        {{/each}}
         </tbody>
       </table>
       {{#if showPagination}}
-      <PaginationPager @pager={{true}} @count={{pagination.totalPageNumber}} @current={{pagination.currentPageNumber}} @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|" >
-        {{pagination.currentPageNumber}} of {{pagination.totalPageNumber}}
-      </PaginationPager>
+        <PaginationPager @pager={{true}} @count={{pagination.totalPageNumber}} @current={{pagination.currentPageNumber}}
+                         @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|">
+          {{pagination.currentPageNumber}} of {{pagination.totalPageNumber}}
+        </PaginationPager>
       {{/if}}
     </div>
   </div>

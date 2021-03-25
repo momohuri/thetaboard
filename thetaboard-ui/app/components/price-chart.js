@@ -10,11 +10,11 @@ export default class PriceChartComponent extends Component {
   get chartData() {
     let historic_data = {};
     if (this.time_range === 'week') {
-      Object.keys(this.args.historic_price).splice(0, 7).forEach((date)=>{
+      Object.keys(this.args.historic_price).splice(0, 7).forEach((date) => {
         historic_data[date] = this.args.historic_price[date]
       })
     } else if (this.time_range === 'month') {
-      Object.keys(this.args.historic_price).splice(0, 30).forEach((date)=>{
+      Object.keys(this.args.historic_price).splice(0, 30).forEach((date) => {
         historic_data[date] = this.args.historic_price[date]
       })
     } else {
@@ -31,14 +31,16 @@ export default class PriceChartComponent extends Component {
       labels: labels,
       datasets: [{
         label: "Theta",
-        fill: true,
+        pointStyle: 'point',
+        radius: 0,
         borderColor: '#21edba',
         pointBackgroundColor: '#21edba',
         data: Object.values(historic_data).map((x) => x.theta_price),
       },
         {
           label: "Tfuel",
-          fill: true,
+          pointStyle: 'point',
+          radius: 0,
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: Object.values(historic_data).map((x) => x.tfuel_price),
@@ -59,11 +61,29 @@ export default class PriceChartComponent extends Component {
     });
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
+
       legend: {
-        display: true
+        display: true,
+        position: 'bottom',
+        labels: {
+          usePointStyle: true
+        }
       },
 
       tooltips: {
+        callbacks: {
+          title: (tooltipItem, data) => {
+            return moment(new Date(tooltipItem[0].label)).format('LL')
+          },
+          label: (tooltipItem, data) => {
+            if(Number(tooltipItem.yLabel)>0.01){
+              return formatter.format(Number(tooltipItem.yLabel));
+            } else{
+              return `$${Number(tooltipItem.yLabel)}`
+            }
+
+          }
+        },
         backgroundColor: '#fff',
         titleFontColor: '#333',
         bodyFontColor: '#666',
@@ -89,7 +109,6 @@ export default class PriceChartComponent extends Component {
 
         xAxes: [{
           type: 'time',
-          tooltipFormat: 'LL',
           time: {
             unit: 'month'
           },
@@ -107,7 +126,7 @@ export default class PriceChartComponent extends Component {
   }
 
   @action
-  updateData(){
+  updateData() {
     this.historic_data_chart.data = this.chartData;
     if (this.time_range === 'week') {
       this.historic_data_chart.options.scales.xAxes[0].time.unit = 'day';
