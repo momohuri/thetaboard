@@ -95,7 +95,6 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     }
 });
 
-
 // wallet transactions
 app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
     const wallet_adr = req.params.wallet_addr;
@@ -171,7 +170,6 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
     }
 });
 
-
 // guardian node APIs
 const fs = require('fs');
 const os = require("os");
@@ -204,13 +202,19 @@ app.get('/guardian/status', async (req, res) => {
         const uptime = Number(theta_process_uptime.stdout.split('\n')[1]);
 
         if (stderr) {
-            res.json({"status": "error", "msg": stderr, "uptime": uptime});
+            res.json({"status": "error", "msg": stderr, "uptime": uptime, "is_demo": is_demo});
         } else {
             const status = JSON.parse(stdout);
             if (status["syncing"]) {
-                res.json({"status": "syncing", "msg": status, "version": version, "uptime": uptime});
+                res.json({
+                    "status": "syncing",
+                    "msg": status,
+                    "version": version,
+                    "uptime": uptime,
+                    "is_demo": is_demo
+                });
             } else {
-                res.json({"status": "ready", "msg": status, "version": version, "uptime": uptime});
+                res.json({"status": "ready", "msg": status, "version": version, "uptime": uptime, "is_demo": is_demo});
             }
         }
     } catch (e) {
@@ -220,12 +224,18 @@ app.get('/guardian/status', async (req, res) => {
                 const theta_process_pid = await find('name', `${theta_mainnet_folder}/bin/theta`);
                 const theta_process_uptime = await exec(`ps -p ${theta_process_pid[0].pid} -o etimes`);
                 const uptime = Number(theta_process_uptime.stdout.split('\n')[1]);
-                res.json({"status": "syncing", "msg": {"process": "process up"}, "version": version, "uptime": uptime});
+                res.json({
+                    "status": "syncing",
+                    "msg": {"process": "process up"},
+                    "version": version,
+                    "uptime": uptime,
+                    "is_demo": is_demo
+                });
             } else {
-                res.json({"status": "error", "msg": e, "version": version});
+                res.json({"status": "error", "msg": e, "version": version, "is_demo": is_demo, "uptime": 0});
             }
         } catch (e) {
-            res.json({"status": "error", "msg": e, "version": version});
+            res.json({"status": "error", "msg": e, "version": version, "is_demo": is_demo, "uptime": 0});
         }
     }
 });
