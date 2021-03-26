@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="navbar-wrapper">
 
-          <a class="navbar-brand" href="#Dashboard">Dashboard</a>
+          <a class="navbar-brand" href="#Dashboard">Dashboard - {{guardian.status}}</a>
         </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,16 +40,7 @@
         <div class="collapse navbar-collapse justify-content-end">
           <ul class="navbar-nav">
             <li class="dropdown nav-item">
-                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                  <div class="notification d-none d-lg-block d-xl-block {{@model.status}}"></div>
-                  <i class="tim-icons icon-sound-wave"></i>
-                  <p class="d-lg-none">
-                    Notifications
-                  </p>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-                  {{guardian-status-notification guardianStatus=@model}}
-                </ul>
+                {{guardian-status-notification}}
               </li>
             <!-- your navbar here -->
           </ul>
@@ -59,7 +50,7 @@
     <!-- End Navbar -->
     <div class="content">
       <div class="container-fluid">
-        {{outlet guardianStatus=@model}}
+        {{outlet}}
       </div>
     </div>
     <footer class="footer">

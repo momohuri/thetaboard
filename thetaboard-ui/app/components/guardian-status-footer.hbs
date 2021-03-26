@@ -1,0 +1,35 @@
+{{#if guardian.snapshotInfo.shouldDownload}}
+    {{#if guardian.snapshotInfo.latestFinalizedBlockTime}}
+        <div class="alert alert-warning">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+            </button>
+            <span><b> Warning - </b> The lastest finalised block is from over 24hours ago. You might want to stop your Guardian Node and download the latest snapshot before starting it again.</span>
+        </div>
+    {{/if}}
+{{/if}}
+<button {{on "click" this.guardian.toggleAutoRefreshStatus}} type="submit" class="btn btn-fill btn-primary btn-left">Auto refresh {{if guardian.statusAutoRefresh 'on' 'off'}}</button>
+{{#if guardian.latestSnapshotLogs}}
+    <button {{on "click" this.guardian.clearDownloadLogs}} type="submit" class="btn btn-fill btn-primary btn-left">Clear Downlod Logs</button>
+{{/if}}
+{{#if guardian.isError}}
+    <button {{on "click" this.guardian.startGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Start Guardian</button>
+    <button {{on "click" this.guardian.updateGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Update Guardian</button>
+    <button {{on "click" this.downloadLatestSnapshot}} type="submit" class="btn btn-fill btn-primary download-latest-snapshot">Download Latest Snapshot</button>
+    {{#if guardian.guardianLatestSnapshotDate}}
+        <div>
+            <br/>
+            <p>The latest Snapshot was downloaded on {{moment-from guardian.guardianLatestSnapshotDate}}</p>
+        </div>
+    {{/if}}
+{{else if guardian.isSyncing}}
+    <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+    {{#if guardian.guardianLatestSnapshotDate}}
+        <div>
+            <br/>
+            <p>The latest Snapshot was downloaded on: {{moment-from guardian.guardianLatestSnapshotDate}}</p>
+        </div>
+    {{/if}}
+{{else if guardian.isReady}}
+    <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+{{/if}}

@@ -151,3 +151,94 @@ nav[aria-label="Page navigation"] .pager li.pager-inner {
   cursor: default;
   background: transparent;
 }
+
+.card.card-user.card-logs .card-body, .card.card-user.card-status .card-body {
+  min-height: 100px;
+}
+
+.card-logs.card-user .avatar, .card-status.card-user .avatar {
+  width: 55px;
+  height:57px;
+  border-radius: 0px;
+  border: none;
+}
+
+.card-logs.card-user .title, .card-status.card-user .title {
+  font-size: 20px;
+}
+
+.card-logs.card-user .card-description, .card-status.card-user .card-description {
+  background: black;
+  font-size: 12px;
+  font-family: monospace;
+  padding: 15px;
+  overflow: auto;
+  max-height: 400px;
+}
+
+.card-footer-actions {
+  padding: 20px;
+  text-align: center;
+}
+
+.guardian-status-alert {
+  width: 60%;
+  margin: auto;
+}
+
+.card-status-body {
+  min-height: 485px;;
+}
+
+@keyframes animate-stripes {
+  0% {
+      background-position: 0 0;
+  }
+
+  100% {
+      background-position: 60px 0;
+  }
+}
+
+@keyframes auto-progress {
+0% {
+  width: 0%;
+}
+
+100% {
+  width: 100%;
+}
+}
+
+.progress-bar {
+  background-color: #1a1a1a;
+  height: 20px;
+  width: 100%;
+  margin: 5px auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+}
+
+.stripes {
+  background-size: 30px 30px;
+  background-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, .15) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, .15) 50%,
+      rgba(255, 255, 255, .15) 75%,
+      transparent 75%,
+      transparent
+  );
+}
+
+.progress-bar-inner {
+  display: block;
+  height: 20px;
+  width: 0%;
+  background-color: #fd77a4;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+  position: relative;
+}

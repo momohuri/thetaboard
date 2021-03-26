@@ -1,0 +1,27 @@
+<div class="col-md-6">
+    <div class="card card-user card-status">
+        <div class="card-body">
+            <p class="card-text"></p>
+                <!-- Define a new accordion-list -->
+                {{#accordion-list as |accordion|}}
+                    <!-- For each element in list create an 'accordion.item' -->
+                    {{#accordion.item as |accordionItem|}}
+                    <!-- Create a 'toggle' and a 'panel' for the item -->
+                    {{#accordionItem.toggle}}
+                      {{guardian-status-header}}
+                    {{/accordionItem.toggle}}
+
+                    <!-- Clicking on the 'toggle' will display the contents of the 'panel' -->
+                    {{#accordionItem.panel openOnInit=true}}
+                        <div class="card-status-body">
+                            {{guardian-status-body}}
+                            <div class="card-footer-actions">
+                                {{guardian-status-footer}}
+                            </div>
+                        </div>
+                    {{/accordionItem.panel}}
+                {{/accordion.item}}
+            {{/accordion-list}}
+        </div>
+    </div>
+</div>

@@ -297,7 +297,9 @@ app.get('/guardian/stop', async (req, res) => {
 app.get('/guardian/logs', (req, res) => {
     const readStream = fs.createReadStream('./logs/guardian_logs.log');
     readStream.on("error", () => {
-        res.send("No logs")
+        const body = "No logs";
+        res.set('Content-Length', Buffer.byteLength(body));
+        res.send(body);
     });
     readStream.pipe(res);
 });

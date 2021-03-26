@@ -1,0 +1,29 @@
+<p></p>
+<div class="card-description">
+    {{#each guardian.messages as |message|}}
+        {{message}}<br/>
+    {{/each}}
+</div>
+{{#if guardian.versions}}
+    <div class="card-description">
+        {{#each guardian.versions as |version|}}
+            {{version}}<br/>
+        {{/each}}
+    </div>
+{{/if}}
+{{#if guardian.latestSnapshotLogs}}
+    <div class="card-description" {{autoscroll guardian.latestSnapshotLogs}}>
+        {{#if thetaSdk.downloadProgress}}
+            Downloading... {{thetaSdk.downloadProgress}}%
+        {{else}}
+            {{guardian.latestSnapshotLogs}} 
+        {{/if}}
+    </div>
+     {{#if thetaSdk.downloadProgress}}
+        <div class="progress-bar-container">
+            <div class="progress-bar stripes">
+                <span class="progress-bar-inner" style="width: {{thetaSdk.downloadProgress}}%"></span>
+            </div>
+        </div>
+    {{/if}}
+{{/if}} 

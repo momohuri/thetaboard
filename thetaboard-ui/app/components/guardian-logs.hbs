@@ -1,0 +1,39 @@
+<div class="col-md-6">
+    <div class="card card-user card-logs">
+        <div class="card-body">
+            <p class="card-text"></p>
+                <!-- Define a new accordion-list -->
+                {{#accordion-list as |accordion|}}
+                    <!-- For each element in list create an 'accordion.item' -->
+                    {{#accordion.item as |accordionItem|}}
+                        <!-- Create a 'toggle' and a 'panel' for the item -->
+                        {{#accordionItem.toggle}}
+                            <div class="author">
+                                <div class="block block-one"></div>
+                                <div class="block block-two"></div>
+                                <div class="block block-three"></div>
+                                <div class="block block-four"></div>
+                                <a href="javascript:void(0)">
+                                    <img class="avatar" src="{{rootURL}}assets/img/logs.PNG" alt="...">
+                                </a>
+                                <p class="title">
+                                    Guardian Logs
+                                </p>
+                            </div>
+                        {{/accordionItem.toggle}}
+
+                    <!-- Clicking on the 'toggle' will display the contents of the 'panel' -->
+                    {{#accordionItem.panel openOnInit=true}}
+                        <p></p>
+                        <div class="card-description" {{autoscroll guardian.guardianLogs.logs}}>
+                            {{guardian.guardianLogs.logs}}
+                        </div>
+                        <div class="card-footer-actions">
+                            <button {{on "click" this.guardian.toggleAutoRefreshLogs}} type="submit" class="btn btn-fill btn-primary btn-left">Auto refresh {{if this.guardian.logsAutoRefresh 'on' 'off'}}</button>
+                        </div>
+                    {{/accordionItem.panel}}
+                {{/accordion.item}}
+            {{/accordion-list}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+ <div class="author">
+    <div class="block block-one"></div>
+    <div class="block block-two"></div>
+    <div class="block block-three"></div>
+    <div class="block block-four"></div>
+    <p class="title">
+        <div class="guardian-status-alert alert {{if guardian.isError "alert-danger"}} {{if guardian.isSyncing "alert-warning"}} {{if guardian.isReady "alert-success"}}">
+            <p>Guardian Status</p>
+            <span><b> {{guardian.status}} 
+                {{#if guardian.isUp}}
+                    since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
+                {{/if}}
+                {{#if guardian.isSyncing}}
+                    {{#if guardian.snapshotInfo.latestFinalizedBlockTime}} 
+                        <p>The lastest finalized block synced is from: {{moment guardian.snapshotInfo.latestFinalizedBlockTime}}</p>
+                    {{/if}}
+                {{/if}}
+            </b> </span>
+        </div>
+    </p>
+</div>
