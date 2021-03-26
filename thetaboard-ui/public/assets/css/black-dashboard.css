@@ -4807,7 +4807,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-nav .dropdown-menu {
-  position: static;
+  /* position: static; */
   float: none;
 }
 
