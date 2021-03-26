@@ -45,12 +45,12 @@ export default class HoldingPieComponent extends Component {
       type: 'pie',
       data: data,
       options: {
+        maintainAspectRatio: false,
         tooltips: {
           mode: 'label',
           callbacks: {
             label: function (tooltipItem, data) {
               const indice = tooltipItem.index;
-
               return data.labels[indice] + ': ' + formatter.format(data.datasets[0].data[indice]) + '';
             }
           }
