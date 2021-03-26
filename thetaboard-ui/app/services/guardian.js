@@ -17,6 +17,8 @@ export default class GuardianService extends Service {
     this.autoRefreshStatus();
     this.autoRefreshLogs();
     this.statusInterval = 60000;
+    this.statusLaterCall = null;
+    this.logsLaterCall = null;
   }
 
   @tracked guardianStatus = {};
@@ -127,7 +129,7 @@ export default class GuardianService extends Service {
   autoRefreshStatus() {
     if (this.statusAutoRefresh) {
       this.refreshStatus();
-      later(this, function () {
+      this.statusLaterCall = later(this, function () {
         this.autoRefreshStatus();
       }, this.statusInterval);
     }
@@ -136,7 +138,7 @@ export default class GuardianService extends Service {
   autoRefreshLogs() {
     if (this.logsAutoRefresh) {
       this.refreshLogs();
-      later(this, function () {
+      this.logsLaterCall = later(this, function () {
         this.autoRefreshLogs();
       }, 5000);
     }
