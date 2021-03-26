@@ -12,10 +12,11 @@ export default class GuardianService extends Service {
     this.guardianSummary = {};
     this.guardianLatestSnapshot = {};
     this.statusAutoRefresh = true;
-    this.logsAutoRefresh = true;
+    this.logsAutoRefresh = false;
     this.latestSnapshotLogs = '';
     this.autoRefreshStatus();
     this.autoRefreshLogs();
+    this.statusInterval = 60000;
   }
 
   @tracked guardianStatus = {};
@@ -23,7 +24,7 @@ export default class GuardianService extends Service {
   @tracked guardianSummary = {};
   @tracked guardianLatestSnapshot = {};
   @tracked statusAutoRefresh = true;
-  @tracked logsAutoRefresh = true;
+  @tracked logsAutoRefresh = false;
   @tracked latestSnapshotLogs = '';
 
   get thetaSdk() {
@@ -128,7 +129,7 @@ export default class GuardianService extends Service {
       this.refreshStatus();
       later(this, function () {
         this.autoRefreshStatus();
-      }, 5000);
+      }, this.statusInterval);
     }
   }
 
