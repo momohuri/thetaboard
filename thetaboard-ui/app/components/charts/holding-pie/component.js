@@ -13,7 +13,7 @@ export default class HoldingPieComponent extends Component {
       {
         'label': 'guardian',
         "value": this.args.walletInfo.wallets.filter((x) => x.type === 'guardian').reduce((a, b) => a.value + b.value, {'value': 0}),
-        'color': '#21edba'
+        'color': '#24bac5'
       },
       {
         'label': 'theta',
@@ -41,40 +41,9 @@ export default class HoldingPieComponent extends Component {
     };
     const ctx = element.getContext("2d");
     // const data = this.chartData
-    function drawSegmentValues()
-    {
-      debugger
-      for(var i=0; i<myPieChart.segments.length; i++)
-      {
-        ctx.fillStyle="white";
-        var textSize = canvas.width/15;
-        ctx.font= textSize+"px Verdana";
-        // Get needed variables
-        var value = myPieChart.segments[i].value/totalValue*100;
-        if(Math.round(value) !== value)
-          value = (myPieChart.segments[i].value/totalValue*100).toFixed(1);
-        value = value + '%';
-
-        var startAngle = myPieChart.segments[i].startAngle;
-        var endAngle = myPieChart.segments[i].endAngle;
-        var middleAngle = startAngle + ((endAngle - startAngle)/2);
-
-        // Compute text location
-        var posX = (radius/2) * Math.cos(middleAngle) + midX;
-        var posY = (radius/2) * Math.sin(middleAngle) + midY;
-
-        // Text offside by middle
-        var w_offset = ctx.measureText(value).width/2;
-        var h_offset = textSize/4;
-
-        ctx.fillText(value, posX - w_offset, posY + h_offset);
-      }
-    }
-    debugger
     const myPieChart = new Chart(ctx, {
       type: 'pie',
       data: data,
-      onAnimationProgress: drawSegmentValues,
       options: {
         tooltips: {
           mode: 'label',
@@ -82,8 +51,25 @@ export default class HoldingPieComponent extends Component {
             label: function (tooltipItem, data) {
               const indice = tooltipItem.index;
 
-              return data.labels[indice] + ': ' +  formatter.format( data.datasets[0].data[indice]) + '';
+              return data.labels[indice] + ': ' + formatter.format(data.datasets[0].data[indice]) + '';
             }
+          }
+        },
+        plugins: {
+          datalabels: {
+            color: 'black',
+            display: function (context) {
+              const total = context.dataset.data.reduce((a,b)=> a+b,0);
+              const curr_value = context.dataset.data[context.dataIndex];
+              return ((100 * curr_value ) / total) > 1;
+            },
+            font: {
+              weight: 'bold'
+            },
+            formatter: function (value, context) {
+              const total = context.dataset.data.reduce((a,b)=> a+b,0);
+              return ((100 * value) / total).toFixed(2) + '%';
+            },
           }
         },
       }

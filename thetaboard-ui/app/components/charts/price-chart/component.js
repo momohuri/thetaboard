@@ -4,7 +4,6 @@ import {tracked} from '@glimmer/tracking';
 
 
 export default class PriceChartComponent extends Component {
-
   @tracked time_range = 'year';
 
   get chartData() {
@@ -125,7 +124,12 @@ export default class PriceChartComponent extends Component {
             unit: 'month'
           },
         }],
-      }
+      },
+      plugins: {
+        datalabels: {
+          display: () => {return null;}, // This is a hack so it doesn't display any label
+        }
+      },
     };
     const ctx = element.getContext("2d");
     const data = this.chartData
