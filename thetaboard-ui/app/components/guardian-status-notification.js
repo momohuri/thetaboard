@@ -1,39 +1,18 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class GuardianStatusNotificationComponent extends Component {
   constructor(...args) {
     super(...args);
   }
-  @tracked arr = [];
 
-  get isError() {
-    let { guardianStatus } = this.args;
-    return guardianStatus.status == 'error';
-  }
-
-  get isSyncing() {
-    let { guardianStatus } = this.args;
-    return guardianStatus.status == 'syncing';
-  }
-
-  get isReady() {
-    let { guardianStatus } = this.args;
-    return guardianStatus.status == 'ready';
-  }
-
-  get messages() {
-    let { guardianStatus } = this.args;
-    for (let i in guardianStatus.msg)
-      this.arr.push([i + ': ' + guardianStatus.msg[i]]);
-    return this.arr;
-  }
+  @service('guardian') guardian;
 
   @action
   copyToClipboard() {
     const el = document.createElement('textarea');
-    el.value = this.arr.join();
+    el.value = this.guardian.messages.join("|");
     el.setAttribute('readonly', '');
     el.style.position = 'absolute';
     el.style.left = '-9999px';

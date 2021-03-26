@@ -1,5 +1,18 @@
-<li {{on "click" this.copyToClipboard}} class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">
-    {{#each messages as |message|}}
-        {{message}}<br/>
-    {{/each}}
-</a></li>
+<a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+    <div class="notification d-block d-sm-block d-md-block d-lg-block d-xl-block {{guardian.guardianStatus.status}}"></div>
+    <i class="tim-icons icon-sound-wave"></i>
+</a>
+<ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+    <li {{on "click" this.copyToClipboard}} class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">
+        {{#each guardian.messages as |message|}}
+            {{message}}<br/>
+        {{/each}}
+    </a></li>
+    <li class="nav-link">
+        {{#if guardian.isError}}
+            <button {{on "click" this.guardian.startGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Start Guardian</button>
+        {{else if guardian.isUp}}
+            <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+        {{/if}}
+    </li>
+</ul>
