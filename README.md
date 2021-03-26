@@ -1,8 +1,9 @@
 # Thetaboard
-You are trying to set up your own guardian node for Theta ? You want an easy-to-use web interface to manage it ? 
-You came to the right place ! Thetaboard was made to easily set up a theta guardian node on your laptop or on a server on the cloud of your choice. <br>
-You want a 360° view of you wallet, transactions, holdings, staking ?<br> 
-This project is made for you! <br>
+You are trying to set up your own guardian node for Theta ? You want an easy-to-use web interface to manage it ?
+You want a 360° view of you wallet, transactions, holdings, staking 
+
+You came to the right place ! Thetaboard was made to easily set up a theta guardian node on your laptop or on the cloud.
+It can also be used to get information about Theta and your wallet.<br>
 <br> 
 
 ### Features
