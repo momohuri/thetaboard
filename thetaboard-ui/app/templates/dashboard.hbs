@@ -1,7 +1,13 @@
 {{page-title "Dashboard"}}
 <div class="row">
   <div class="col-12">
-    {{price-chart historic_price=@model.historic_price }}
+    {{charts/price-chart historic_price=@model.historicPrice }}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    {{charts/holding-pie walletInfo=@model.walletInfo}}
   </div>
 </div>
 
