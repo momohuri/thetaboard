@@ -120,7 +120,7 @@ export default class GuardianService extends Service {
   }
 
   async updateGuardianLatestSnapshotLogs() {
-    const latestSnapshotLogs = await this.thetaSdk.downloadLatestGardianSnapshot();
+    const latestSnapshotLogs = await this.thetaSdk.downloadLatestGuardianSnapshot();
     this.latestSnapshotLogs = latestSnapshotLogs.logs;
   }
 

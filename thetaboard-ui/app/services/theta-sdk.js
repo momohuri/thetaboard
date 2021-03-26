@@ -144,7 +144,7 @@ export default class ThetaSdkService extends Service {
     return await response.json();
   }
 
-  async downloadLatestGardianSnapshot() {
+  async downloadLatestGuardianSnapshot() {
     const self = this;
     return await fetch('/guardian/download_snapshot' + this.envManager.config.queryParams)
       .then((response) => self.readableStreamDownload(response))
