@@ -15,6 +15,10 @@ export default class GuardianStatusComponent extends Component {
       cancel(this.guardian.statusLaterCall);
       this.guardian.autoRefreshStatus();
     }
+    if (!this.guardian.statusAutoRefresh) {
+      this.guardian.statusAutoRefresh = true;
+      this.guardian.autoRefreshStatus();
+    }
   }
 
   @service('theta-sdk') thetaSdk;
