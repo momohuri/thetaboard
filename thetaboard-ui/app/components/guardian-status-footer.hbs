@@ -8,13 +8,13 @@
         </div>
     {{/if}}
 {{/if}}
-<button {{on "click" this.guardian.toggleAutoRefreshStatus}} type="submit" class="btn btn-fill btn-primary btn-left">Auto refresh {{if guardian.statusAutoRefresh 'on' 'off'}}</button>
+<button {{on "click" this.guardian.toggleAutoRefreshStatus}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Auto refresh {{if guardian.statusAutoRefresh 'on' 'off'}}</button>
 {{#if guardian.latestSnapshotLogs}}
-    <button {{on "click" this.guardian.clearDownloadLogs}} type="submit" class="btn btn-fill btn-primary btn-left">Clear Downlod Logs</button>
+    <button {{on "click" this.guardian.clearDownloadLogs}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Clear Downlod Logs</button>
 {{/if}}
 {{#if guardian.isError}}
-    <button {{on "click" this.guardian.startGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Start Guardian</button>
-    <button {{on "click" this.guardian.updateGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Update Guardian</button>
+    <button {{on "click" this.guardian.startGuardian}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Start Guardian</button>
+    <button {{on "click" this.guardian.updateGuardian}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Update Guardian</button>
     <button {{on "click" this.downloadLatestSnapshot}} type="submit" class="btn btn-fill btn-primary download-latest-snapshot">Download Latest Snapshot</button>
     {{#if guardian.guardianLatestSnapshotDate}}
         <div>

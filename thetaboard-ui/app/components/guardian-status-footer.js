@@ -6,11 +6,12 @@ import $ from 'jquery';
 
 export default class GuardianStatusFooterComponent extends Component {
   @service('guardian') guardian;
+  @service('theta-sdk') thetaSdk;
 
   async fetchLatestSnapshot() {
-    this.guardian.updateGuardianLatestSnapshotLogs();
+    await this.guardian.updateGuardianLatestSnapshotLogs();
+    await this.guardian.updateGuardianLatestSnapshot();
     $('button.download-latest-snapshot').removeClass("disabled");
-    this.guardian.updateGuardianLatestSnapshot();
   }
 
   @action
