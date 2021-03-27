@@ -1,0 +1,15 @@
+<div class="card-body-stake">
+    <h5 class="title" style="font-size: 30px;">Deposit Stake</h5>
+    <br/>
+    <div class="row justify-content-lg-center">
+    <form class="stakes-deposit col-md-9">
+        <div class="form-group">
+        <label for="stake-amount">Stake Amount</label>
+        <Input @id="stake-amount" @type="number" @min="0" class="form-control border-color" @value={{this.thetaStakes.stakeAmount}}/>
+        </div>
+    </form>
+    </div>
+    <br/>
+    <button {{on "click" this.thetaStakes.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+    <button {{on "click" this.thetaStakes.deposit}} type="submit" class="btn btn-fill btn-primary">Deposit</button>
+</div>

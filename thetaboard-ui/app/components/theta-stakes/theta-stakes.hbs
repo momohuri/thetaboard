@@ -8,49 +8,23 @@
       <div class="block block-four"></div>
       <img class="avatar" src="{{rootURL}}assets/img/logo/theta.png" alt="...">
     </div>
-    {{#if this.isStakes}}
+    {{#if this.thetaStakes.isStakes}}
       <div class="card-body-stake">
         <h5 class="title" style="font-size: 20px;">Stakes</h5>
         <h6>Demo only, this feature won't work unless you setup your own guardian</h6>
-        <button {{on "click" this.showDeposit}} type="submit" class="btn btn-fill btn-primary btn-left">Deposit</button>
-        <button {{on "click" this.showWithdraw}} type="submit" class="btn btn-fill btn-primary">Withdraw</button>
+        <button {{on "click" this.thetaStakes.showDeposit}} type="submit" class="btn btn-fill btn-primary btn-left">Deposit</button>
+        <button {{on "click" this.thetaStakes.showWithdraw}} type="submit" class="btn btn-fill btn-primary">Withdraw</button>
         <br/>
         <div class="stakes-activity">
           <p class="title">No Stakes</p>
           <p class="description">Stake THETA to earn TFUEL</p>
         </div>
       </div>
-    {{else if this.isDeposit}}
-      <div class="card-body-stake">
-          <h5 class="title" style="font-size: 30px;">Deposit Stake</h5>
-          <br/>
-          <div class="row justify-content-lg-center">
-            <form class="stakes-deposit col-md-9">
-              <div class="form-group">
-                <label for="stake-amount">Stake Amount</label>
-                <Input @id="stake-amount" @type="number" @min="0" class="form-control border-color" @value="{{this.stakeAmount}}"/>
-              </div>
-            </form>
-          </div>
-          <br/>
-          <button {{on "click" this.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
-          <button {{on "click" this.deposit}} type="submit" class="btn btn-fill btn-primary">Next</button>
-        </div>
-      {{else if this.isWithdraw}}
-        <div class="card-body-stake">
-         <h5 class="title" style="font-size: 30px;">Withdraw Stake</h5>
-          <br/>
-          <form class="stakes-withdraw">
-            <div class="form-group">
-              <label for="stake-amount">Stake Amount</label>
-              <Input @id="stake-amount" @type="number" class="form-control border-color" @min="0" @value="{{this.stakeAmount}}"/>
-            </div>
-          </form>
-          <br/>
-          <button {{on "click" this.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
-          <button {{on "click" this.withdraw}} type="submit" class="btn btn-fill btn-primary">Next</button>
-        </div>
-      {{/if}}
+    {{else if this.thetaStakes.isDeposit}}
+      {{theta-stakes/theta-stakes-deposit}}
+    {{else if this.thetaStakes.isWithdraw}}
+      {{theta-stakes/theta-stakes-withdraw}}
+    {{/if}}
   </div>
   <div class="card-footer">
   </div>

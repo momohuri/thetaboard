@@ -1,0 +1,12 @@
+<div class="card-body-stake">
+    <h5 class="title" style="font-size: 30px;">Withdraw Stake</h5>
+    <br/>
+    <form class="stakes-withdraw">
+    <div class="form-group">
+        <label for="stake-amount">Stake Amount</label>
+    </div>
+    </form>
+    <br/>
+    <button {{on "click" this.thetaStakes.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+    <button {{on "click" this.thetaStakes.withdraw}} type="submit" class="btn btn-fill btn-primary">Withdraw</button>
+</div>

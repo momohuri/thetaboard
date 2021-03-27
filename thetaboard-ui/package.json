@@ -78,6 +78,7 @@
   },
   "dependencies": {
     "@thetalabs/theta-js": "0.0.42",
-    "@thetalabs/theta-wallet-connect": "0.0.15"
+    "@thetalabs/theta-wallet-connect": "0.0.15",
+    "bignumber.js": "^9.0.1"
   }
 }

@@ -3,6 +3,7 @@ import { getOwner } from '@ember/application';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 import * as thetajs from '@thetalabs/theta-js';
 import { tracked } from '@glimmer/tracking';
+import BigNumber from "bignumber.js";
 
 export default class ThetaSdkService extends Service {
   constructor(...args) {
@@ -16,12 +17,45 @@ export default class ThetaSdkService extends Service {
     return getOwner(this).lookup('service:env-manager');
   }
 
+  get thetaStakes() {
+    return getOwner(this).lookup('service:theta-stakes');
+  }
+
   async getThetaAccount() {
     let provider = new thetajs.providers.HttpProvider(
       this.envManager.config.thetaNetwork
     );
     await ThetaWalletConnect.connect();
     return await ThetaWalletConnect.requestAccounts();
+  }
+
+  async sendThetaTransaction(type) {
+    debugger
+    const source = await this.getThetaAccount();
+    const holderSummary = "GUARDIAN_NODE_SUMMARY";
+    const txData = {
+      source: source[0],
+      holderSummary: holderSummary,
+      purpose: thetajs.constants.StakePurpose.StakeForGuardian,
+    };
+debugger
+    if (type == 'deposit') {
+      const stakeAmount = this.thetaStakes.stakeAmount;
+      if (stakeAmount && stakeAmount > 999) {
+        const ten18 = (new BigNumber(10)).pow(18); // 10^18, 1 Theta = 10^18 ThetaWei, 1 Gamma = 10^ TFuelWei
+        const thetaWeiToStake = (new BigNumber(stakeAmount)).multipliedBy(ten18);
+        txData.thetaWeiToStake = thetaWeiToStake;
+        let stakeTx = new thetajs.transactions.DepositStakeV2Transaction(txData);
+        // const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
+        // return stakeTxResult.hash;
+      } else {
+        return { success: false, msg: 'Please provide a stake amout of 1000 minimum' };
+      }
+    } else if (type == 'withdraw') {
+      let withdrawTx = new thetajs.transactions.WithdrawStakeTransaction(txData);
+      // const withdrawTxResult = await ThetaWalletConnect.sendTransaction(withdrawTx);
+      // return withdrawTxResult.hash;
+    }
   }
 
   async getWalletInfo(accounts) {
