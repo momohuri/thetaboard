@@ -275,9 +275,6 @@ app.get('/guardian/start', async (req, res) => {
 });
 
 app.get('/guardian/stop', async (req, res) => {
-    if (is_demo) {
-        return res.json({"error": "Not authorized", "success": false});
-    }
     try {
         const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length === 0) {
@@ -319,9 +316,6 @@ app.get('/guardian/summary', async (req, res) => {
 });
 
 app.get('/guardian/update', async (req, res) => {
-    if (is_demo) {
-        return res.json({"error": "Not authorized", "success": false});
-    }
     try {
         fs.rmSync(`${theta_mainnet_folder}/bin/theta`, {'force': true});
         fs.rmSync(`${theta_mainnet_folder}/bin/thetacli`, {'force': true});
