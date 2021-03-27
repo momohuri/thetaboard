@@ -182,11 +182,11 @@ export default class GuardianService extends Service {
     } else {
       $.notify(
         {
-          icon: 'glyphicon glyphicon-success-sign',
+          icon: 'glyphicon glyphicon-danger-sign',
           title: 'Error!!',
           message: 'We couldn\'t start your Guardian node, please check the logs for more information.',
         },
-        { type: 'error' }
+        { type: 'danger' }
       );
     }
   }
@@ -207,11 +207,11 @@ export default class GuardianService extends Service {
     } else {
       $.notify(
         {
-          icon: 'glyphicon glyphicon-success-sign',
+          icon: 'glyphicon glyphicon-danger-sign',
           title: 'Error!!',
           message: 'We couldn\'t stop your Guardian node, please check the logs for more information.',
         },
-        { type: 'error' }
+        { type: 'danger' }
       );
     }
   }

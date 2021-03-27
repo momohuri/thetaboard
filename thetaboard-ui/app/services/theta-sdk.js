@@ -22,6 +22,10 @@ export default class ThetaSdkService extends Service {
     return getOwner(this).lookup('service:theta-stakes');
   }
 
+  get guardian() {
+    return getOwner(this).lookup('service:guardian');
+  }
+
   async getThetaAccount() {
     let provider = new thetajs.providers.HttpProvider(
       this.envManager.config.thetaNetwork
@@ -32,28 +36,29 @@ export default class ThetaSdkService extends Service {
 
   async sendThetaTransaction(type) {
     const source = await this.getThetaAccount();
-    const holderSummary = "GUARDIAN_NODE_SUMMARY";
+    const holderSummary = this.guardian.guardianSummary.msg.Summary;
     const txData = {
       source: source[0],
       holderSummary: holderSummary,
+      holder: holderSummary,
       purpose: thetajs.constants.StakePurpose.StakeForGuardian,
     };
     if (type == 'deposit') {
       const stakeAmount = this.thetaStakes.stakeAmount;
-      if (stakeAmount && stakeAmount > 999) {
+      if (stakeAmount && stakeAmount > 0) {
         const ten18 = (new BigNumber(10)).pow(18); // 10^18, 1 Theta = 10^18 ThetaWei, 1 Gamma = 10^ TFuelWei
-        const thetaWeiToStake = (new BigNumber(stakeAmount)).multipliedBy(ten18);
-        txData.thetaWeiToStake = thetaWeiToStake;
+        const thetaWeiToStake = (new BigNumber(Number(stakeAmount))).multipliedBy(ten18);
+        txData.amount = thetaWeiToStake;
         let stakeTx = new thetajs.transactions.DepositStakeV2Transaction(txData);
-        // const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
-        // return stakeTxResult.hash;
+        const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
+        return stakeTxResult.hash;
       } else {
         return { success: false, msg: 'Please provide a stake amout of 1000 minimum' };
       }
     } else if (type == 'withdraw') {
       let withdrawTx = new thetajs.transactions.WithdrawStakeTransaction(txData);
-      // const withdrawTxResult = await ThetaWalletConnect.sendTransaction(withdrawTx);
-      // return withdrawTxResult.hash;
+      const withdrawTxResult = await ThetaWalletConnect.sendTransaction(withdrawTx);
+      return withdrawTxResult.hash;
     }
   }
 

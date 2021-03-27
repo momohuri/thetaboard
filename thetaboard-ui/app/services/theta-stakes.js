@@ -41,11 +41,33 @@ export default class ThetaStakesService extends Service {
 
   @action
   async deposit() {
-    return await this.thetaSdk.sendThetaTransaction('deposit');
+    try {
+      return await this.thetaSdk.sendThetaTransaction('deposit');
+    } catch (error) {
+      $.notify(
+        {
+          icon: 'glyphicon glyphicon-success-sign',
+          title: 'Error',
+          message: error.message,
+        },
+        { type: 'success' }
+      );
+    }
   }
 
   @action
   async withdraw() {
-    return await this.thetaSdk.sendThetaTransaction('withdraw');
+    try {
+      return await this.thetaSdk.sendThetaTransaction('withdraw');
+    } catch (error) {
+      $.notify(
+        {
+          icon: 'glyphicon glyphicon-danger-sign',
+          title: 'Error',
+          message: error.message,
+        },
+        { type: 'danger' }
+      );
+    }
   }
 }
