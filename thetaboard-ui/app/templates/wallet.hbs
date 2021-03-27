@@ -3,12 +3,12 @@
 <div class="content">
   <div class="row">
     <div class="col-lg-12 col-md-12">
-      {{wallet-list wallets=@model.wallets}}
+      {{wallets/wallet-list wallets=@model.wallets}}
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      {{transaction-history transactions=@model.transactions pagination=@model.pagination}}
+      {{transactions/transaction-history transactions=@model.transactions pagination=@model.pagination}}
      </div>
   </div>
 </div>

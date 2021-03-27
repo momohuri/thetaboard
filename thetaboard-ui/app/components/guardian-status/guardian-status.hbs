@@ -8,15 +8,15 @@
                     {{#accordion.item as |accordionItem|}}
                     <!-- Create a 'toggle' and a 'panel' for the item -->
                     {{#accordionItem.toggle}}
-                      {{guardian-status-header}}
+                      {{guardian-status/guardian-status-header}}
                     {{/accordionItem.toggle}}
 
                     <!-- Clicking on the 'toggle' will display the contents of the 'panel' -->
                     {{#accordionItem.panel openOnInit=true}}
                         <div class="card-status-body">
-                            {{guardian-status-body}}
+                            {{guardian-status/guardian-status-body}}
                             <div class="card-footer-actions">
-                                {{guardian-status-footer}}
+                                {{guardian-status/guardian-status-footer}}
                             </div>
                         </div>
                     {{/accordionItem.panel}}
