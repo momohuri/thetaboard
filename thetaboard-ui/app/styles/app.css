@@ -260,3 +260,17 @@ ul.guardian-status-ul.dropdown-menu.dropdown-menu-right.dropdown-navbar button {
   font-size: 12px;
   padding: 10px 20px;
 }
+
+.btn.btn-fill.btn-primary.btn-left span i {
+  margin-left: 7px;
+}
+
+.btn.btn-fill.btn-primary.btn-left span i.icon-check-2::before {
+  color: #00bf9a;
+  font-weight: bold;
+}
+
+.btn.btn-fill.btn-primary.btn-left span i.icon-simple-remove::before {
+  color: #fd77a4;
+  font-weight: bold;
+}

@@ -13058,13 +13058,11 @@ fieldset[disabled] .navbar .navbar-nav>a.btn.active {
   width: 24px;
 }
 
-.btn:not(.btn-icon) .tim-icons,
 .navbar .navbar-nav>a.btn:not(.btn-icon) .tim-icons {
   position: relative;
   top: 1px;
 }
 
-.btn span,
 .navbar .navbar-nav>a.btn span {
   position: relative;
   display: block;

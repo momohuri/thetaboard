@@ -24,7 +24,7 @@ export default class ApplicationRoute extends Route {
     this.envManager.setParameters(params);
     const guardianStatus = await this.thetaSdk.getGuardianStatus();
     const guardianLogs = await this.thetaSdk.getGuardianLogs();
-    //const guardianSummary = await this.thetaSdk.getGuardianSummary();
+    const guardianSummary = await this.thetaSdk.getGuardianSummary();
     const guardianLatestSnapshot = await this.thetaSdk.getGuardianLatestSnapshot();
     this.guardian.setup({
       guardianStatus: guardianStatus,

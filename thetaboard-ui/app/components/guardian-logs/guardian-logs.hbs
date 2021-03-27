@@ -29,7 +29,11 @@
                             {{guardian.guardianLogs.logs}}
                         </div>
                         <div class="card-footer-actions">
-                            <button {{on "click" this.guardian.toggleAutoRefreshLogs}} type="submit" class="btn btn-fill btn-primary btn-left">Auto refresh {{if this.guardian.logsAutoRefresh 'on' 'off'}}</button>
+                            <button {{on "click" this.guardian.toggleAutoRefreshLogs}} 
+                                type="submit" 
+                                class="btn btn-fill btn-primary btn-left">Auto refresh 
+                                <span><i class="tim-icons {{if this.guardian.logsAutoRefresh 'icon-check-2' 'icon-simple-remove'}}"></i></span>
+                            </button>
                         </div>
                     {{/accordionItem.panel}}
                 {{/accordion.item}}

@@ -30,7 +30,6 @@ export default class ThetaSdkService extends Service {
   }
 
   async sendThetaTransaction(type) {
-    debugger
     const source = await this.getThetaAccount();
     const holderSummary = "GUARDIAN_NODE_SUMMARY";
     const txData = {
@@ -38,7 +37,6 @@ export default class ThetaSdkService extends Service {
       holderSummary: holderSummary,
       purpose: thetajs.constants.StakePurpose.StakeForGuardian,
     };
-debugger
     if (type == 'deposit') {
       const stakeAmount = this.thetaStakes.stakeAmount;
       if (stakeAmount && stakeAmount > 999) {
