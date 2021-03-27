@@ -4,6 +4,7 @@ import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 import * as thetajs from '@thetalabs/theta-js';
 import { tracked } from '@glimmer/tracking';
 import BigNumber from "bignumber.js";
+import { htmlSafe } from '@ember/template';
 
 export default class ThetaSdkService extends Service {
   constructor(...args) {
@@ -85,9 +86,8 @@ export default class ThetaSdkService extends Service {
   async readableStreamDownload(response) {
     const self = this;
     const reader = response.body.getReader();
-    const contentLength = response.headers.get('Content-Length') || 1976919;
-    let receivedLength = 0;
-    let result = '';
+    let textDecoder = new TextDecoder();
+    let result = [];
     return new ReadableStream({
       start(controller) {
         return pump();
@@ -101,9 +101,14 @@ export default class ThetaSdkService extends Service {
             }
             // Enqueue the next data chunk into our target stream
             controller.enqueue(value);
-            result += value;
-            receivedLength += value.length;
-            self.downloadProgress = `${((receivedLength/contentLength)*100).toFixed(1)}`;
+            let decodedString = textDecoder.decode(value);
+            result.push(decodedString);
+            const percentReceived = decodedString.split('%')[0].substr(-3);
+            if (percentReceived != '...') {
+              if (Number(percentReceived) > self.downloadProgress && Number(percentReceived) < 100) {
+                self.downloadProgress = percentReceived;
+              }
+            }
             return pump();
           });
         }
@@ -142,7 +147,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return { logs: text };
+          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
         });
       })
       .catch((err) => console.error(err));
@@ -184,7 +189,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return { logs: text };
+          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
         });
       })
       .catch((err) => console.error(err));

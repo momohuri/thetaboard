@@ -29,7 +29,7 @@ export default class ApplicationRoute extends Route {
     this.guardian.setup({
       guardianStatus: guardianStatus,
       guardianLogs: guardianLogs,
-      //guardianSummary: guardianSummary,
+      guardianSummary: guardianSummary,
       guardianLatestSnapshot: guardianLatestSnapshot,
     });
   }
