@@ -7,25 +7,41 @@
                     <!-- For each element in list create an 'accordion.item' -->
                     {{#accordion.item as |accordionItem|}}
                         <!-- Create a 'toggle' and a 'panel' for the item -->
-                        {{#accordionItem.toggle}}
-                            <div class="author">
-                                <div class="block block-one"></div>
-                                <div class="block block-two"></div>
-                                <div class="block block-three"></div>
-                                <div class="block block-four"></div>
-                                <a href="javascript:void(0)">
-                                    <img class="avatar" src="{{rootURL}}assets/img/logs.png" alt="...">
-                                </a>
-                                <p class="title">
-                                    Guardian Logs
-                                </p>
-                            </div>
-                        {{/accordionItem.toggle}}
+                        <div class="AccordionItem-toggles">
+                            {{#accordionItem.toggle panelName="logs" as |isActive|}}
+                                <div class="author border-right {{if isActive "" "small"}}">
+                                    <div class="block block-one"></div>
+                                    <div class="block block-two"></div>
+                                    <div class="block block-three"></div>
+                                    <div class="block block-four"></div>
+                                    <a href="javascript:void(0)">
+                                        <img class="avatar" src="{{rootURL}}assets/img/logs.png" alt="...">
+                                    </a>
+                                    <p class="title">
+                                        Guardian Logs
+                                    </p>
+                                </div>
+                            {{/accordionItem.toggle}}
+                            {{#accordionItem.toggle panelName="summary" as |isActive|}}
+                                <div class="author {{if isActive "" "small"}}">
+                                    <div class="block block-one"></div>
+                                    <div class="block block-two"></div>
+                                    <div class="block block-three"></div>
+                                    <div class="block block-four"></div>
+                                    <a href="javascript:void(0)">
+                                        <img class="avatar" src="{{rootURL}}assets/img/logs.png" alt="...">
+                                    </a>
+                                    <p class="title">
+                                        Guardian Summary
+                                    </p>
+                                </div>
+                            {{/accordionItem.toggle}}
+                        </div>
 
                     <!-- Clicking on the 'toggle' will display the contents of the 'panel' -->
-                    {{#accordionItem.panel openOnInit=true}}
+                    {{#accordionItem.panel panelName="logs" openOnInit=true}}
                         <p></p>
-                        <div class="card-description" {{autoscroll guardian.guardianLogs.logs}}>
+                        <div {{on "click" (action this.copyLogsToClipBoard guardian.guardianLogs.logs)}} class="card-description" {{autoscroll guardian.guardianLogs.logs}}>
                             {{guardian.guardianLogs.logs}}
                         </div>
                         <div class="card-footer-actions">
@@ -35,6 +51,15 @@
                                 <span><i class="tim-icons {{if this.guardian.logsAutoRefresh 'icon-check-2' 'icon-simple-remove'}}"></i></span>
                             </button>
                         </div>
+                    {{/accordionItem.panel}}
+                    {{#accordionItem.panel panelName="summary"}}
+                        <p></p>
+                        {{#each guardian.summary as |item|}}
+                            <p class="summary-label">{{item.label}}</p>
+                            <div {{on "click" (action this.copySummaryToClipBoard item)}} class="card-description-summary">
+                                <p class="summary-value">{{item.value}}</p>
+                            </div>
+                        {{/each}}
                     {{/accordionItem.panel}}
                 {{/accordion.item}}
             {{/accordion-list}}

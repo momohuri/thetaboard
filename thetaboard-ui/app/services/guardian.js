@@ -66,14 +66,27 @@ export default class GuardianService extends Service {
 
   get messages() {
     let arrMessages = [];
-    for (let i in this.guardianStatus.msg)
+    for (let i in this.guardianStatus.msg) {
       arrMessages.push([i + ': ' + this.guardianStatus.msg[i]]);
+    }
     return arrMessages;
+  }
+
+  get summary() {
+    let arrSummary = [];
+    for (let i in this.guardianSummary.msg) {
+      if (this.guardianSummary.msg.hasOwnProperty(i)) {
+        if (this.guardianSummary.msg[i]) {
+          arrSummary.push({ label: i, value: this.guardianSummary.msg[i] });
+        }
+      }
+    }
+    return arrSummary;
   }
 
   get versions() {
     let arrVersions = [];
-    for (let i in this.guardianStatus.version){
+    for (let i in this.guardianStatus.version) {
       if (this.guardianStatus.version.hasOwnProperty(i)) {
         if (this.guardianStatus.version[i]) {
           arrVersions.push(this.guardianStatus.version[i]);
