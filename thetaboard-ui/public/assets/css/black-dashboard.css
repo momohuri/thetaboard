@@ -20164,7 +20164,6 @@ Copyright (c) 2015 Daniel Eden
   width: 30px;
   height: 30px;
   overflow: hidden;
-  border-radius: 50%;
   margin-bottom: 15px;
 }
 
@@ -20368,7 +20367,6 @@ Copyright (c) 2015 Daniel Eden
 .card-user .avatar {
   width: 124px;
   height: 124px;
-  border: 5px solid #2b3553;
   border-bottom-color: transparent;
   background-color: transparent;
   position: relative;
