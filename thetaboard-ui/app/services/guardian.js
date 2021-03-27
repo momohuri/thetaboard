@@ -33,28 +33,8 @@ export default class GuardianService extends Service {
     return getOwner(this).lookup('service:theta-sdk');
   }
 
-  get guardianStatus() {
-    return this.guardianStatus;
-  }
-
-  get guardianLogs() {
-    return this.guardianLogs;
-  }
-
-  get guardianSummary() {
-    return this.guardianSummary;
-  }
-
-  get guardianLatestSnapshot() {
-    return this.guardianLatestSnapshot;
-  }
-
   get guardianLatestSnapshotDate() {
     return this.guardianLatestSnapshot.date;
-  }
-
-  get latestSnapshotLogs() {
-    return this.latestSnapshotLogs;
   }
 
   get isError() {
