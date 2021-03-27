@@ -7,7 +7,7 @@
         <p>Guardian Status</p>
         <span><b> {{guardian.status}} 
             {{#if guardian.isUp}}
-                <p>since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}</p>
+                since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
             {{/if}}
             {{#if guardian.isSyncing}}
                 {{#if guardian.snapshotInfo.latestFinalizedBlockTime}} 
