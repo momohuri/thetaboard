@@ -55,6 +55,11 @@
 
 .card-body-stake {
   text-align: center;
+
+}
+
+.card-body-stake .title {
+  font-size: 20px;
 }
 
 .stakes-activity {
@@ -66,11 +71,11 @@ input.border-color{
 }
 
 #stake-amount {
-  font-size: 28px;
-  width: 300px;
+  font-size: 20px;
+  width: 200px;
   margin: 20px auto;
   text-align: center;
-  height: 55px;
+  height: 39px;
 }
 
 .a-elipsis {
