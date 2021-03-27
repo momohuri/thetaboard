@@ -39,7 +39,7 @@ NODE_PASSWORD='A-SECRET-PASSWRD' make start_thetaboard
 
 ### Options 
 If you want to run multiples Guardian Node on the same machine you can set individual names using the following variable: <br>
-`NODE_PASSWORD=A-SECRET-PASSWRD GUARDIANNAME='REPLACE_THIS' make start_docker ` <br>
+`NODE_PASSWORD='A-SECRET-PASSWRD' GUARDIANNAME='REPLACE_THIS' make start_docker ` <br>
 You can restart your docker using: <br>
 `GUARDIANNAME='REPLACE_THIS' make restart_thetaboard`
 
