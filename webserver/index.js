@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8000;
+const HTTP_PORT = 8001;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
@@ -183,7 +183,7 @@ const await_spawn = require('await-spawn');
 // set machine id as password of GN so it persists after docker restart.
 const theta_mainnet_folder = "/home/node/theta_mainnet";
 const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
-const is_demo = "PUBLIC" in process.env && process.env.PUBLIC;
+const is_demo = "DEMO" in process.env && process.env.DEMO;
 
 app.get('/guardian/status', async (req, res) => {
     let version = null;
@@ -358,11 +358,19 @@ app.get('/guardian/download_snapshot', async (req, res) => {
         if (theta_process.length > 0) {
             res.json({"msg": "Process is running", "success": false});
         } else {
+
+
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/key`, {recursive: true});
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/db`, {recursive: true});
             fs.rmSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
             const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`, {https: {rejectUnauthorized: false}});
+
+            const {
+                stdout,
+                stderr
+            } = await exec(`wget ${snapshot_url.body} --spider --server-response 2>&1 | sed -n '/Content-Length/{s/.*: //;p}'`);
             const wget = spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
+            res.write(`{"Content-Length":${stdout.replace('\n','')}}\n`)
             wget.stdout.pipe(res);
             wget.stderr.pipe(res);
         }
