@@ -59,7 +59,7 @@ export default class GuardianService extends Service {
     } else if (this.isSyncing) {
       return 'Syncing';
     } else if (this.isReady) {
-      return 'Is up';
+      return 'Online';
     }
     return '';
   }

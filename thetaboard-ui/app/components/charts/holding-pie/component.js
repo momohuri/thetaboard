@@ -45,6 +45,10 @@ export default class HoldingPieComponent extends Component {
       type: 'pie',
       data: data,
       options: {
+        legend: {
+          display: true,
+          position: 'right'
+        },
         maintainAspectRatio: false,
         tooltips: {
           mode: 'label',
