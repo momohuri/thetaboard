@@ -33,8 +33,8 @@ export default class PriceChartComponent extends Component {
         pointStyle: 'point',
         yAxisID: 'theta',
         radius: 0,
-        borderColor: '#21edba',
-        pointBackgroundColor: '#21edba',
+        borderColor: '#2BB7E5',
+        pointBackgroundColor: '#2BB7E5',
         data: Object.values(historic_data).map((x) => x.theta_price),
       },
         {
@@ -95,7 +95,7 @@ export default class PriceChartComponent extends Component {
           type: 'linear',
           ticks: {
             min: 0,
-            fontColor: "#21edba",
+            fontColor: "#2BB7E5",
             beginAtZero: true,
             maxTicksLimit: 10,
             callback: function (value, index, values) {

@@ -19,7 +19,7 @@ export default class HoldingPieComponent extends Component {
         'label': 'theta',
         "value": this.args.walletInfo.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta')
           .reduce((a, b) => a.value + b.value, {'value': 0}),
-        'color': '#21edba'
+        'color': '#2BB7E5'
       },
       {
         'label': 'tfuel',
