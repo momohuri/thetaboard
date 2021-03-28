@@ -6,6 +6,9 @@ You came to the right place ! Thetaboard was made to easily set up a theta guard
 It can also be used to get information about Theta and your wallet.<br>
 <br> 
 
+####Live demo : https://ns100226.ip-147-135-1.us/
+
+
 ### Features
 An easy-to-use Docker container for installing &amp; running a Theta guardian node.
 It is provided with a webserver with the following features:
@@ -58,7 +61,9 @@ How to install pre-req on Mac:
 
 How to install pre-req on Linux:
 - Step 1 install Docker: https://docs.docker.com/engine/install/ubuntu/ <br>
-- Step 2 install Make: 
+
+### Contact 
+@momohuri on theta discord https://discord.gg/3wRkJFvk9Q
 
 
 
