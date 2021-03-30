@@ -5,11 +5,17 @@
     <form class="stakes-deposit col-md-9">
         <div class="form-group">
         <label for="stake-amount">Stake Amount</label>
-        <Input @id="stake-amount" @type="number" @min="0" class="form-control border-color" @value={{this.thetaStakes.stakeAmount}}/>
+        {{#if this.guardian.isReady}}
+            <Input @id="stake-amount" @type="number" @min="0" class="form-control border-color" @value={{this.thetaStakes.stakeAmount}}/>
+        {{else}}
+            <p>Your guardian node needs to be online to be able to deposit.</p>
+        {{/if}}
         </div>
     </form>
     </div>
     <br/>
     <button {{on "click" this.thetaStakes.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
-    <button {{on "click" this.thetaStakes.deposit}} type="submit" class="btn btn-fill btn-primary">Deposit</button>
+    {{#if this.guardian.isReady}}
+        <button {{on "click" this.thetaStakes.deposit}} type="submit" class="btn btn-fill btn-primary">Deposit</button>
+    {{/if}}
 </div>
