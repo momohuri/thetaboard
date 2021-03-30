@@ -22,4 +22,16 @@ export default class UtilsService extends Service {
       { type: 'success' }
     );
   }
+
+  @action
+  errorNotify(message) {
+    $.notify(
+      {
+        icon: 'glyphicon glyphicon-success-sign',
+        title: 'Error',
+        message: message,
+      },
+      { type: 'danger' }
+    );
+  }
 }

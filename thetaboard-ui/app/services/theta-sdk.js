@@ -45,7 +45,7 @@ export default class ThetaSdkService extends Service {
     };
     if (type == 'deposit') {
       const stakeAmount = this.thetaStakes.stakeAmount;
-      if (stakeAmount && stakeAmount > 0) {
+      if (stakeAmount && stakeAmount > 999) {
         const ten18 = (new BigNumber(10)).pow(18); // 10^18, 1 Theta = 10^18 ThetaWei, 1 Gamma = 10^ TFuelWei
         const thetaWeiToStake = (new BigNumber(Number(stakeAmount))).multipliedBy(ten18);
         txData.amount = thetaWeiToStake;

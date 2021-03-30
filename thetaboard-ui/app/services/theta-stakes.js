@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
+import { utils } from '@thetalabs/theta-js';
 
 export default class ThetaStakesService extends Service {
   constructor(...args) {
@@ -15,6 +16,10 @@ export default class ThetaStakesService extends Service {
 
   get thetaSdk() {
     return getOwner(this).lookup('service:theta-sdk');
+  }
+
+  get utils() {
+    return getOwner(this).lookup('service:utils');
   }
 
   @action
@@ -42,16 +47,10 @@ export default class ThetaStakesService extends Service {
   @action
   async deposit() {
     try {
-      return await this.thetaSdk.sendThetaTransaction('deposit');
+      const sendTransaction = await this.thetaSdk.sendThetaTransaction('deposit');
+      if (!sendTransaction.success) this.utils.errorNotify(sendTransaction.msg);
     } catch (error) {
-      $.notify(
-        {
-          icon: 'glyphicon glyphicon-success-sign',
-          title: 'Error',
-          message: error.message,
-        },
-        { type: 'success' }
-      );
+      this.utils.errorNotify(error.message);
     }
   }
 
@@ -60,14 +59,7 @@ export default class ThetaStakesService extends Service {
     try {
       return await this.thetaSdk.sendThetaTransaction('withdraw');
     } catch (error) {
-      $.notify(
-        {
-          icon: 'glyphicon glyphicon-danger-sign',
-          title: 'Error',
-          message: error.message,
-        },
-        { type: 'danger' }
-      );
+      this.utils.errorNotify(error.message);
     }
   }
 }
