@@ -60,6 +60,10 @@
                                 <p class="summary-value">{{item.value}}</p>
                             </div>
                         {{/each}}
+                        <div class="card-footer-actions">
+                            <button {{on "click" this.guardian.refreshSummary}} type="submit" 
+                                class="btn btn-fill btn-primary">Refresh</button>
+                        </div>
                     {{/accordionItem.panel}}
                 {{/accordion.item}}
             {{/accordion-list}}

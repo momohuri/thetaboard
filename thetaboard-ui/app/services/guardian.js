@@ -167,6 +167,12 @@ export default class GuardianService extends Service {
   }
 
   @action
+  async refreshSummary() {
+    const guardianSummary = await this.thetaSdk.getGuardianSummary();
+    this.guardianSummary = guardianSummary;
+  }
+
+  @action
   async startGuardian() {
     const startGuardian = await this.thetaSdk.startGuardian();
     await this.refreshStatus();
