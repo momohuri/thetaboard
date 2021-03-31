@@ -72,6 +72,18 @@
   margin: 40px auto 0;
 }
 
+.stakes-activity .title {
+  font-size: 16px;
+}
+
+.stakes-activity .description {
+  font-size: 11px;
+}
+
+.stakes-no-activity .title {
+  font-size: 20px;
+}
+
 input.border-color{
   border: 1px solid #bdbdc4;
 }
