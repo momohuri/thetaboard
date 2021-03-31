@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8000;
+const HTTP_PORT = 8001;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
@@ -99,17 +99,6 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
 app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
     const wallet_adr = req.params.wallet_addr;
 
-    // balances should be of hte following format:
-    // {
-    //     amount: 0,
-    //     currency: "theta/tfuel",
-    //     value: 0, // value in $$$
-    //     type: "wallet/guardian/edge",
-    //     wallet_address: "0x000" // theta address
-    //     reward_address: "0x000" // theta address if staked tfuel/theta
-    // }
-
-    const response = [];
     try {
         // get price
         const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
@@ -118,8 +107,10 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
 
         // get transaction history
         const transaction_history = [];
-        let pageNumber = req.query.pageNumber ? req.query.pageNumber.toString() : '1';
-        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=15&isEqualType=false`,
+        const pageNumber = req.query.pageNumber ? req.query.pageNumber.toString() : '1';
+        const limitNumber = req.query.limitNumber ? req.query.limitNumber.toString() : '15';
+        console.log(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=${limitNumber}&isEqualType=false`)
+        const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=${limitNumber}&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
         const transaction_list = JSON.parse(transaction_history_query.body);
         const pagination = {
@@ -364,7 +355,7 @@ app.get('/guardian/download_snapshot', async (req, res) => {
                 stderr
             } = await exec(`wget ${snapshot_url.body} --spider --server-response 2>&1 | sed -n '/Content-Length/{s/.*: //;p}'`);
             const wget = spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, snapshot_url.body]);
-            res.write(`{"Content-Length":${stdout.replace('\n','')}}\n`)
+            res.write(`{"Content-Length":${stdout.replace('\n', '')}}\n`)
             wget.stdout.pipe(res);
             wget.stderr.pipe(res);
         }

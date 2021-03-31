@@ -1,7 +1,7 @@
 {{page-title "Dashboard"}}
 <div class="row">
   <div class="col-6">
-    {{charts/price-chart historic_price=@model.historicPrice }}
+    {{charts/price-chart historic_price=@model.historicPrice}}
   </div>
   <div class="col-6">
     {{charts/holding-pie walletInfo=@model.walletInfo}}
@@ -10,11 +10,11 @@
 
 <div class="row">
 
-  <div class="col-md-4">
+  <div class="col-md-3">
     {{theta-stakes/theta-stakes}}
   </div>
-  <div class="col-md-4">
-    <div class="card card-user" style="height: 435px">
+  <div class="col-md-3">
+    <div class="card card-user" style="height: 550px">
       <div class="card-body">
         <p class="card-text"></p>
         <div class="author">
@@ -27,17 +27,18 @@
         </div>
         <div class="card-body-stake">
           <h5 class="title" style="font-size: 20px;">
+            <p>
+              Uptime
+            </p>
             {{#if model.guardian.isUp}}
               {{moment-duration model.guardian.guardianStatus.uptime 'seconds'}}
             {{/if}}
-
           </h5>
-          <p>
-            Uptime
-          </p>
-
           <hr style="background-color: #525f7f">
           <p></p>
+          <p>
+            Status
+          </p>
           <h5 class="title" style="font-size: 20px; margin-top: 20px">
             {{#if model.guardian.isUp}}
               {{model.guardian.status}}
@@ -46,9 +47,6 @@
             {{/if}}
 
           </h5>
-          <p>
-            Status
-          </p>
           <p>
             {{#if model.guardian.isSyncing}}
               {{#if model.guardian.snapshotInfo.latestFinalizedBlockTime}}
@@ -63,6 +61,10 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="col-md-6">
+    {{charts/earnings-forecast historic_price=@model.historicPrice}}
   </div>
 </div>
 

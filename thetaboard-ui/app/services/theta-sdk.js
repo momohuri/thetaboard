@@ -1,10 +1,10 @@
 import Service from '@ember/service';
-import { getOwner } from '@ember/application';
+import {getOwner} from '@ember/application';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 import * as thetajs from '@thetalabs/theta-js';
-import { tracked } from '@glimmer/tracking';
+import {tracked} from '@glimmer/tracking';
 import BigNumber from "bignumber.js";
-import { htmlSafe } from '@ember/template';
+import {htmlSafe} from '@ember/template';
 
 export default class ThetaSdkService extends Service {
   constructor(...args) {
@@ -53,7 +53,7 @@ export default class ThetaSdkService extends Service {
         const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
         return stakeTxResult.hash;
       } else {
-        return { success: false, msg: 'Please provide a stake amout of 1000 minimum' };
+        return {success: false, msg: 'Please provide a stake amout of 1000 minimum'};
       }
     } else if (type == 'withdraw') {
       let withdrawTx = new thetajs.transactions.WithdrawStakeTransaction(txData);
@@ -69,14 +69,11 @@ export default class ThetaSdkService extends Service {
     return await walletInfo.json();
   }
 
-  async getTransactions(accounts, current) {
+  async getTransactions(accounts, current= 1 , limit_number = 15) {
     let finalUrl = '/wallet-transactions/' + accounts[0] + this.envManager.config.queryParams;
 
-    if (current) {
-      this.envManager.config.queryParams ? (finalUrl += '&') : (finalUrl += '?');
-      finalUrl += 'pageNumber=' + current;
-    }
-
+    this.envManager.config.queryParams ? (finalUrl += '&') : (finalUrl += '?');
+    finalUrl += `pageNumber=${current}&limitNumber=${limit_number}`
     const transactions = await fetch(finalUrl);
     return await transactions.json();
   }
@@ -96,8 +93,9 @@ export default class ThetaSdkService extends Service {
     return new ReadableStream({
       start(controller) {
         return pump();
+
         function pump() {
-          return reader.read().then(({ done, value }) => {
+          return reader.read().then(({done, value}) => {
             // When no more data needs to be consumed, close the stream
             if (done) {
               controller.close();
@@ -127,8 +125,9 @@ export default class ThetaSdkService extends Service {
     return new ReadableStream({
       start(controller) {
         return pump();
+
         function pump() {
-          return reader.read().then(({ done, value }) => {
+          return reader.read().then(({done, value}) => {
             // When no more data needs to be consumed, close the stream
             if (done) {
               controller.close();
@@ -152,7 +151,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
+          return {logs: htmlSafe(text.split('\n').join('<br/>'))};
         });
       })
       .catch((err) => console.error(err));
@@ -194,7 +193,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
+          return {logs: htmlSafe(text.split('\n').join('<br/>'))};
         });
       })
       .catch((err) => console.error(err));
