@@ -8,14 +8,32 @@ export default class EarningsProjectionsComponent extends Component {
   @service('theta-sdk') thetaSdk;
 
   @tracked avg_tfuel_per_day = 0;
+  @tracked avg_tfuel_per_year = 0;
+
+  formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
 
   get avg_tfuel_per_month() {
     return this.avg_tfuel_per_day * 30;
   }
 
-  get avg_tfuel_per_year() {
-    return this.avg_tfuel_per_day * 365;
+  get avg_tfuel_per_day_dollar() {
+    const value = this.avg_tfuel_per_day * this.args.walletInfo.wallets[1].market_price
+    return this.formatter.format(value);
   }
+
+  get avg_tfuel_per_month_dollar() {
+    const value = this.avg_tfuel_per_month * this.args.walletInfo.wallets[1].market_price;
+    return this.formatter.format(value);
+  }
+
+  get avg_tfuel_per_year_dollar() {
+    const value = this.avg_tfuel_per_year * this.args.walletInfo.wallets[1].market_price
+    return this.formatter.format(value);
+  }
+
 
   _groupByDay(accumulator, currentValue) {
     let d = new Date(currentValue['timestamp']);
@@ -54,6 +72,8 @@ export default class EarningsProjectionsComponent extends Component {
       }
       return acc;
     }, []);
+
+    this.avg_tfuel_per_year = data[data.length - 1];
     return {
       labels: labels,
       datasets: [
@@ -65,7 +85,7 @@ export default class EarningsProjectionsComponent extends Component {
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: data,
-          borderWidth: 1
+          borderDash: [10, 5]
         }]
     };
   }
