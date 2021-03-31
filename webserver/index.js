@@ -342,9 +342,6 @@ app.get('/guardian/download_snapshot', async (req, res) => {
         if (theta_process.length > 0) {
             res.json({"msg": "Process is running", "success": false});
         } else {
-
-
-            fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/key`, {recursive: true});
             fs.rmdirSync(`${theta_mainnet_folder}/guardian_mainnet/node/db`, {recursive: true});
             fs.rmSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
             const snapshot_url = await got(`https://mainnet-data.thetatoken.org/snapshot`, {https: {rejectUnauthorized: false}});
