@@ -109,7 +109,6 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
         const transaction_history = [];
         const pageNumber = req.query.pageNumber ? req.query.pageNumber.toString() : '1';
         const limitNumber = req.query.limitNumber ? req.query.limitNumber.toString() : '15';
-        console.log(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=${limitNumber}&isEqualType=false`)
         const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=${limitNumber}&isEqualType=false`,
             {https: {rejectUnauthorized: false}});
         const transaction_list = JSON.parse(transaction_history_query.body);
