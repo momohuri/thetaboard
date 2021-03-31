@@ -352,3 +352,30 @@ iv.AccordionToggle .author.border-right {
 .card-logs.card-user .card-description.max-height-462 {
   max-height: 462px;
 }
+
+div.card-header  .card-title.forecast-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+div.card-header  .card-title.forecast-description {
+  font-size: 18px;
+}
+
+.forecast-legend {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.forcast-earning-title {
+  font-weight: 600;
+}
+
+.forcast-earning-span-list span.legend-label {
+  margin: 0 15px;
+}
+
+.forcast-earning-span-list span.amount {
+  font-weight: 600;
+}
