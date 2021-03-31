@@ -14,53 +14,7 @@
     {{theta-stakes/theta-stakes}}
   </div>
   <div class="col-md-3">
-    <div class="card card-user" style="height: 550px">
-      <div class="card-body">
-        <p class="card-text"></p>
-        <div class="author">
-          <div class="block block-one"></div>
-          <div class="block block-two"></div>
-          <div class="block block-three"></div>
-          <div class="block block-four"></div>
-          <!--          <i class="avatar tim-icons icon-time-alarm"></i>-->
-          <img class="avatar" src="{{rootURL}}assets/img/uptime.png" alt="...">
-        </div>
-        <div class="card-body-stake">
-          <h5 class="title" style="font-size: 20px;">
-            <p>
-              Uptime
-            </p>
-            {{#if model.guardian.isUp}}
-              {{moment-duration model.guardian.guardianStatus.uptime 'seconds'}}
-            {{/if}}
-          </h5>
-          <hr style="background-color: #525f7f">
-          <p></p>
-          <p>
-            Status
-          </p>
-          <h5 class="title" style="font-size: 20px; margin-top: 20px">
-            {{#if model.guardian.isUp}}
-              {{model.guardian.status}}
-            {{else}}
-              0 seconds
-            {{/if}}
-
-          </h5>
-          <p>
-            {{#if model.guardian.isSyncing}}
-              {{#if model.guardian.snapshotInfo.latestFinalizedBlockTime}}
-                {{moment
-                        model.guardian.snapshotInfo.latestFinalizedBlockTime}}
-              {{/if}}
-            {{/if}}
-          </p>
-        </div>
-      </div>
-      <div class="card-footer">
-      </div>
-    </div>
-
+    {{uptime/uptime}}
   </div>
 
   <div class="col-md-6">
