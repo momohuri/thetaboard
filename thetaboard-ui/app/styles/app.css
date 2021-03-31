@@ -316,10 +316,10 @@ iv.AccordionToggle .author.border-right {
 }
 
 .summary-value {
-
+  margin: 0;
 }
 
-.card-description-summary {
+.row .card-description-summary {
   background: #22252b;
   font-size: 12px;
   padding: 15px;
@@ -327,4 +327,16 @@ iv.AccordionToggle .author.border-right {
   max-height: 400px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.row .card .card-body.card-min-460 {
+  min-height: 460px;
+}
+
+.row .card .card-body.card-min-750 {
+  min-height: 750px;
+}
+
+.card-logs.card-user .card-description.max-height-462 {
+  max-height: 462px;
 }

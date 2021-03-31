@@ -1,6 +1,6 @@
 <div class="col-md-6">
     <div class="card card-user card-logs">
-        <div class="card-body">
+        <div class="card-body card-min-750">
             <p class="card-text"></p>
                 <!-- Define a new accordion-list -->
                 {{#accordion-list as |accordion|}}
@@ -41,7 +41,7 @@
                     <!-- Clicking on the 'toggle' will display the contents of the 'panel' -->
                     {{#accordionItem.panel panelName="logs" openOnInit=true}}
                         <p></p>
-                        <div {{on "click" (action this.copyLogsToClipBoard guardian.guardianLogs.logs)}} class="card-description" {{autoscroll guardian.guardianLogs.logs}}>
+                        <div {{on "click" (action this.copyLogsToClipBoard guardian.guardianLogs.logs)}} class="card-description max-height-462" {{autoscroll guardian.guardianLogs.logs}}>
                             {{guardian.guardianLogs.logs}}
                         </div>
                         <div class="card-footer-actions">
@@ -54,12 +54,19 @@
                     {{/accordionItem.panel}}
                     {{#accordionItem.panel panelName="summary"}}
                         <p></p>
-                        {{#each guardian.summary as |item|}}
-                            <p class="summary-label">{{item.label}}</p>
-                            <div {{on "click" (action this.copySummaryToClipBoard item)}} class="card-description-summary">
-                                <p class="summary-value">{{item.value}}</p>
-                            </div>
-                        {{/each}}
+                        {{#if this.guardian.snapshotInfo.latestFinalizedBlockTime}}
+                           {{#each guardian.summary as |item|}}
+                                <p class="summary-label">{{item.label}}</p>
+                                <div {{on "click" (action this.copySummaryToClipBoard item)}} class="card-description-summary">
+                                    <p class="summary-value">{{item.value}}</p>
+                                </div>
+                            {{/each}}
+                        {{else}}
+                         <p></p><br/>
+                        <div class="card-description-summary">
+                            <p class="summary-value">Guardian Node is not running</p>
+                        </div>
+                        {{/if}}
                         <div class="card-footer-actions">
                             <button {{on "click" this.guardian.refreshSummary}} type="submit" 
                                 class="btn btn-fill btn-primary">Refresh</button>
