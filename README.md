@@ -6,7 +6,9 @@ You came to the right place ! Thetaboard was made to easily set up a theta guard
 It can also be used to get information about Theta and your wallet.<br>
 <br> 
 
-#### Live demo : https://ns100226.ip-147-135-1.us/
+#### Live demo : https://ns100226.ip-147-135-1.us/guardian 
+
+#### Join us on Discord: https://discord.gg/SGUtY7zBU3
 
 
 ### Features
@@ -62,8 +64,23 @@ How to install pre-req on Mac:
 How to install pre-req on Linux:
 - Step 1 install Docker: https://docs.docker.com/engine/install/ubuntu/ <br>
 
-### Contact 
-@momohuri on theta discord https://discord.gg/3wRkJFvk9Q
 
 
+## FAQ
+
+
+#### Do we host Guardian Nodes ?
+We encourage you to set up your own Guardian Node by using the tutorials on this page. <br>
+But also offer Gurdian Node hosting if you want to. This is free while we are in beta. Please contact us on discord for more info: https://discord.gg/SGUtY7zBU3 
+
+
+#### What is different between Thetaboard and Gpool?
+
+
+In our architecture, everyone has their own Guardian Node. <br>
+Which is better for a couple of reason:  We are not a "man in the middle" between you and your GN. 
+So you get rewards right away, and you get full control over your Guardian Node. <br>
+It is also better for theta network health in general as more GN the better. <br>
+Last point, on top of the Guardian Node we also provide a cool dashboard that allow you to track price, 
+get chart about your wallet, history of your transactions, forecasting of Tfuel rewards, and a lot of other valuable information for any theta holder.
 
