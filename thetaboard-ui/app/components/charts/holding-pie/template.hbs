@@ -1,13 +1,20 @@
 
-<div class="card card-chart card-logs">
+<div class="card card-chart card-logs card-user">
   <div class="card-header ">
     <div class="row">
       <div class="col-sm-12 text-left">
-        <h3 class="card-title">Wallet Composition in $</h3>
+        <p class="card-text"></p>
+        <div class="author">
+          <div class="block block-one"></div>
+          <div class="block block-two"></div>
+          <div class="block block-three"></div>
+          <div class="block block-four"></div>
+          <h2 class="card-title forecast-title">Wallet Composition in $</h2>
+        </div>
       </div>
     </div>
   </div>
-  <div class="card-body" style="position: relative; height:40vh; ">
-    <canvas id="pieChartExample" {{did-insert this.setupChart}}></canvas>
+  <div class="card-body pie-chart-card-body">
+    <canvas id="pieChartExample" height="266" {{did-insert this.setupChart}}></canvas>
   </div>
 </div>

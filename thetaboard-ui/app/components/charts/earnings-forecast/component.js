@@ -54,13 +54,6 @@ export default class EarningsProjectionsComponent extends Component {
       }
       return acc;
     }, []);
-
-    const ctx = document.getElementById("forecastChart").getContext("2d");
-    const gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
-    gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
     return {
       labels: labels,
       datasets: [
@@ -72,7 +65,7 @@ export default class EarningsProjectionsComponent extends Component {
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: data,
-          borderDash: [10, 5]
+          borderWidth: 1
         }]
     };
   }
@@ -84,10 +77,6 @@ export default class EarningsProjectionsComponent extends Component {
       maintainAspectRatio: false,
       legend: {
         display: false,
-        position: 'bottom',
-        labels: {
-          usePointStyle: true
-        }
       },
       tooltips: {
         callbacks: {
@@ -121,7 +110,13 @@ export default class EarningsProjectionsComponent extends Component {
         xAxes: [{
           type: 'time',
           time: {
-            unit: 'day'
+            unit: 'month'
+          },
+          ticks: {
+            min: 0,
+            fontColor: "#ccc",
+            beginAtZero: true,
+            maxTicksLimit: 10,
           },
         }],
       },

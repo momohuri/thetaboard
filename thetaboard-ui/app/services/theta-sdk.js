@@ -10,9 +10,11 @@ export default class ThetaSdkService extends Service {
   constructor(...args) {
     super(...args);
     this.downloadProgress = '';
+    this.wallets = [];
   }
 
   @tracked downloadProgress = '';
+  @tracked wallets = [];
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -24,6 +26,12 @@ export default class ThetaSdkService extends Service {
 
   get guardian() {
     return getOwner(this).lookup('service:guardian');
+  }
+
+  get guardianWallets() {
+    if (this.wallets.length) {
+      return this.wallets.filter((x) => x.type === "guardian");
+    }
   }
 
   async getThetaAccount() {
@@ -66,7 +74,9 @@ export default class ThetaSdkService extends Service {
     const walletInfo = await fetch(
       '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
     );
-    return await walletInfo.json();
+    const wallets = await walletInfo.json();
+    this.wallets = wallets.wallets;
+    return wallets;
   }
 
   async getTransactions(accounts, current= 1 , limit_number = 15) {

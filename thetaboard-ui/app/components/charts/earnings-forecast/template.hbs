@@ -1,19 +1,30 @@
-<div class="card card-chart" style=" height:550px">
+<div class="card card-chart card-user">
   <div class="card-header ">
     <div class="row">
       <div class="col-sm-12 text-left">
-        <h2 class="card-title"> Reward Forecast</h2>
-        <h5 class="card-title"> Forecasting is based on your rewards earned in the last month</h5>
+        <p class="card-text"></p>
+        <div class="author">
+          <div class="block block-one"></div>
+          <div class="block block-two"></div>
+          <div class="block block-three"></div>
+          <div class="block block-four"></div>
+          <h2 class="card-title forecast-title">TFuel Reward Forecast</h2>
+          <h5 class="card-title forecast-description"> Forecasting is based on your rewards earned in the last month</h5>
+        </div>
       </div>
-
     </div>
   </div>
-  <div class="card-body" style="position: relative;">
+  <div class="card-body">
     <div>
-      <canvas id="forecastChart" {{did-insert this.setupChart}}></canvas>
+      <canvas id="forecastChart" height="215" {{did-insert this.setupChart}}></canvas>
     </div>
-    <p> Per Day {{avg_tfuel_per_day}}</p>
-    <p> Per Month {{avg_tfuel_per_month}}</p>
-    <p> Per Year {{avg_tfuel_per_year}} </p>
+    <div class="forecast-legend">
+      <p class="forcast-earning-title">Estimated Tfuel earnings:</p>
+      <p class="forcast-earning-span-list">
+        <span class="legend-label"> Per Day: <span class="amount">{{format-number avg_tfuel_per_day}}<img src="assets/img/logo/tfuel.png" style="width: 15px; margin-left: 3px; vertical-align: unset;"></span></span>
+        <span class="legend-label"> Per Month: <span class="amount">{{format-number avg_tfuel_per_month}}<img src="assets/img/logo/tfuel.png" style="width: 15px; margin-left: 3px; vertical-align: unset;"></span></span>
+        <span class="legend-label"> Per Year: <span class="amount">{{format-number avg_tfuel_per_year}}<img src="assets/img/logo/tfuel.png" style="width: 15px; margin-left: 3px; vertical-align: unset;"></span></span>
+      </p>
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="card card-user">
-  <div class="card-body">
+  <div class="card-body card-min-390">
     <p class="card-text"></p>
     <div class="author">
       <div class="block block-one"></div>
@@ -14,11 +14,20 @@
         <h6>Demo only, this feature won't work unless you setup your own guardian</h6>
         <button {{on "click" this.thetaStakes.showDeposit}} type="submit" class="btn btn-fill btn-primary btn-left">Deposit</button>
         <button {{on "click" this.thetaStakes.showWithdraw}} type="submit" class="btn btn-fill btn-primary">Withdraw</button>
-        <br/>
-        <div class="stakes-activity">
-          <p class="title">No Stakes</p>
-          <p class="description">Stake THETA to earn TFUEL</p>
-        </div>
+        {{#if this.thetaSDK.guardianWallets.length}}
+          <div class="stakes-activity">
+            {{#each this.thetaSDK.guardianWallets as |guardianWallet|}}
+              <p class="title">{{format-number guardianWallet.amount maximumFractionDigits="2"}} <span class="capitalize">{{guardianWallet.currency}}</span> Staked</p>
+              <p class="description">Staked on node address:<br/>{{guardianWallet.node_address}}</p>
+            {{/each}}
+          </div>
+        {{else}}
+          <br/><br/><br/>
+          <div class="stakes-no-activity">
+            <p class="title">No Stakes</p>
+            <p class="description">Stake THETA to earn TFUEL</p>
+          </div>
+        {{/if}}
       </div>
     {{else if this.thetaStakes.isDeposit}}
       {{theta-stakes/theta-stakes-deposit}}
