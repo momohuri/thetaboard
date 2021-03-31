@@ -1,3 +1,9 @@
+.thetaboard-logo {
+  width: 130px;
+  margin: 10px auto;
+  display: block;
+}
+
 .btn-left {
   margin-right: 15px;
 }
