@@ -65,6 +65,7 @@ export default class EarningsProjectionsComponent extends Component {
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: data,
+          borderWidth: 1
         }]
     };
   }
@@ -113,7 +114,7 @@ export default class EarningsProjectionsComponent extends Component {
           },
           ticks: {
             min: 0,
-            fontColor: "#FFA500",
+            fontColor: "#ccc",
             beginAtZero: true,
             maxTicksLimit: 10,
           },

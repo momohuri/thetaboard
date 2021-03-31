@@ -20,12 +20,6 @@ export default class PriceChartComponent extends Component {
       historic_data = this.args.historic_price;
     }
     const labels = Object.keys(historic_data).map((x) => moment(x, "YYYY-MM-DD"));
-    const ctx = document.getElementById("lineChartExample").getContext("2d");
-    const gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
-    gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
     return {
       labels: labels,
       datasets: [{
@@ -36,6 +30,7 @@ export default class PriceChartComponent extends Component {
         borderColor: '#2BB7E5',
         pointBackgroundColor: '#2BB7E5',
         data: Object.values(historic_data).map((x) => x.theta_price),
+        borderWidth: 1,
       },
         {
           label: "Tfuel",
@@ -45,6 +40,7 @@ export default class PriceChartComponent extends Component {
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: Object.values(historic_data).map((x) => x.tfuel_price),
+          borderWidth: 1,
         },]
     };
   }
@@ -62,7 +58,8 @@ export default class PriceChartComponent extends Component {
         display: true,
         position: 'bottom',
         labels: {
-          usePointStyle: true
+          usePointStyle: true,
+          fontColor: "#ccc",
         }
       },
       tooltips: {
@@ -123,6 +120,12 @@ export default class PriceChartComponent extends Component {
           time: {
             unit: 'month'
           },
+          ticks: {
+            maxTicksLimit: 10,
+            min: 0,
+            fontColor: "#ccc",
+            beginAtZero: true,
+          }
         }],
       },
       plugins: {

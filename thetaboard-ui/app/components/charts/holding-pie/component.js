@@ -11,29 +11,31 @@ export default class HoldingPieComponent extends Component {
     });
     const types = [
       {
-        'label': 'guardian',
+        'label': 'Guardian',
         "value": this.args.walletInfo.wallets.filter((x) => x.type === 'guardian').reduce((a, b) => a.value + b.value, {'value': 0}),
-        'color': '#24bac5'
+        'color': '#24bac5',
       },
       {
-        'label': 'theta',
+        'label': 'Theta',
         "value": this.args.walletInfo.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta')
           .reduce((a, b) => a.value + b.value, {'value': 0}),
         'color': '#2BB7E5'
       },
       {
-        'label': 'tfuel',
+        'label': 'Tfuel',
         "value": this.args.walletInfo.wallets.filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
           .reduce((a, b) => a.value + b.value, {'value': 0}),
         'color': '#FFA500'
       }
     ];
-    this.args.walletInfo.wallets.map((x) => x.value)
+    this.args.walletInfo.wallets.map((x) => x.value);
     let data = {
       datasets: [{
         data: types.map((x) => x.value),
         backgroundColor: types.map((x) => x.color),
-        hoverOffset: 4
+        hoverOffset: 4,
+        borderWidth: 1,
+        borderColor: '#ddd',
       }],
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -47,7 +49,12 @@ export default class HoldingPieComponent extends Component {
       options: {
         legend: {
           display: true,
-          position: 'right'
+          position: 'bottom',
+          labels: {
+            fontColor: "#ccc",
+            usePointStyle: true,
+            padding: 20,
+          }
         },
         maintainAspectRatio: false,
         tooltips: {
@@ -68,7 +75,7 @@ export default class HoldingPieComponent extends Component {
               return ((100 * curr_value ) / total) > 1;
             },
             font: {
-              weight: 'bold'
+              weight: 'bold',
             },
             formatter: function (value, context) {
               const total = context.dataset.data.reduce((a,b)=> a+b,0);

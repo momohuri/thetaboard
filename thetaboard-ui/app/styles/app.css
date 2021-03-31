@@ -341,8 +341,8 @@ iv.AccordionToggle .author.border-right {
   cursor: pointer;
 }
 
-.row .card .card-body.card-min-460 {
-  min-height: 460px;
+.row .card .card-body.card-min-390 {
+  min-height: 390px;
 }
 
 .row .card .card-body.card-min-750 {
@@ -354,17 +354,17 @@ iv.AccordionToggle .author.border-right {
 }
 
 div.card-header  .card-title.forecast-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 div.card-header  .card-title.forecast-description {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .forecast-legend {
   text-align: center;
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 20px;
 }
 
@@ -378,4 +378,8 @@ div.card-header  .card-title.forecast-description {
 
 .forcast-earning-span-list span.amount {
   font-weight: 600;
+}
+
+.pie-chart-card-body {
+  margin: 5px 0 5px;
 }
