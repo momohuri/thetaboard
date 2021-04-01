@@ -9,10 +9,16 @@ export default class HoldingPieComponent extends Component {
       style: 'currency',
       currency: 'USD'
     });
+
+    const guardian = this.args.walletInfo.wallets.filter((x) => x.type === 'guardian');
+    let guardian_value = 0
+    if (guardian.length > 0) {
+      guardian_value = guardian.reduce((a, b) => a.value + b.value, {'value': 0})
+    }
     const types = [
       {
         'label': 'Guardian',
-        "value": this.args.walletInfo.wallets.filter((x) => x.type === 'guardian').reduce((a, b) => a.value + b.value, {'value': 0}),
+        "value": guardian_value,
         'color': '#24bac5',
       },
       {
@@ -70,15 +76,15 @@ export default class HoldingPieComponent extends Component {
           datalabels: {
             color: 'black',
             display: function (context) {
-              const total = context.dataset.data.reduce((a,b)=> a+b,0);
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
               const curr_value = context.dataset.data[context.dataIndex];
-              return ((100 * curr_value ) / total) > 1;
+              return ((100 * curr_value) / total) > 1;
             },
             font: {
               weight: 'bold',
             },
             formatter: function (value, context) {
-              const total = context.dataset.data.reduce((a,b)=> a+b,0);
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
               return ((100 * value) / total).toFixed(2) + '%';
             },
           }

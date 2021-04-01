@@ -7,7 +7,10 @@ module.exports = function (defaults) {
     // Add options here
     fingerprint:{
       enabled: false
-    }
+    },
+    SRI: {
+      enabled: false,
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
