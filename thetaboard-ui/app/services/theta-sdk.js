@@ -48,7 +48,7 @@ export default class ThetaSdkService extends Service {
     const txData = {
       source: source[0],
       holderSummary: holderSummary,
-      holder: holderSummary,
+      holder: this.guardian.guardianSummary.msg.Address,
       purpose: thetajs.constants.StakePurpose.StakeForGuardian,
     };
     if (type == 'deposit') {
