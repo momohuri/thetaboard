@@ -21,7 +21,7 @@ It is provided with a webserver with the following features:
  - Start/Stop your Guardian Node
  - Update your Guardian Node to the latest version
  - See the Status and logs of your Guardian Node
- - *COMING SOON*: Stake your tfuel on your edge node using this interface as well ( we are waiting on mainet 3.0 + some API's from theta's team)
+ - *COMING SOON*: Stake your tfuel on your edge node using this interface as well ( we are waiting on mainnet 3.0 + some API's from theta's team)
  
 We don't and will never track any data about anything at all.
 
