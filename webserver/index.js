@@ -312,7 +312,7 @@ app.get('/guardian/update', async (req, res) => {
         // get latest urls
         const config = await got(`https://mainnet-data.thetatoken.org/config?is_guardian=true`, {https: {rejectUnauthorized: false}});
         const theta = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`, {https: {rejectUnauthorized: false}});
-        const thetacli = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=theta`, {https: {rejectUnauthorized: false}});
+        const thetacli = await got(`https://mainnet-data.thetatoken.org/binary?os=linux&name=thetacli`, {https: {rejectUnauthorized: false}});
         // DLL files
         const wget_config = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/guardian_mainnet/node/config.yaml`, config.body]);
         const wget_theta = await_spawn(`wget`, [`--no-check-certificate`, `-O`, `${theta_mainnet_folder}/bin/theta`, theta.body]);
