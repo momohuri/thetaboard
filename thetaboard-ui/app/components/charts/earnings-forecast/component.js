@@ -20,17 +20,26 @@ export default class EarningsProjectionsComponent extends Component {
   }
 
   get avg_tfuel_per_day_dollar() {
-    const value = this.avg_tfuel_per_day * this.args.walletInfo.wallets[1].market_price
+    let value = 0;
+    if (this.args.walletInfo.wallets.length) {
+      value = this.avg_tfuel_per_day * this.args.walletInfo.wallets[1].market_price
+    }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_month_dollar() {
-    const value = this.avg_tfuel_per_month * this.args.walletInfo.wallets[1].market_price;
+    let value = 0;
+    if (this.args.walletInfo.wallets.length) {
+      value = this.avg_tfuel_per_month * this.args.walletInfo.wallets[1].market_price;
+    }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_year_dollar() {
-    const value = this.avg_tfuel_per_year * this.args.walletInfo.wallets[1].market_price
+    let value = 0;
+    if (this.args.walletInfo.wallets.length) {
+      value = this.avg_tfuel_per_year * this.args.walletInfo.wallets[1].market_price
+    }
     return this.formatter.format(value);
   }
 

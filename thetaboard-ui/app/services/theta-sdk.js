@@ -71,21 +71,27 @@ export default class ThetaSdkService extends Service {
   }
 
   async getWalletInfo(accounts) {
+    let wallets = { wallets: [] };
     const walletInfo = await fetch(
       '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
     );
-    const wallets = await walletInfo.json();
+    if (walletInfo.status == 200) {
+      wallets = await walletInfo.json();
+    }
     this.wallets = wallets.wallets;
     return wallets;
   }
 
-  async getTransactions(accounts, current= 1 , limit_number = 15) {
+  async getTransactions(accounts, current = 1, limit_number = 15) {
+    let transactionList = { transactions: [] };
     let finalUrl = '/wallet-transactions/' + accounts[0] + this.envManager.config.queryParams;
-
     this.envManager.config.queryParams ? (finalUrl += '&') : (finalUrl += '?');
-    finalUrl += `pageNumber=${current}&limitNumber=${limit_number}`
+    finalUrl += `pageNumber=${current}&limitNumber=${limit_number}`;
     const transactions = await fetch(finalUrl);
-    return await transactions.json();
+    if (transactions.status == 200) {
+      transactionList = await transactions.json();
+    }
+    return transactionList;
   }
 
   async getGuardianStatus() {
