@@ -32,6 +32,7 @@ export default class ThetaSdkService extends Service {
     if (this.wallets.length) {
       return this.wallets.filter((x) => x.type === "guardian");
     }
+    return [];
   }
 
   async getThetaAccount() {
@@ -59,14 +60,14 @@ export default class ThetaSdkService extends Service {
         txData.amount = thetaWeiToStake;
         let stakeTx = new thetajs.transactions.DepositStakeV2Transaction(txData);
         const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
-        return stakeTxResult.hash;
+        return stakeTxResult;
       } else {
         return {success: false, msg: 'Please provide a stake amout of 1000 minimum'};
       }
     } else if (type == 'withdraw') {
       let withdrawTx = new thetajs.transactions.WithdrawStakeTransaction(txData);
       const withdrawTxResult = await ThetaWalletConnect.sendTransaction(withdrawTx);
-      return withdrawTxResult.hash;
+      return withdrawTxResult;
     }
   }
 
@@ -201,6 +202,13 @@ export default class ThetaSdkService extends Service {
     return await response.json();
   }
 
+  async updateGuardian() {
+    const response = await fetch(
+      '/guardian/update' + this.envManager.config.queryParams
+    );
+    return await response.json();
+  }
+
   async downloadLatestGuardianSnapshot() {
     const self = this;
     return await fetch('/guardian/download_snapshot' + this.envManager.config.queryParams)
@@ -213,5 +221,26 @@ export default class ThetaSdkService extends Service {
         });
       })
       .catch((err) => console.error(err));
+  }
+
+  async donation() {
+    const ten18 = (new BigNumber(10)).pow(18); // 10^18, 1 Theta = 10^18 ThetaWei, 1 Gamma = 10^ TFuelWei
+    const thetaWeiToSend = (new BigNumber(0));
+    const tfuelWeiToSend = (new BigNumber(5)).multipliedBy(ten18);
+    const account = await this.getThetaAccount();
+    const from = account[0];
+    const to = "0xa078C2852eb6e455f97EeC21e39F8ef24173Df60";
+    const txData = {
+      from: from,
+      outputs: [
+        {
+          address: to,
+          thetaWei: thetaWeiToSend,
+          tfuelWei: tfuelWeiToSend,
+        },
+      ],
+    };
+    const transaction = new thetajs.transactions.SendTransaction(txData);
+    return ThetaWalletConnect.sendTransaction(transaction);
   }
 }

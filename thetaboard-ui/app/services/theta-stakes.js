@@ -48,7 +48,11 @@ export default class ThetaStakesService extends Service {
   async deposit() {
     try {
       const sendTransaction = await this.thetaSdk.sendThetaTransaction('deposit');
-      if (!sendTransaction.success) this.utils.errorNotify(sendTransaction.msg);
+      if (sendTransaction.hash) {
+        this.utils.successNotify('Deposit Successful!');
+      } else {
+        this.utils.errorNotify('Something went wrong, please try again');
+      }
     } catch (error) {
       this.utils.errorNotify(error.message);
     }
@@ -57,7 +61,12 @@ export default class ThetaStakesService extends Service {
   @action
   async withdraw() {
     try {
-      return await this.thetaSdk.sendThetaTransaction('withdraw');
+      const withdraw = await this.thetaSdk.sendThetaTransaction('withdraw');
+      if (withdraw.hash) {
+        this.utils.successNotify('Withdraw Successful!');
+      } else {
+        this.utils.errorNotify('Something went wrong, please try again');
+      }
     } catch (error) {
       this.utils.errorNotify(error.message);
     }

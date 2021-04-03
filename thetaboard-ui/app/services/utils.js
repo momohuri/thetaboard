@@ -34,4 +34,16 @@ export default class UtilsService extends Service {
       { type: 'danger' }
     );
   }
+
+  @action
+  successNotify(message) {
+    $.notify(
+      {
+        icon: 'glyphicon glyphicon-success-sign',
+        title: 'Success!',
+        message: message,
+      },
+      { type: 'success' }
+    );
+  }
 }

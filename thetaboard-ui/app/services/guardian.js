@@ -228,7 +228,27 @@ export default class GuardianService extends Service {
   }
 
   @action
-  updateGuardian() {
-    return '';
+  async updateGuardian() {
+    const updateGuardian = await this.thetaSdk.updateGuardian();
+    await this.refreshStatus();
+    if (updateGuardian.success) {
+      $.notify(
+        {
+          icon: 'glyphicon glyphicon-success-sign',
+          title: 'Success!!',
+          message: 'Guardian node successfully updated',
+        },
+        { type: 'success' }
+      );
+    } else {
+      $.notify(
+        {
+          icon: 'glyphicon glyphicon-danger-sign',
+          title: 'Error!!',
+          message: 'We couldn\'t update your Guardian node, please check the logs for more information.',
+        },
+        { type: 'danger' }
+      );
+    }
   }
 }
