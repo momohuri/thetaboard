@@ -20,7 +20,7 @@
         <tbody>
           {{#each transactions as |transaction|}}
             <tr>
-            <td class="text-center">{{transaction.type}}</td>
+            <td class="text-center transaction-type"><img src="{{rootURL}}assets/img/transactions/{{transaction.type}}.png"/> {{transaction.typeName}}</td>
             <td class="text-center">
               <a class="a-elipsis" href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}">{{transaction.txn_hash}}</a>
             </td>

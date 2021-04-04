@@ -162,6 +162,7 @@ nav[aria-label="Page navigation"] .pager li {
 
 nav[aria-label="Page navigation"] .pager li a {
   color: white;
+  padding: 10px;
 }
 
 nav[aria-label="Page navigation"] .pager li.disabled {
@@ -382,4 +383,8 @@ div.card-header  .card-title.forecast-description {
 
 .pie-chart-card-body {
   margin: 5px 0 5px;
+}
+
+td.transaction-type img {
+  width: 18px;
 }

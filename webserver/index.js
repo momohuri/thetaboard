@@ -117,24 +117,40 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
             totalPageNumber: transaction_list.totalPageNumber
         };
         transaction_history.push(...transaction_list.body.map((x) => {
-            let from, to, values = null;
+            let from, to, values, typeName = null;
             if (x["type"] == 0) {
                 from = x["data"]["proposer"];
                 to = x["data"]["outputs"].filter(x => x['address'].toUpperCase() === wallet_adr.toUpperCase())[0];
                 values = to;
+                typeName = "Coinbase";
             } else if (x["type"] == 10) {
                 from = x["data"]["source"];
                 to = x["data"]["holder"];
                 values = from;
+                typeName = "Deposit Stake";
             } else if (x["type"] == 2) {
                 from = x["data"]["inputs"][0];
-                to = x["data"]["outputs"][0]
+                to = x["data"]["outputs"][0];
                 values = to;
+                typeName = "Transfer";
+            } else if (x["type"] == 9) {
+                to = x["data"]["source"];
+                from = x["data"]["holder"];
+                values = to;
+                typeName = "Withdraw Stake";
+            } else if (x["type"] == 7) {
+                from = x["data"]["from"];
+                to = x["data"]["to"];
+                values = to;
+                typeName = "Smart Contract";
+            } else {
+                toto = 1;
             }
 
             return {
                 "in_or_out": wallet_adr.toUpperCase() == from["address"].toUpperCase() ? "out" : "in",
                 "type": x["type"],
+                "typeName": typeName,
                 "txn_hash": x["hash"],
                 "block": x["block_height"],
                 "timestamp": dateFormat(new Date(Number(x["timestamp"]) * 1000), "isoDateTime"),
