@@ -7,7 +7,7 @@ It can also be used to get information about Theta and your wallet.<br>
 <br> 
 
 #### Live demo : https://ns100226.ip-147-135-1.us/guardian 
-
+#### Demo Video : https://www.youtube.com/watch?v=R8GLcNzbi0Y
 #### Join us on Discord: https://discord.gg/SGUtY7zBU3
 
 
