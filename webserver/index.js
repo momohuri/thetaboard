@@ -18,6 +18,17 @@ app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
 });
 
+// env variables
+const api_token = "API_TOKEN" in process.env && process.env.API_TOKEN ? process.env.API_TOKEN : null;
+const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
+const is_demo = "DEMO" in process.env && process.env.DEMO;
+const theta_explorer_api_params = {
+    https: {rejectUnauthorized: false},
+}
+if(api_token){
+    theta_explorer_api_params.headers = {"x-api-token": api_token}
+}
+
 // a middleware function with no mount path. This code is executed for every request to the router
 app.use(function (req, res, next) {
     if (req.query && req.query.env) {
@@ -49,11 +60,11 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
     const response = [];
     try {
         // get price
-        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
+        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, theta_explorer_api_params);
         const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0]['price'];
         const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
         // get theta holding
-        const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`, {https: {rejectUnauthorized: false}});
+        const holding = await got(`${theta_explorer_api_domain}/api/account/${wallet_adr}`, theta_explorer_api_params);
 
         const balances = JSON.parse(holding.body).body.balance;
         response.push({
@@ -76,7 +87,7 @@ app.get("/wallet-info/:wallet_addr", async (req, res, next) => {
         });
 
         // get staked theta
-        const staked_query = await got(`${theta_explorer_api_domain}/api/stake/${wallet_adr}`, {https: {rejectUnauthorized: false}});
+        const staked_query = await got(`${theta_explorer_api_domain}/api/stake/${wallet_adr}`, theta_explorer_api_params);
         response.push(...JSON.parse(staked_query.body).body.sourceRecords.map((x) => {
             return {
                 "amount": x["amount"] / wei_divider,
@@ -101,7 +112,7 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
 
     try {
         // get price
-        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, {https: {rejectUnauthorized: false}});
+        const prices = await got(`${theta_explorer_api_domain}/api/price/all`, theta_explorer_api_params);
         const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0]['price'];
         const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
 
@@ -110,7 +121,7 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
         const pageNumber = req.query.pageNumber ? req.query.pageNumber.toString() : '1';
         const limitNumber = req.query.limitNumber ? req.query.limitNumber.toString() : '15';
         const transaction_history_query = await got(`${theta_explorer_api_domain}/api/accounttx/${wallet_adr}?type=-1&pageNumber=${pageNumber}&limitNumber=${limitNumber}&isEqualType=false`,
-            {https: {rejectUnauthorized: false}});
+            theta_explorer_api_params);
         const transaction_list = JSON.parse(transaction_history_query.body);
         const pagination = {
             currentPageNumber: transaction_list.currentPageNumber,
@@ -188,8 +199,6 @@ const await_spawn = require('await-spawn');
 
 // set machine id as password of GN so it persists after docker restart.
 const theta_mainnet_folder = "/home/node/theta_mainnet";
-const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
-const is_demo = "DEMO" in process.env && process.env.DEMO;
 
 app.get('/guardian/status', async (req, res) => {
     let version = null;
