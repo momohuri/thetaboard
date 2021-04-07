@@ -9,8 +9,17 @@
           <div class="block block-three"></div>
           <div class="block block-four"></div>
           <h2 class="card-title forecast-title">TFuel Reward Forecast</h2>
-          <h5 class="card-title forecast-description"> Forecasting is based on your rewards earned in the last
-            month</h5>
+
+          <div class="form-group form-inline">
+            <label>Forecasting for
+              <Input
+                      @type="number"
+                      @value={{thetaAmount}}
+                      @class="form-control"
+                      {{on "keyup" this.updateData}}
+              />
+              Theta </label>
+          </div>
         </div>
       </div>
     </div>

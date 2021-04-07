@@ -10,6 +10,8 @@ export default class EarningsProjectionsComponent extends Component {
   @tracked avg_tfuel_per_day = 0;
   @tracked avg_tfuel_per_year = 0;
 
+  @tracked thetaAmount = 1000;
+
   formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD'
@@ -43,41 +45,17 @@ export default class EarningsProjectionsComponent extends Component {
     return this.formatter.format(value);
   }
 
-
-  _groupByDay(accumulator, currentValue) {
-    let d = new Date(currentValue['timestamp']);
-    d = d.toISOString().split('T')[0];
-    accumulator[d] = accumulator[d] || 0;
-    accumulator[d] += currentValue.value[1].amount;
-    return accumulator;
-  }
-
-  async _getAvgTfuelPerDay() {
-    const account = await this.thetaSdk.getThetaAccount();
-    const transactions = await this.thetaSdk.getTransactions(account, 1, 100);
-    const reward_transactions = transactions.transactions.filter((x) => x.type === 0);
-    const day_groups = reward_transactions.reduce(this._groupByDay, {});
-    // remove first and last date as they might not be complete
-    if (Object.keys(day_groups).length > 2) {
-      delete day_groups[Object.keys(day_groups)[0]];
-      delete day_groups[Object.keys(day_groups)[Object.keys(day_groups).length - 1]];
-    }
-    const sum = Object.values(day_groups).reduce((a, b) => a + b, 0);
-    this.avg_tfuel_per_day = (sum / Object.keys(day_groups).length) || 0;
-    return this.avg_tfuel_per_day;
-  }
-
-  async chartData() {
-    const avg_tfuel_per_day = await this._getAvgTfuelPerDay();
+  get chartData() {
+    this.avg_tfuel_per_day = this.thetaAmount * 0.00118
     const labels = [];
     for (let i = 0; i < 13; i++) {
       labels.push(moment().add(i, 'months'));
     }
     const data = labels.reduce((acc, curr, index) => {
       if (acc[index - 1]) {
-        acc.push(acc[index - 1] + avg_tfuel_per_day * curr.daysInMonth());
+        acc.push(acc[index - 1] + this.avg_tfuel_per_day * curr.daysInMonth());
       } else {
-        acc.push(avg_tfuel_per_day * curr.daysInMonth());
+        acc.push(this.avg_tfuel_per_day * curr.daysInMonth());
       }
       return acc;
     }, []);
@@ -100,7 +78,11 @@ export default class EarningsProjectionsComponent extends Component {
   }
 
   @action
-  async setupChart() {
+  setupChart() {
+    const guardian = this.args.walletInfo.wallets.filter((x) => x.type === 'guardian');
+    if (guardian.length > 0) {
+      this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
+    }
     const element = document.getElementById("forecastChart");
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
@@ -158,11 +140,17 @@ export default class EarningsProjectionsComponent extends Component {
       },
     };
     const ctx = element.getContext("2d");
-    const data = await this.chartData();
-    new Chart(ctx, {
+    const data = this.chartData;
+    this.forecast_chart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: gradientChartOptionsConfiguration
     });
+  }
+
+  @action
+  updateData() {
+    this.forecast_chart.data = this.chartData;
+    this.forecast_chart.update();
   }
 }
