@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
+import {inject as service} from '@ember/service';
 import {action} from '@ember/object';
 
 export default class HoldingPieComponent extends Component {
+  @service('theta-sdk') thetaSdk;
+
   @action
   setupChart() {
     const element = document.getElementById("pieChartExample");
@@ -10,8 +13,8 @@ export default class HoldingPieComponent extends Component {
       currency: 'USD'
     });
 
-    const guardian = this.args.walletInfo.wallets.filter((x) => x.type === 'guardian');
-    let guardian_value = 0
+    const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
+    let guardian_value = 0;
     if (guardian.length > 0) {
       guardian_value = guardian.reduce((a, b) => a.value + b.value, {'value': 0})
     }
@@ -23,26 +26,28 @@ export default class HoldingPieComponent extends Component {
       },
       {
         'label': 'Theta',
-        "value": this.args.walletInfo.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta')
+        "value": this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta')
           .reduce((a, b) => a.value + b.value, {'value': 0}),
         'color': '#2BB7E5'
       },
       {
         'label': 'Tfuel',
-        "value": this.args.walletInfo.wallets.filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
+        "value": this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
           .reduce((a, b) => a.value + b.value, {'value': 0}),
         'color': '#FFA500'
-      }
+      },
     ];
-    this.args.walletInfo.wallets.map((x) => x.value);
+    this.thetaSdk.wallets.map((x) => x.value);
     let data = {
-      datasets: [{
-        data: types.map((x) => x.value),
-        backgroundColor: types.map((x) => x.color),
-        hoverOffset: 4,
-        borderWidth: 1,
-        borderColor: '#ddd',
-      }],
+      datasets: [
+        {
+          data: types.map((x) => x.value),
+          backgroundColor: types.map((x) => x.color),
+          hoverOffset: 4,
+          borderWidth: 1,
+          borderColor: '#ddd',
+        },
+      ],
 
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: types.map((x) => x.label)

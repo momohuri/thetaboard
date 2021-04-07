@@ -20,8 +20,6 @@ export default class DashboardRoute extends Route {
     const historicPrice = await fetch(
       `https://www.thetascan.io/api/price/?start_date=${oneYearBack}&end_date=${today}`
     );
-    const account = await this.thetaSdk.getThetaAccount();
-    const walletInfo = await this.thetaSdk.getWalletInfo(account);
-    return {"historicPrice": await historicPrice.json(), 'walletInfo': walletInfo, guardian: this.guardian};
+    return {"historicPrice": await historicPrice.json(), 'walletInfo': {wallets: []}, guardian: this.guardian};
   }
 }

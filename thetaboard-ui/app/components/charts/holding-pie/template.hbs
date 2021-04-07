@@ -1,5 +1,5 @@
 
-<div class="card card-chart card-logs card-user">
+<div class="card card-chart card-user card-holdings">
   <div class="card-header ">
     <div class="row">
       <div class="col-sm-12 text-left">
@@ -15,6 +15,11 @@
     </div>
   </div>
   <div class="card-body pie-chart-card-body">
+
+  {{#if this.thetaSdk.wallets.length}}
     <canvas id="pieChartExample" height="266" {{did-insert this.setupChart}}></canvas>
+  {{else}}
+    <p class="wallet-placeholder">Please connect your wallet or enter an address</p>
+  {{/if}}
   </div>
 </div>

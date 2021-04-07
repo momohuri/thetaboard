@@ -1,3 +1,23 @@
+button.connect-wallet-button.btn.btn-fill {
+  margin: 10px auto 0;
+  display: block;
+  padding: 7px 20px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+p.wallet-placeholder{ 
+  position: absolute;
+  top: 170px;
+  font-size: 20px;
+  margin: 0 18% 0;
+  text-align: center;
+}
+
+div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
+  min-height: 295px;
+}
+
 .thetaboard-logo {
   width: 130px;
   margin: 10px auto;

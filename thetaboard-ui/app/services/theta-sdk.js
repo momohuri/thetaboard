@@ -11,10 +11,12 @@ export default class ThetaSdkService extends Service {
     super(...args);
     this.downloadProgress = '';
     this.wallets = [];
+    this.currentAccount = '';
   }
 
-  @tracked downloadProgress = '';
-  @tracked wallets = [];
+  @tracked downloadProgress;
+  @tracked wallets;
+  @tracked currentAccount;
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -40,7 +42,9 @@ export default class ThetaSdkService extends Service {
       this.envManager.config.thetaNetwork
     );
     await ThetaWalletConnect.connect();
-    return await ThetaWalletConnect.requestAccounts();
+    const account = await ThetaWalletConnect.requestAccounts();
+    this.currentAccount = account;
+    return account;
   }
 
   async sendThetaTransaction(type) {
