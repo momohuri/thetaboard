@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 app.use(express.static('public'));
 // Server port
-const HTTP_PORT = 8000;
+const HTTP_PORT = 8001;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
@@ -412,7 +412,7 @@ app.get('/guardian/download_snapshot', async (req, res) => {
 // Streams api
 
 app.get('/streams/list', async (req, res) => {
-    const streams = fs.readFileSync('./streams.json', {encoding: 'utf8', flag: 'r'});
+    const streams = fs.readFileSync('./ressources/streams.json', {encoding: 'utf8', flag: 'r'});
     res.json({"msg": JSON.parse(streams).result.stream_info, "success": true});
 })
 
