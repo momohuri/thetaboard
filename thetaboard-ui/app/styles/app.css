@@ -3,7 +3,23 @@ button.connect-wallet-button.btn.btn-fill {
   display: block;
   padding: 7px 20px;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 9997;
+}
+
+#searchModal {
+  z-index: 9998;
+  background: rgb(0,0,0,0.7);
+}
+
+#searchModal form{
+  width: 100%
+}
+
+#searchModal .search-bar-button {
+  width: 200px;
+  display: block;
+  cursor: pointer;
+  margin: -5px 40px 0 0;
 }
 
 p.wallet-placeholder{ 

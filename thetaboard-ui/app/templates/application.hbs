@@ -32,6 +32,11 @@
 
         <div class="collapse navbar-collapse justify-content-end">
           <ul class="navbar-nav">
+          <li class="search-bar input-group">
+              <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
+                <span class="d-lg-none d-md-block">Search</span>
+              </button>
+            </li>
             <li class="dropdown nav-item">
               {{guardian-notifications/guardian-status-notification}}
             </li>
@@ -40,6 +45,7 @@
         </div>
       </div>
     </nav>
+    {{search-bar/search-bar}}
     <!-- End Navbar -->
     {{connect-wallet/connect-wallet}}
     <div class="content">
