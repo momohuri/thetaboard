@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class EarningsProjectionsComponent extends Component {
   @service('theta-sdk') thetaSdk;
+  account = '';
 
   @tracked avg_tfuel_per_day = 0;
   @tracked avg_tfuel_per_year = 0;
@@ -17,7 +18,12 @@ export default class EarningsProjectionsComponent extends Component {
   });
 
   get setUpChart() {
-    if (this.thetaSdk.wallets.length) {
+    if (this.thetaSdk.currentAccount != this.account) {
+      this.account = this.thetaSdk.currentAccount;
+      const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
+      if (guardian.length > 0) {
+        this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
+      }
       this.setupChart();
     }
   }
@@ -28,24 +34,24 @@ export default class EarningsProjectionsComponent extends Component {
 
   get avg_tfuel_per_day_dollar() {
     let value = 0;
-    if (this.thetaSdk.wallets.length) {
-      value = this.avg_tfuel_per_day * this.thetaSdk.wallets[1].market_price;
+    if (this.thetaSdk.prices) {
+      value = this.avg_tfuel_per_day * this.thetaSdk.prices.tfuel;
     }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_month_dollar() {
     let value = 0;
-    if (this.thetaSdk.wallets.length) {
-      value = this.avg_tfuel_per_month * this.thetaSdk.wallets[1].market_price;
+    if (this.thetaSdk.prices) {
+      value = this.avg_tfuel_per_month * this.thetaSdk.prices.tfuel;
     }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_year_dollar() {
     let value = 0;
-    if (this.thetaSdk.wallets.length) {
-      value = this.avg_tfuel_per_year * this.thetaSdk.wallets[1].market_price;
+    if (this.thetaSdk.prices) {
+      value = this.avg_tfuel_per_year * this.thetaSdk.prices.tfuel;
     }
     return this.formatter.format(value);
   }
@@ -91,12 +97,6 @@ export default class EarningsProjectionsComponent extends Component {
     $('#forecast-chart-container').append('<canvas id="forecastChart" height="215"></canvas>');
     element = document.getElementById('forecastChart');
     const ctx = element.getContext('2d');
-
-    const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
-    if (guardian.length > 0) {
-      this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
-    }
-
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
       legend: {

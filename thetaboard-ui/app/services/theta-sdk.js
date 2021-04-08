@@ -12,11 +12,14 @@ export default class ThetaSdkService extends Service {
     this.downloadProgress = '';
     this.wallets = [];
     this.currentAccount = '';
+    this.prices = {};
+    this.getPrices();
   }
 
   @tracked downloadProgress;
   @tracked wallets;
   @tracked currentAccount;
+  @tracked prices;
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -76,6 +79,18 @@ export default class ThetaSdkService extends Service {
       const withdrawTxResult = await ThetaWalletConnect.sendTransaction(withdrawTx);
       return withdrawTxResult;
     }
+  }
+
+  async getPrices() {
+    let prices = { theta: 0, tfuel: 0 };
+    const getPrices = await fetch(
+      '/prices' + this.envManager.config.queryParams
+    );
+    if (getPrices.status == 200) {
+      prices = await getPrices.json();
+    }
+    this.prices = prices;
+    return prices;
   }
 
   async getWalletInfo(accounts) {
