@@ -8,24 +8,23 @@
           <div class="block block-two"></div>
           <div class="block block-three"></div>
           <div class="block block-four"></div>
-          <h2 class="card-title forecast-title">TFuel Reward Forecast</h2>
+          <h2 class="card-title forecast-title">TFuel Reward Forecast {{setUpChart}}</h2>
 
-          <div class="form-group form-inline">
-            <label>Forecasting for
-              <Input
-                      @type="number"
-                      @value={{thetaAmount}}
-                      @class="form-control"
-                      {{on "keyup" this.updateData}}
-              />
-              Theta </label>
-          </div>
+          <br/>
+          <p class="form-inline forecast-amout-inline">Forecasting for
+          <Input
+                  @type="number"
+                  @value={{thetaAmount}}
+                  @class="form-control theta-ammout-forecast"
+                  {{on "keyup" this.updateData}}
+          />
+          Theta </p>
         </div>
       </div>
     </div>
   </div>
   <div class="card-body">
-    <div>
+    <div id="forecast-chart-container">
       <canvas id="forecastChart" height="215" {{did-insert this.setupChart}}></canvas>
     </div>
     <div class="forecast-legend">

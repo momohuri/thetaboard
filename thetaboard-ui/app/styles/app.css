@@ -408,3 +408,14 @@ div.card-header  .card-title.forecast-description {
 td.transaction-type img {
   width: 18px;
 }
+
+.form-control.ember-text-field.ember-view.theta-ammout-forecast {
+  width: 122px;
+  margin: 0 12px;
+  width: 143px;
+}
+
+p.form-inline.forecast-amout-inline {
+  margin: auto;
+  display: block;
+}

@@ -9,12 +9,12 @@
           <div class="block block-two"></div>
           <div class="block block-three"></div>
           <div class="block block-four"></div>
-          <h2 class="card-title forecast-title">Wallet Composition in $</h2>
+          <h2 class="card-title forecast-title">Wallet Composition in $ {{setUpChart}}</h2>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body pie-chart-card-body">
+  <div id="holding-container" class="card-body pie-chart-card-body">
 
   {{#if this.thetaSdk.wallets.length}}
     <canvas id="pieChartExample" height="266" {{did-insert this.setupChart}}></canvas>
