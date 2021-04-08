@@ -1,7 +1,13 @@
 import Service from '@ember/service';
 import * as thetajs from '@thetalabs/theta-js';
+import { getOwner } from '@ember/application';
 
 export default class EnvManagerService extends Service {
+
+  get thetaSdk() {
+    return getOwner(this).lookup('service:theta-sdk');
+  }
+
   config = {
     env: '',
     explorerEndpoint: '',
@@ -9,7 +15,7 @@ export default class EnvManagerService extends Service {
     thetaNetwork: '',
   };
 
-  setParameters(params) {
+  async setParameters(params) {
     if (params && params.env) {
       this.config.env = params.env;
       if (params.env === 'testnet') {
@@ -28,6 +34,12 @@ export default class EnvManagerService extends Service {
       this.config.thetaNetwork = thetajs.networks.ChainIds.Mainnet;
       this.config.env = '';
       this.config.explorerEndpoint = 'https://explorer.thetatoken.org';
+    }
+    if (params && params.wa) {
+      const wa = params.wa;
+      if (wa.length == 42 && wa.substr(1, 1).toLocaleLowerCase() == 'x') {
+        await this.thetaSdk.getWalletInfo([wa]);
+      }
     }
     return this.config;
   }
