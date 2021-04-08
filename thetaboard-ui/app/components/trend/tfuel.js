@@ -17,7 +17,7 @@ export default class TrendTfuelComponent extends Component {
   async initialize() {
     return this.getDates().then((dates) => {
       const prices = this.args.historic_price;
-      const tfuelPrice = this.thetaSdk.prices.tfuel;
+      const tfuelPrice = this.thetaSdk.prices.tfuel.price;
       this.trendLastWeek = this.setTrend(tfuelPrice, prices[dates.lastWeek].tfuel_price);
       this.trendYesterday = this.setTrend(tfuelPrice, prices[dates.yesterday].tfuel_price);
     });

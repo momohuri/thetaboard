@@ -37,6 +37,10 @@ export default class ThetaSdkService extends Service {
     return getOwner(this).lookup('service:guardian');
   }
 
+  get utils() {
+    return getOwner(this).lookup('service:utils');
+  }
+
   get guardianWallets() {
     if (this.wallets.length) {
       return this.wallets.filter((x) => x.type === 'guardian');
@@ -155,6 +159,7 @@ export default class ThetaSdkService extends Service {
             const percentReceived = decodedString.split('%')[0].substr(-3);
             if (percentReceived != '...') {
               if (
+                percentReceived != '050' &&
                 Number(percentReceived) > self.downloadProgress &&
                 Number(percentReceived) < 100
               ) {
@@ -245,11 +250,15 @@ export default class ThetaSdkService extends Service {
     const self = this;
     return await fetch('/guardian/download_snapshot' + this.envManager.config.queryParams)
       .then((response) => self.readableStreamDownload(response))
-      .then((stream) => new Response(stream))
+      .then((stream) => {
+        self.utils.successNotify('Downloading...');
+        return new Response(stream);
+      })
       .then((response) => response.blob())
       .then((blob) => {
-        return blob.text().then((text) => {
-          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
+        return blob.text().then((logs) => {
+          self.utils.successNotify('Download completed. You can now start your Guardian Node');
+          return { logs: htmlSafe(logs.split('\n').join('<br/>')) };
         });
       })
       .catch((err) => console.error(err));

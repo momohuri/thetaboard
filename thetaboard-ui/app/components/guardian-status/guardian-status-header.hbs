@@ -10,7 +10,7 @@
                 {{#if guardian.isUp}}
                     since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
                 {{/if}}
-                {{#if guardian.isSyncing}}
+                {{#if guardian.isUp}}
                     {{#if guardian.snapshotInfo.latestFinalizedBlockTime}} 
                         <p>The lastest finalized block synced is from: {{moment guardian.snapshotInfo.latestFinalizedBlockTime}}</p>
                     {{/if}}

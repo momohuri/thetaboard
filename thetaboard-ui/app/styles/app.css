@@ -247,12 +247,8 @@ nav[aria-label="Page navigation"] .pager li.pager-inner {
 }
 
 .guardian-status-alert {
-  width: 60%;
+  width: 90%;
   margin: auto;
-}
-
-.card-status-body {
-  min-height: 485px;;
 }
 
 @keyframes animate-stripes {
@@ -444,17 +440,19 @@ p.form-inline.forecast-amout-inline {
 }
 
 .trend-activity {
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 .trend-activity .down {
   color: #fd5d93;
   font-size: 24px;
+  margin: 0;
 }
 
 .trend-activity .up {
   color: #00bf9a;
   font-size: 24px;
+  margin: 0;
 }
 
 .title.current-price {
@@ -463,4 +461,22 @@ p.form-inline.forecast-amout-inline {
 
 .trend-activity .trend-usd-change {
   font-size: 12px;
+}
+
+.trends-percent-container {
+  display: block;
+  width: 100%;
+}
+
+.trends-percent {
+  display: inline-block;
+  width: 48%;
+}
+
+.trends-percent.border-separation {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.trend-activity.extra .title {
+  font-size: 15px;
 }

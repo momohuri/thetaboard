@@ -34,24 +34,24 @@ export default class EarningsProjectionsComponent extends Component {
 
   get avg_tfuel_per_day_dollar() {
     let value = 0;
-    if (this.thetaSdk.prices) {
-      value = this.avg_tfuel_per_day * this.thetaSdk.prices.tfuel;
+    if (this.thetaSdk.prices.tfuel) {
+      value = this.avg_tfuel_per_day * this.thetaSdk.prices.tfuel.price;
     }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_month_dollar() {
     let value = 0;
-    if (this.thetaSdk.prices) {
-      value = this.avg_tfuel_per_month * this.thetaSdk.prices.tfuel;
+    if (this.thetaSdk.prices.tfuel) {
+      value = this.avg_tfuel_per_month * this.thetaSdk.prices.tfuel.price;
     }
     return this.formatter.format(value);
   }
 
   get avg_tfuel_per_year_dollar() {
     let value = 0;
-    if (this.thetaSdk.prices) {
-      value = this.avg_tfuel_per_year * this.thetaSdk.prices.tfuel;
+    if (this.thetaSdk.prices.tfuel) {
+      value = this.avg_tfuel_per_year * this.thetaSdk.prices.tfuel.price;
     }
     return this.formatter.format(value);
   }
@@ -94,7 +94,7 @@ export default class EarningsProjectionsComponent extends Component {
     let element = document.getElementById("forecastChart");
     if (!element) return;
     element.remove(); // this is my <canvas> element
-    $('#forecast-chart-container').append('<canvas id="forecastChart" height="215"></canvas>');
+    $('#forecast-chart-container').append('<canvas id="forecastChart" height="239"></canvas>');
     element = document.getElementById('forecastChart');
     const ctx = element.getContext('2d');
     const gradientChartOptionsConfiguration = {

@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | uptime/uptime', function(hooks) {
+module('Integration | Component | guardian-logs/footer', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Uptime::Uptime />`);
+    await render(hbs`<GuardianLogs::Footer />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <Uptime::Uptime>
+      <GuardianLogs::Footer>
         template block text
-      </Uptime::Uptime>
+      </GuardianLogs::Footer>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

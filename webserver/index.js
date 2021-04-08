@@ -49,9 +49,12 @@ app.get("/prices", async (req, res, next) => {
     try {
         // get price
         const prices = await got(`${theta_explorer_api_domain}/api/price/all`, theta_explorer_api_params);
-        const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0]['price'];
-        const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0]['price'];
-        res.json({theta: theta_price, tfuel: tfuel_price});
+        const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0];
+        const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0];
+        res.json({
+            theta: theta_price,
+            tfuel: tfuel_price,
+        });
     } catch (error) {
         res.status(400).json(error.response.body);
     }

@@ -3,10 +3,6 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class GuardianLogsComponent extends Component {
-  constructor(...args) {
-    super(...args);
-  }
-
   @service('guardian') guardian;
   @service('utils') utils;
 
