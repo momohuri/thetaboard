@@ -1,1 +1,4 @@
+{{#if this.thetaSdk.currentAccount}}
+    <span class="wallet-address-span"> Wallet: {{this.thetaSdk.currentAccount}}</span>
+{{/if}}
 <button {{on 'click' this.connectWallet}} type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>

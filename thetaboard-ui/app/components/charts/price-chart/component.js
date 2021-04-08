@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
-import {action} from '@ember/object';
-import {tracked} from '@glimmer/tracking';
-
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class PriceChartComponent extends Component {
   @tracked time_range = 'year';
@@ -9,31 +8,38 @@ export default class PriceChartComponent extends Component {
   get chartData() {
     let historic_data = {};
     if (this.time_range === 'week') {
-      Object.keys(this.args.historic_price).splice(0, 7).forEach((date) => {
-        historic_data[date] = this.args.historic_price[date]
-      })
+      Object.keys(this.args.historic_price)
+        .splice(0, 7)
+        .forEach((date) => {
+          historic_data[date] = this.args.historic_price[date];
+        });
     } else if (this.time_range === 'month') {
-      Object.keys(this.args.historic_price).splice(0, 30).forEach((date) => {
-        historic_data[date] = this.args.historic_price[date]
-      })
+      Object.keys(this.args.historic_price)
+        .splice(0, 30)
+        .forEach((date) => {
+          historic_data[date] = this.args.historic_price[date];
+        });
     } else {
       historic_data = this.args.historic_price;
     }
-    const labels = Object.keys(historic_data).map((x) => moment(x, "YYYY-MM-DD"));
+    const labels = Object.keys(historic_data).map((x) =>
+      moment(x, 'YYYY-MM-DD')
+    );
     return {
       labels: labels,
-      datasets: [{
-        label: "Theta",
-        pointStyle: 'point',
-        yAxisID: 'theta',
-        radius: 0,
-        borderColor: '#2BB7E5',
-        pointBackgroundColor: '#2BB7E5',
-        data: Object.values(historic_data).map((x) => x.theta_price),
-        borderWidth: 1,
-      },
+      datasets: [
         {
-          label: "Tfuel",
+          label: 'Theta',
+          pointStyle: 'point',
+          yAxisID: 'theta',
+          radius: 0,
+          borderColor: '#2BB7E5',
+          pointBackgroundColor: '#2BB7E5',
+          data: Object.values(historic_data).map((x) => x.theta_price),
+          borderWidth: 1,
+        },
+        {
+          label: 'Tfuel',
           yAxisID: 'tfuel',
           pointStyle: 'point',
           radius: 0,
@@ -41,16 +47,17 @@ export default class PriceChartComponent extends Component {
           pointBackgroundColor: '#FFA500',
           data: Object.values(historic_data).map((x) => x.tfuel_price),
           borderWidth: 1,
-        },]
+        },
+      ],
     };
   }
 
   @action
   setupChart() {
-    const element = document.getElementById("lineChartExample");
+    const element = document.getElementById('lineChartExample');
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     });
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
@@ -59,87 +66,91 @@ export default class PriceChartComponent extends Component {
         position: 'bottom',
         labels: {
           usePointStyle: true,
-          fontColor: "#ccc",
-        }
+          fontColor: '#ccc',
+        },
       },
       tooltips: {
         callbacks: {
-          title: (tooltipItem, data) => {
-            return moment(new Date(tooltipItem[0].label)).format('LL')
+          title: (tooltipItem) => {
+            return moment(new Date(tooltipItem[0].label)).format('LL');
           },
-          label: (tooltipItem, data) => {
+          label: (tooltipItem) => {
             if (Number(tooltipItem.yLabel) > 0.01) {
               return formatter.format(Number(tooltipItem.yLabel));
             } else {
-              return `$${Number(tooltipItem.yLabel)}`
+              return `$${Number(tooltipItem.yLabel)}`;
             }
-
-          }
+          },
         },
         backgroundColor: '#fff',
         titleFontColor: '#333',
         bodyFontColor: '#666',
         bodySpacing: 4,
         xPadding: 12,
-        mode: "nearest",
+        mode: 'nearest',
         intersect: 0,
-        position: "nearest"
+        position: 'nearest',
       },
       responsive: true,
       scales: {
-        yAxes: [{
-          id: "theta",
-          type: 'linear',
-          ticks: {
-            min: 0,
-            fontColor: "#2BB7E5",
-            beginAtZero: true,
-            maxTicksLimit: 10,
-            callback: function (value, index, values) {
-              return formatter.format(Number(value.toString()));
-            }
-          },
-        },
+        yAxes: [
           {
-            id: "tfuel",
+            id: 'theta',
+            type: 'linear',
+            ticks: {
+              min: 0,
+              fontColor: '#2BB7E5',
+              beginAtZero: true,
+              maxTicksLimit: 10,
+              callback: function (value) {
+                return formatter.format(Number(value.toString()));
+              },
+            },
+          },
+          {
+            id: 'tfuel',
             type: 'linear',
             position: 'right',
             ticks: {
               min: 0,
-              fontColor: "#FFA500",
+              fontColor: '#FFA500',
               beginAtZero: true,
               maxTicksLimit: 10,
-              callback: function (value, index, values) {
+              callback: function (value) {
                 return formatter.format(Number(value.toString()));
-              }
+              },
             },
-          }],
-
-        xAxes: [{
-          type: 'time',
-          time: {
-            unit: 'month'
           },
-          ticks: {
-            maxTicksLimit: 10,
-            min: 0,
-            fontColor: "#ccc",
-            beginAtZero: true,
-          }
-        }],
+        ],
+        xAxes: [
+          {
+            type: 'time',
+            time: {
+              unit: 'month',
+            },
+            ticks: {
+              maxTicksLimit: 10,
+              min: 0,
+              fontColor: '#ccc',
+              beginAtZero: true,
+            },
+          },
+        ],
       },
       plugins: {
         datalabels: {
-          display: () => {return null;}, // This is a hack so it doesn't display any label
-        }
+          display: () => {
+            return null;
+          }, // This is a hack so it doesn't display any label
+        },
       },
     };
-    const ctx = element.getContext("2d");
-    const data = this.chartData
+    const ctx = element.getContext('2d');
+    const data = this.chartData;
     this.historic_data_chart = new Chart(ctx, {
       type: 'line',
       data: data,
-      options: gradientChartOptionsConfiguration
+      options: gradientChartOptionsConfiguration,
     });
   }
 

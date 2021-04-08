@@ -1,10 +1,6 @@
 import Component from '@glimmer/component';
 
 export default class WalletTotalComponent extends Component {
-  constructor(...args) {
-    super(...args);
-  }
-
   get walletTotal() {
     let { wallet } = this.args;
     if (!wallet || wallet.length == 0) return 0;

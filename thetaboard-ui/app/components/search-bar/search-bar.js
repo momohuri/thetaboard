@@ -16,7 +16,7 @@ export default class SearchBarSearchBarComponent extends Component {
     ) {
       await this.thetaSdk.getWalletInfo([this.walletAddress]);
     } else {
-      this.utils.errorNotify("Invalid Wallet Address");
+      this.utils.errorNotify('Invalid Wallet Address');
     }
     $('#searchModal').modal('hide');
   }

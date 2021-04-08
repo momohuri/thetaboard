@@ -1,10 +1,10 @@
 import Service from '@ember/service';
-import {getOwner} from '@ember/application';
+import { getOwner } from '@ember/application';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 import * as thetajs from '@thetalabs/theta-js';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import BigNumber from "bignumber.js";
-import {htmlSafe} from '@ember/template';
+import { htmlSafe } from '@ember/template';
 
 export default class ThetaSdkService extends Service {
   constructor(...args) {
@@ -32,7 +32,7 @@ export default class ThetaSdkService extends Service {
 
   get guardianWallets() {
     if (this.wallets.length) {
-      return this.wallets.filter((x) => x.type === "guardian");
+      return this.wallets.filter((x) => x.type === 'guardian');
     }
     return [];
   }
@@ -66,7 +66,10 @@ export default class ThetaSdkService extends Service {
         const stakeTxResult = await ThetaWalletConnect.sendTransaction(stakeTx);
         return stakeTxResult;
       } else {
-        return {success: false, msg: 'Please provide a stake amout of 1000 minimum'};
+        return {
+          success: false,
+          msg: 'Please provide a stake amout of 1000 minimum',
+        };
       }
     } else if (type == 'withdraw') {
       let withdrawTx = new thetajs.transactions.WithdrawStakeTransaction(txData);
@@ -84,6 +87,7 @@ export default class ThetaSdkService extends Service {
       wallets = await walletInfo.json();
     }
     this.wallets = wallets.wallets;
+    this.currentAccount = accounts;
     return wallets;
   }
 
@@ -116,7 +120,7 @@ export default class ThetaSdkService extends Service {
         return pump();
 
         function pump() {
-          return reader.read().then(({done, value}) => {
+          return reader.read().then(({ done, value }) => {
             // When no more data needs to be consumed, close the stream
             if (done) {
               controller.close();
@@ -129,7 +133,10 @@ export default class ThetaSdkService extends Service {
             result.push(decodedString);
             const percentReceived = decodedString.split('%')[0].substr(-3);
             if (percentReceived != '...') {
-              if (Number(percentReceived) > self.downloadProgress && Number(percentReceived) < 100) {
+              if (
+                Number(percentReceived) > self.downloadProgress &&
+                Number(percentReceived) < 100
+              ) {
                 self.downloadProgress = percentReceived;
               }
             }
@@ -148,7 +155,7 @@ export default class ThetaSdkService extends Service {
         return pump();
 
         function pump() {
-          return reader.read().then(({done, value}) => {
+          return reader.read().then(({ done, value }) => {
             // When no more data needs to be consumed, close the stream
             if (done) {
               controller.close();
@@ -172,7 +179,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return {logs: htmlSafe(text.split('\n').join('<br/>'))};
+          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
         });
       })
       .catch((err) => console.error(err));
@@ -221,7 +228,7 @@ export default class ThetaSdkService extends Service {
       .then((response) => response.blob())
       .then((blob) => {
         return blob.text().then((text) => {
-          return {logs: htmlSafe(text.split('\n').join('<br/>'))};
+          return { logs: htmlSafe(text.split('\n').join('<br/>')) };
         });
       })
       .catch((err) => console.error(err));
@@ -233,7 +240,7 @@ export default class ThetaSdkService extends Service {
     const tfuelWeiToSend = (new BigNumber(5)).multipliedBy(ten18);
     const account = await this.getThetaAccount();
     const from = account[0];
-    const to = "0xa078C2852eb6e455f97EeC21e39F8ef24173Df60";
+    const to = '0xa078C2852eb6e455f97EeC21e39F8ef24173Df60';
     const txData = {
       from: from,
       outputs: [

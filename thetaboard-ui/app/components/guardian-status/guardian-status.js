@@ -24,7 +24,8 @@ export default class GuardianStatusComponent extends Component {
   @service('theta-sdk') thetaSdk;
   @service('guardian') guardian;
 
-  willDestroy () {
+  willDestroy() {
+    super.willDestroy(...arguments);
     this.guardian.logsAutoRefresh = false;
     this.guardian.statusInterval = 60000;
   }

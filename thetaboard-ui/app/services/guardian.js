@@ -122,18 +122,26 @@ export default class GuardianService extends Service {
   autoRefreshStatus() {
     if (this.statusAutoRefresh) {
       this.refreshStatus();
-      this.statusLaterCall = later(this, function () {
-        this.autoRefreshStatus();
-      }, this.statusInterval);
+      this.statusLaterCall = later(
+        this,
+        function () {
+          this.autoRefreshStatus();
+        },
+        this.statusInterval
+      );
     }
   }
 
   autoRefreshLogs() {
     if (this.logsAutoRefresh) {
       this.refreshLogs();
-      this.logsLaterCall = later(this, function () {
-        this.autoRefreshLogs();
-      }, 5000);
+      this.logsLaterCall = later(
+        this,
+        function () {
+          this.autoRefreshLogs();
+        },
+        5000
+      );
     }
   }
 
@@ -181,7 +189,8 @@ export default class GuardianService extends Service {
         {
           icon: 'glyphicon glyphicon-success-sign',
           title: 'Success!!',
-          message: 'Guardian node is starting, check the Guardian Logs for more information.',
+          message:
+            'Guardian node is starting, check the Guardian Logs for more information.',
         },
         { type: 'success' }
       );
@@ -190,7 +199,8 @@ export default class GuardianService extends Service {
         {
           icon: 'glyphicon glyphicon-danger-sign',
           title: 'Error!!',
-          message: 'We couldn\'t start your Guardian node, please check the logs for more information.',
+          message:
+            "We couldn't start your Guardian node, please check the logs for more information.",
         },
         { type: 'danger' }
       );
@@ -215,7 +225,8 @@ export default class GuardianService extends Service {
         {
           icon: 'glyphicon glyphicon-danger-sign',
           title: 'Error!!',
-          message: 'We couldn\'t stop your Guardian node, please check the logs for more information.',
+          message:
+            "We couldn't stop your Guardian node, please check the logs for more information.",
         },
         { type: 'danger' }
       );
@@ -245,7 +256,8 @@ export default class GuardianService extends Service {
         {
           icon: 'glyphicon glyphicon-danger-sign',
           title: 'Error!!',
-          message: 'We couldn\'t update your Guardian node, please check the logs for more information.',
+          message:
+            "We couldn't update your Guardian node, please check the logs for more information.",
         },
         { type: 'danger' }
       );

@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
-import {action} from '@ember/object';
-import {inject as service} from '@ember/service';
-import {tracked} from '@glimmer/tracking';
-
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class EarningsProjectionsComponent extends Component {
   @service('theta-sdk') thetaSdk;
@@ -17,7 +16,6 @@ export default class EarningsProjectionsComponent extends Component {
     currency: 'USD',
   });
 
-
   get setUpChart() {
     if (this.thetaSdk.wallets.length) {
       this.setupChart();
@@ -31,7 +29,7 @@ export default class EarningsProjectionsComponent extends Component {
   get avg_tfuel_per_day_dollar() {
     let value = 0;
     if (this.thetaSdk.wallets.length) {
-      value = this.avg_tfuel_per_day * this.thetaSdk.wallets[1].market_price
+      value = this.avg_tfuel_per_day * this.thetaSdk.wallets[1].market_price;
     }
     return this.formatter.format(value);
   }
@@ -47,13 +45,13 @@ export default class EarningsProjectionsComponent extends Component {
   get avg_tfuel_per_year_dollar() {
     let value = 0;
     if (this.thetaSdk.wallets.length) {
-      value = this.avg_tfuel_per_year * this.thetaSdk.wallets[1].market_price
+      value = this.avg_tfuel_per_year * this.thetaSdk.wallets[1].market_price;
     }
     return this.formatter.format(value);
   }
 
   get chartData() {
-    this.avg_tfuel_per_day = this.thetaAmount * 0.00118
+    this.avg_tfuel_per_day = this.thetaAmount * 0.00118;
     const labels = [];
     for (let i = 0; i < 13; i++) {
       labels.push(moment().add(i, 'months'));
@@ -72,15 +70,16 @@ export default class EarningsProjectionsComponent extends Component {
       labels: labels,
       datasets: [
         {
-          label: "Tfuel",
+          label: 'Tfuel',
           yAxisID: 'tfuel',
           pointStyle: 'point',
           radius: 0,
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: data,
-          borderDash: [10, 5]
-        }]
+          borderDash: [10, 5],
+        },
+      ],
     };
   }
 
@@ -97,7 +96,7 @@ export default class EarningsProjectionsComponent extends Component {
     if (guardian.length > 0) {
       this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
     }
-    
+
     const gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
       legend: {
@@ -105,7 +104,7 @@ export default class EarningsProjectionsComponent extends Component {
       },
       tooltips: {
         callbacks: {
-          title: (tooltipItem, data) => {
+          title: (tooltipItem) => {
             return moment(new Date(tooltipItem[0].label)).format('LL')
           },
         },
@@ -120,30 +119,34 @@ export default class EarningsProjectionsComponent extends Component {
       },
       responsive: true,
       scales: {
-        yAxes: [{
-          id: "tfuel",
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            min: 0,
-            fontColor: "#FFA500",
-            beginAtZero: true,
-            maxTicksLimit: 10,
+        yAxes: [
+          {
+            id: 'tfuel',
+            type: 'linear',
+            position: 'right',
+            ticks: {
+              min: 0,
+              fontColor: '#FFA500',
+              beginAtZero: true,
+              maxTicksLimit: 10,
+            },
           },
-        }],
+        ],
 
-        xAxes: [{
-          type: 'time',
-          time: {
-            unit: 'month'
+        xAxes: [
+          {
+            type: 'time',
+            time: {
+              unit: 'month'
+            },
+            ticks: {
+              min: 0,
+              fontColor: '#ccc',
+              beginAtZero: true,
+              maxTicksLimit: 10,
+            },
           },
-          ticks: {
-            min: 0,
-            fontColor: "#ccc",
-            beginAtZero: true,
-            maxTicksLimit: 10,
-          },
-        }],
+        ],
       },
       plugins: {
         datalabels: {
@@ -157,7 +160,7 @@ export default class EarningsProjectionsComponent extends Component {
     this.forecast_chart = new Chart(ctx, {
       type: 'line',
       data: data,
-      options: gradientChartOptionsConfiguration
+      options: gradientChartOptionsConfiguration,
     });
   }
 

@@ -18,7 +18,10 @@ export default class TransactionHistoryComponent extends Component {
   @tracked transactions = [];
 
   get showPagination() {
-    return !!this.pagination.totalPageNumber && !!(this.pagination.totalPageNumber > 1);
+    return (
+      !!this.pagination.totalPageNumber &&
+      !!(this.pagination.totalPageNumber > 1)
+    );
   }
 
   get explorerEndpoint() {

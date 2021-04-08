@@ -12,12 +12,17 @@ export default class GuardianLogsComponent extends Component {
 
   @action
   copySummaryToClipBoard(summary) {
-    this.utils.copyToClipboard(summary.value, `${summary.label} was successfully copied to your clipboad`);
+    this.utils.copyToClipboard(
+      summary.value,
+      `${summary.label} was successfully copied to your clipboad`
+    );
   }
 
   @action
   copyLogsToClipBoard(logs) {
-    this.utils.copyToClipboard(logs, `Logs were successfully copied to your clipboad`);
+    this.utils.copyToClipboard(
+      logs,
+      `Logs were successfully copied to your clipboad`
+    );
   }
-
 }

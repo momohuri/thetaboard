@@ -435,3 +435,9 @@ p.form-inline.forecast-amout-inline {
   margin: auto;
   display: block;
 }
+
+.wallet-address-span {
+  position: absolute;
+  color: #ffffff;
+  margin: 6px;
+}
