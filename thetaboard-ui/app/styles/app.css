@@ -442,3 +442,25 @@ p.form-inline.forecast-amout-inline {
   color: #ffffff;
   margin: 6px;
 }
+
+.trend-activity {
+  margin: 15px 0;
+}
+
+.trend-activity .down {
+  color: #fd5d93;
+  font-size: 24px;
+}
+
+.trend-activity .up {
+  color: #00bf9a;
+  font-size: 24px;
+}
+
+.title.current-price {
+  font-size: 24px;
+}
+
+.trend-activity .trend-usd-change {
+  font-size: 12px;
+}
