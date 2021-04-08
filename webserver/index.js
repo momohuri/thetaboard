@@ -156,7 +156,11 @@ app.get("/wallet-transactions/:wallet_addr", async (req, res, next) => {
                 typeName = "Deposit Stake";
             } else if (x["type"] == 2) {
                 from = x["data"]["inputs"][0];
-                to = x["data"]["outputs"][0];
+                if (x["data"]["outputs"].length == 1) {
+                    to = x["data"]["outputs"][0];
+                } else {
+                    to = x["data"]["outputs"].filter(x => x['address'].toUpperCase() === wallet_adr.toUpperCase())[0];
+                }
                 values = to;
                 typeName = "Transfer";
             } else if (x["type"] == 9) {
