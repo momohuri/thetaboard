@@ -25,7 +25,7 @@ const is_demo = "DEMO" in process.env && process.env.DEMO;
 const theta_explorer_api_params = {
     https: {rejectUnauthorized: false},
 }
-if(api_token){
+if (api_token) {
     theta_explorer_api_params.headers = {"x-api-token": api_token}
 }
 
@@ -407,6 +407,14 @@ app.get('/guardian/download_snapshot', async (req, res) => {
     }
 
 });
+
+
+// Streams api
+
+app.get('/streams/list', async (req, res) => {
+    const streams = fs.readFileSync('./streams.json', {encoding: 'utf8', flag: 'r'});
+    res.json({"msg": JSON.parse(streams).result.stream_info, "success": true});
+})
 
 // Default response for any other request
 app.use(function (req, res) {
