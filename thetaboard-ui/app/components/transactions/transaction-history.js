@@ -2,26 +2,33 @@ import Ember from 'ember';
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import $ from 'jquery';
 
 export default class TransactionHistoryComponent extends Component {
   constructor(...args) {
     super(...args);
-    let { transactions, pagination } = this.args;
-    this.transactions = transactions;
-    this.pagination = pagination;
+    this.account = '';
   }
   @service('env-manager') envManager;
   @service('theta-sdk') thetaSdk;
-  @tracked pagination = {};
-  @tracked transactions = [];
+
+  async initialize() {
+    if (this.thetaSdk.currentAccount && this.thetaSdk.currentAccount != this.account) {
+      this.account = this.thetaSdk.currentAccount;
+      return await this.thetaSdk.getTransactions(this.thetaSdk.currentAccount);
+    }
+  }
+
+  get transactionList() {
+    this.initialize();
+    return this.thetaSdk.transactions;
+  }
 
   get showPagination() {
-    return (
-      !!this.pagination.totalPageNumber &&
-      !!(this.pagination.totalPageNumber > 1)
-    );
+    const pagination = this.thetaSdk.pagination;
+    if (pagination && !!pagination.totalPageNumber)
+      return !!pagination.totalPageNumber && !!(pagination.totalPageNumber > 1);
+    return false;
   }
 
   get explorerEndpoint() {
@@ -29,11 +36,9 @@ export default class TransactionHistoryComponent extends Component {
   }
 
   async changePagination(current) {
-    const account = await this.thetaSdk.getThetaAccount();
-    const transactions = await this.thetaSdk.getTransactions(account, current);
-    this.transactions = transactions.transactions;
+    const account = this.thetaSdk.currentAccount;
+    await this.thetaSdk.getTransactions(account, current);
     $('nav[aria-label="Page navigation"] .pager li').removeClass("disabled");
-    this.pagination = transactions.pagination;
   }
 
   @action

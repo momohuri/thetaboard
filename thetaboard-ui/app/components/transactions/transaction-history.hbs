@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each transactions as |transaction|}}
+          {{#each transactionList as |transaction|}}
             <tr>
             <td class="text-center transaction-type"><img src="{{rootURL}}assets/img/transactions/{{transaction.type}}.png"/> {{transaction.typeName}}</td>
             <td class="text-center">
@@ -53,8 +53,8 @@
         </tbody>
       </table>
       {{#if showPagination}}
-      <PaginationPager @pager={{true}} @count={{pagination.totalPageNumber}} @current={{pagination.currentPageNumber}} @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|" >
-        {{pagination.currentPageNumber}} of {{pagination.totalPageNumber}}
+      <PaginationPager @pager={{true}} @count={{this.thetaSdk.pagination.totalPageNumber}} @current={{this.thetaSdk.pagination.currentPageNumber}} @change={{this.pageChanged}} @pagerFirst="|<" @pagerLast=">|" >
+        {{this.thetaSdk.pagination.currentPageNumber}} of {{this.thetaSdk.pagination.totalPageNumber}}
       </PaginationPager>
       {{/if}}
     </div>

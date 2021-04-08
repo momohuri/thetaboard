@@ -11,6 +11,8 @@ export default class ThetaSdkService extends Service {
     super(...args);
     this.downloadProgress = '';
     this.wallets = [];
+    this.transactions = [];
+    this.pagination = {};
     this.currentAccount = '';
     this.prices = {};
     this.getPrices();
@@ -20,6 +22,8 @@ export default class ThetaSdkService extends Service {
   @tracked wallets;
   @tracked currentAccount;
   @tracked prices;
+  @tracked pagination;
+  @tracked transactions;
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -114,6 +118,8 @@ export default class ThetaSdkService extends Service {
     const transactions = await fetch(finalUrl);
     if (transactions.status == 200) {
       transactionList = await transactions.json();
+      this.transactions = transactionList.transactions;
+      this.pagination = transactionList.pagination;
     }
     return transactionList;
   }

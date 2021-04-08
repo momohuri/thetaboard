@@ -1,19 +1,6 @@
 import Route from '@ember/routing/route';
-import { getOwner } from '@ember/application';
 
 export default class DashboardRoute extends Route {
-  get guardian() {
-    return getOwner(this).lookup('service:guardian');
-  }
-
-  get thetaSdk() {
-    return getOwner(this).lookup('service:theta-sdk');
-  }
-
-  get envManager() {
-    return getOwner(this).lookup('service:env-manager');
-  }
-
   async model() {
     const oneYearBack = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0];
     const today = new Date().toISOString().split('T')[0];
@@ -22,7 +9,6 @@ export default class DashboardRoute extends Route {
     );
     return {
       historicPrice: await historicPrice.json(),
-      guardian: this.guardian,
     };
   }
 }
