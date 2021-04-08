@@ -7,6 +7,16 @@ export default class SearchBarSearchBarComponent extends Component {
   @service('utils') utils;
   walletAddress = '';
 
+  @action
+  setupEventListener() {
+    $('#searchModal').on('shown.bs.modal', function () {
+      $('#searchInput').focus();
+    });
+    $('#searchModal').on('hidden.bs.modal', function () {
+      $('#searchInput').blur();
+    });
+  }
+
   @action 
   async search(event) {
     event.preventDefault();

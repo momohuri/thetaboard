@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
-import { utils } from '@thetalabs/theta-js';
 
 export default class ThetaStakesService extends Service {
   constructor(...args) {

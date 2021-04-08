@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <form>
-                <Input {{on "submit" this.search}} @type="text" @value={{walletAddress}} @class="form-control search-bar-input" @placeholder="Enter Wallet Address"/>
+                <Input {{on "submit" this.search}} {{did-insert this.setupEventListener}} @type="text" @value={{walletAddress}} @id="searchInput" @class="form-control search-bar-input" @placeholder="Enter Wallet Address"/>
                 <button {{on 'click' this.search}} type="submit" class="search-bar-button btn btn-fill btn-primary">Search</button>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i class="tim-icons icon-simple-remove"></i>
