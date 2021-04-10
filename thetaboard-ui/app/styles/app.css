@@ -1,6 +1,22 @@
+div.wallet-address-search-container {
+  text-align: center;
+}
+
+.wallet-address-span {
+  background: #ffffff;
+  margin: 6px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: 1px solid;
+  cursor: pointer;
+  display: inline-block;
+  width: 40%;
+  overflow: hidden;
+  position: relative;
+  z-index: 9997;
+}
+
 button.connect-wallet-button.btn.btn-fill {
-  margin: 10px auto 0;
-  display: block;
   padding: 7px 20px;
   cursor: pointer;
   z-index: 9997;
@@ -431,12 +447,6 @@ td.transaction-type img {
 p.form-inline.forecast-amout-inline {
   margin: auto;
   display: block;
-}
-
-.wallet-address-span {
-  position: absolute;
-  color: #ffffff;
-  margin: 6px;
 }
 
 .trend-activity {
