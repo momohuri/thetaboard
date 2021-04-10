@@ -50,12 +50,12 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
 }
 
 #wallet-connection-notif {
-    position: absolute;
-    z-index: 0; 
-    margin: 10% 10% 0; 
-    text-align: center; 
-    font-size: 30px; 
-    padding: 47px;
+  position: absolute;
+  z-index: 0;
+  margin: 15% 0 0 44%;
+  text-align: center;
+  font-size: 30px;
+  padding: 47px;
 }
 
 .wallet-total-amount {
