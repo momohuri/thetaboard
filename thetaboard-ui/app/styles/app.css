@@ -15,15 +15,17 @@ div.wallet-address-search-container {
   position: relative;
   z-index: 9997;
   max-width: 420px;
+  height: 33px;
 }
 
 button.connect-wallet-button.btn.btn-fill {
   padding: 7px 20px;
   cursor: pointer;
   z-index: 9997;
+  top: -19px;
 }
 
-#searchModal {
+#searchModal, #downloadThetaExtension {
   z-index: 9998;
   background: rgb(0,0,0,0.7);
 }
@@ -37,6 +39,11 @@ button.connect-wallet-button.btn.btn-fill {
   display: block;
   cursor: pointer;
   margin: -5px 40px 0 0;
+}
+
+#downloadThetaExtension .modal-dialog {
+  max-width: 100%;
+  margin: 0;
 }
 
 p.wallet-placeholder{ 
@@ -69,10 +76,18 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
 #wallet-connection-notif {
   position: absolute;
   z-index: 0;
-  margin: 15% 0 0 44%;
+  margin: 15% 0 0 0;
+  left: 50%;
   text-align: center;
   font-size: 30px;
-  padding: 47px;
+  width: 70%;
+}
+
+#wallet-connection-notif .relative-content {
+  position: relative;
+  left: -50%;
+  padding: 50px 20px;
+  line-height: 60px;
 }
 
 .wallet-total-amount {

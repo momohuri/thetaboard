@@ -5,6 +5,8 @@ import * as thetajs from '@thetalabs/theta-js';
 import { tracked } from '@glimmer/tracking';
 import BigNumber from "bignumber.js";
 import { htmlSafe } from '@ember/template';
+import { cancel } from '@ember/runloop';
+import { later } from '@ember/runloop';
 
 export default class ThetaSdkService extends Service {
   constructor(...args) {
@@ -49,13 +51,34 @@ export default class ThetaSdkService extends Service {
   }
 
   async getThetaAccount() {
-    let provider = new thetajs.providers.HttpProvider(
-      this.envManager.config.thetaNetwork
-    );
-    await ThetaWalletConnect.connect();
-    const account = await ThetaWalletConnect.requestAccounts();
+    try {
+      let provider = new thetajs.providers.HttpProvider(
+        this.envManager.config.thetaNetwork
+      );
+      await ThetaWalletConnect.connect();
+      const timeoutId = later(
+        this,
+        function () {
+          this.showDownloadExtensionPopup();
+        },
+        4000
+      );
+      const account = await ThetaWalletConnect.requestAccounts();
+      return this.setupWalletAddress(account, timeoutId);
+    } catch (error) {
+      this.utils.errorNotify(error.message);
+    }
+  }
+
+  setupWalletAddress(account, timeoutId) {
+    cancel(timeoutId);
     this.currentAccount = account;
+    $('#downloadThetaExtension').modal('hide');
     return account;
+  }
+
+  showDownloadExtensionPopup() {
+    $('#downloadThetaExtension').modal('show');
   }
 
   async sendThetaTransaction(type) {

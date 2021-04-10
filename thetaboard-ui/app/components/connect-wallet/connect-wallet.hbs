@@ -2,9 +2,10 @@
     <div>
         {{#if this.thetaSdk.currentAccount}}
             <div class="wallet-address-span" data-toggle="modal" data-target="#searchModal">{{this.thetaSdk.currentAccount}}</div>
-            <button {{on 'click' this.connectWallet}} style="top:-19px;" type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
+            <button {{on 'click' this.connectWallet}} type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
         {{else}}
-            <button {{on 'click' this.connectWallet}} style="top: 5px;" type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
+            <div class="wallet-address-span" data-toggle="modal" data-target="#searchModal">{{this.thetaSdk.currentAccount}}</div>
+            <button {{on 'click' this.connectWallet}} type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
         {{/if}}
     </div>
 </div>

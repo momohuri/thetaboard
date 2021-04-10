@@ -9,10 +9,10 @@ export default class SearchBarSearchBarComponent extends Component {
 
   @action
   setupEventListener() {
-    $('#searchModal').on('shown.bs.modal', function () {
+    $('#searchModal').on('shown.bs.modal', () => {
       $('#searchInput').focus();
     });
-    $('#searchModal').on('hidden.bs.modal', function () {
+    $('#searchModal').on('hidden.bs.modal', () => {
       $('#searchInput').blur();
     });
   }
