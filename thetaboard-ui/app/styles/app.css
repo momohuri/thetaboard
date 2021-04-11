@@ -13,7 +13,7 @@ div.wallet-address-search-container {
   width: 40%;
   overflow: hidden;
   position: relative;
-  z-index: 9997;
+  z-index: 1051;
   max-width: 420px;
   height: 33px;
 }
@@ -21,7 +21,7 @@ div.wallet-address-search-container {
 button.connect-wallet-button.btn.btn-fill {
   padding: 7px 20px;
   cursor: pointer;
-  z-index: 9997;
+  z-index: 1051;
 }
 
 #searchModal, #downloadThetaExtension {
@@ -342,9 +342,9 @@ nav[aria-label="Page navigation"] .pager li.pager-inner {
 }
 
 ul.guardian-status-ul.dropdown-menu.dropdown-menu-right.dropdown-navbar {
-  width: 350px;
+  width: 250px;
   padding: 0;
-  margin: 0;
+  margin: 10px 0 0 0;
   border-radius: 5px;
   text-align: center;
 }
@@ -352,11 +352,13 @@ ul.guardian-status-ul.dropdown-menu.dropdown-menu-right.dropdown-navbar {
 .guardian-status-ul .guardian-status-alert{
   width: 100%;
   margin: 0;
+  z-index: 9999;
 }
 
 ul.guardian-status-ul.dropdown-menu.dropdown-menu-right.dropdown-navbar button {
   font-size: 12px;
   padding: 10px 20px;
+  display: inherit;
 }
 
 .btn.btn-fill.btn-primary.btn-left span i {
@@ -510,4 +512,8 @@ p.form-inline.forecast-amout-inline {
 
 .trend-activity.extra .title {
   font-size: 15px;
+}
+
+.price-label-small {
+  font-size: 13px;
 }
