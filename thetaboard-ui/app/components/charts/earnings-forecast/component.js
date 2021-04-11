@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 export default class EarningsProjectionsComponent extends Component {
   @service('theta-sdk') thetaSdk;
   account = '';
+  walletLength = 0;
 
   @tracked avg_tfuel_per_day = 0;
   @tracked avg_tfuel_per_year = 0;
@@ -18,8 +19,9 @@ export default class EarningsProjectionsComponent extends Component {
   });
 
   get setUpChart() {
-    if (this.thetaSdk.currentAccount != this.account) {
+    if (this.thetaSdk.currentAccount != this.account || this.walletLength !=  this.thetaSdk.wallets.length) {
       this.account = this.thetaSdk.currentAccount;
+      this.walletLength =  this.thetaSdk.wallets.length;
       const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
       if (guardian.length > 0) {
         this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
