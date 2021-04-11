@@ -4,7 +4,8 @@
             <div class="modal-header">
                 <form>
                 <Input {{on "submit" this.search}} {{did-insert this.setupEventListener}} @type="text" @value={{walletAddress}} @id="searchInput" @class="form-control search-bar-input" @placeholder="Enter Wallet Address"/>
-                <button {{on 'click' this.search}} type="submit" class="search-bar-button btn btn-fill btn-primary">Search</button>
+                <button {{on 'click' this.search}} type="submit" class="d-none d-md-block d-lg-block search-bar-button btn btn-fill btn-primary">Search</button>
+                <button {{on 'click' this.search}} type="submit" style="margin: 75px 0 0; width:100%; right:0;" class="d-block d-md-none d-lg-none search-bar-button btn btn-fill btn-primary">Search</button>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i class="tim-icons icon-simple-remove"></i>
                 </button>
