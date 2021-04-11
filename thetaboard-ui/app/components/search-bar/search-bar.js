@@ -25,6 +25,7 @@ export default class SearchBarSearchBarComponent extends Component {
       this.walletAddress.substr(1, 1).toLocaleLowerCase() == 'x'
     ) {
       await this.thetaSdk.getWalletInfo([this.walletAddress]);
+      this.args.onRouteChange(this.walletAddress);
     } else {
       this.utils.errorNotify('Invalid Wallet Address');
     }

@@ -10,6 +10,7 @@ export default class ConnectWalletConnectWalletComponent extends Component {
     const account = await this.thetaSdk.getThetaAccount();
     const walletInfo = await this.thetaSdk.getWalletInfo(account);
     $('button.connect-wallet-button').removeClass("disabled");
+    this.args.onRouteChange(account[0]);
     return walletInfo;
   }
 

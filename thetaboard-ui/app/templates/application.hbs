@@ -40,10 +40,10 @@
         </div>
       </div>
     </nav>
-    {{search-bar/search-bar}}
+    {{search-bar/search-bar onRouteChange=this.setQueryParam}}
     {{download-wallet/modal}}
     <!-- End Navbar -->
-    {{connect-wallet/connect-wallet}}
+    {{connect-wallet/connect-wallet onRouteChange=this.setQueryParam}}
     <div class="content">
       <div class="container-fluid">
         {{outlet}}
