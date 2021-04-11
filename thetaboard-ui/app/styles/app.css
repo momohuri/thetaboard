@@ -22,7 +22,6 @@ button.connect-wallet-button.btn.btn-fill {
   padding: 7px 20px;
   cursor: pointer;
   z-index: 9997;
-  top: -19px;
 }
 
 #searchModal, #downloadThetaExtension {

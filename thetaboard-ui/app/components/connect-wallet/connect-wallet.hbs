@@ -1,10 +1,10 @@
 <div class="wallet-address-search-container">
     <div>
         {{#if this.thetaSdk.currentAccount}}
-            <div class="wallet-address-span" data-toggle="modal" data-target="#searchModal">{{this.thetaSdk.currentAccount}}</div>
+            <input placeholder="Enter Wallet Adress" readonly  class="wallet-address-span" data-toggle="modal" data-target="#searchModal" value="{{this.thetaSdk.currentAccount}}"/>
             <button {{on 'click' this.connectWallet}} type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
         {{else}}
-            <div class="wallet-address-span" data-toggle="modal" data-target="#searchModal">{{this.thetaSdk.currentAccount}}</div>
+            <input placeholder="Enter Wallet Adress"  readonly class="wallet-address-span" data-toggle="modal" data-target="#searchModal" value="{{this.thetaSdk.currentAccount}}"/>
             <button {{on 'click' this.connectWallet}} type="submit" class="connect-wallet-button btn btn-fill btn-primary btn-left">Connect to Wallet</button>
         {{/if}}
     </div>
