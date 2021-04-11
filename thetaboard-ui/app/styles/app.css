@@ -72,6 +72,12 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
   text-decoration: underline;
 }
 
+#wallet-connection-notif-loader {
+  margin-top: 40vh;
+  margin-left: 46vw;
+  position: absolute;
+}
+
 #wallet-connection-notif {
   position: absolute;
   z-index: 0;
@@ -94,7 +100,7 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
 }
 
 .main-loader {
-    width: 45px; 
+    width: 100px; 
     margin: 43px 0;
 }
 
