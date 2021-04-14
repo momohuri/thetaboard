@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import {action} from '@ember/object';
+import {inject as service} from '@ember/service';
+import {tracked} from '@glimmer/tracking';
 
 export default class EarningsProjectionsComponent extends Component {
   @service('theta-sdk') thetaSdk;
@@ -12,20 +12,25 @@ export default class EarningsProjectionsComponent extends Component {
   @tracked avg_tfuel_per_year = 0;
 
   @tracked thetaAmount = 1000;
+  @tracked transactions = [];
 
   formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
 
+  async initialize() {
+  }
+
   get setUpChart() {
-    if (this.thetaSdk.currentAccount != this.account || this.walletLength !=  this.thetaSdk.wallets.length) {
+    if (this.thetaSdk.currentAccount != this.account || this.walletLength != this.thetaSdk.wallets.length) {
       this.account = this.thetaSdk.currentAccount;
-      this.walletLength =  this.thetaSdk.wallets.length;
+      this.walletLength = this.thetaSdk.wallets.length;
       const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
       if (guardian.length > 0) {
         this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
       }
+      this.transactions = this.thetaSdk.transactions;
       this.setupChart();
     }
   }
@@ -72,22 +77,21 @@ export default class EarningsProjectionsComponent extends Component {
       }
       return acc;
     }, []);
+    const datasets = [];
+    datasets.push({
+      label: 'Tfuel Forecast',
+      backgroundColor: 'rgba(255,165,0,0.16)',
+      borderColor: 'rgba(255,165,0,0.16)',
+      data: data,
+      borderDash: [10, 5],
+    });
 
+    //todo remove setter from getter
     this.avg_tfuel_per_year = data[data.length - 1];
+
     return {
       labels: labels,
-      datasets: [
-        {
-          label: 'Tfuel',
-          yAxisID: 'tfuel',
-          pointStyle: 'point',
-          radius: 0,
-          borderColor: '#FFA500',
-          pointBackgroundColor: '#FFA500',
-          data: data,
-          borderDash: [10, 5],
-        },
-      ],
+      datasets: datasets,
     };
   }
 
@@ -107,7 +111,12 @@ export default class EarningsProjectionsComponent extends Component {
       tooltips: {
         callbacks: {
           title: (tooltipItem) => {
-            return moment(new Date(tooltipItem[0].label)).format('LL')
+            return moment(new Date(tooltipItem[0].label)).format('LL');
+          },
+          label: function (tooltipItem, data) {
+            const label = [];
+            label.push(`Tfuel Forecast: ${Math.round(data.datasets[0].data[tooltipItem.index], 0)}`);
+            return label;
           },
         },
         backgroundColor: '#fff',
@@ -121,22 +130,18 @@ export default class EarningsProjectionsComponent extends Component {
       },
       responsive: true,
       scales: {
-        yAxes: [
-          {
-            id: 'tfuel',
-            type: 'linear',
-            position: 'right',
-            ticks: {
-              min: 0,
-              fontColor: '#FFA500',
-              beginAtZero: true,
-              maxTicksLimit: 10,
-            },
+        yAxes: [{
+          stacked: true,
+          type: 'linear',
+          position: 'left',
+          ticks: {
+            min: 0,
+            beginAtZero: true,
           },
-        ],
-
+        }],
         xAxes: [
           {
+            stacked: true,
             type: 'time',
             time: {
               unit: 'month'
@@ -160,7 +165,7 @@ export default class EarningsProjectionsComponent extends Component {
     };
     const data = this.chartData;
     this.forecast_chart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: data,
       options: gradientChartOptionsConfiguration,
     });

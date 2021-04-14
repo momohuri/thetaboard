@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
+import {inject as service} from '@ember/service';
+import {action} from '@ember/object';
 
 export default class HoldingPieComponent extends Component {
   @service('theta-sdk') thetaSdk;
@@ -41,14 +41,14 @@ export default class HoldingPieComponent extends Component {
         label: 'Theta',
         value: this.thetaSdk.wallets
           .filter((x) => x.type === 'wallet' && x.currency === 'theta')
-          .reduce((a, b) => a.value + b.value, { value: 0 }),
+          .reduce((a, b) => a.value + b.value, {value: 0}),
         color: '#2BB7E5',
       },
       {
         label: 'Tfuel',
         value: this.thetaSdk.wallets
           .filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
-          .reduce((a, b) => a.value + b.value, { value: 0 }),
+          .reduce((a, b) => a.value + b.value, {value: 0}),
         color: '#FFA500',
       },
     ];
@@ -110,7 +110,10 @@ export default class HoldingPieComponent extends Component {
             },
             formatter: function (value, context) {
               const total = context.dataset.data.reduce((a, b) => a + b, 0);
-              return ((100 * value) / total).toFixed(2) + '%';
+              return `
+                  ${formatter.format(value)}
+                   ${((100 * value) / total).toFixed(2)}%
+              `
             },
           },
         },
