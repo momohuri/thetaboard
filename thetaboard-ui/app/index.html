@@ -52,6 +52,15 @@
     <script src="{{rootURL}}assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 
     <script src="{{rootURL}}assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB4WZ3VY1C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XB4WZ3VY1C');
+    </script>
 
     {{content-for "body-footer"}}
   </body>
