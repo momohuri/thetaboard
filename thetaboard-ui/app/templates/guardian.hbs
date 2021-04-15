@@ -1,10 +1,47 @@
 {{page-title "Guardian"}}
+{{#if is_demo}}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Public Guardian Node</h4>
+        </div>
+        <div class="card-body">
+
+          <p class="text-success">
+            If you want to to stake your theta on a Guardian Node, you can do it for free using the stakes widget in
+            this page or
+            using the summary bellow. We have multiple redundant node to ensure that the Guardian Node is running 24/7.<br>
+            The staked Theta NEVER leave your wallet. Neither us or the Guardian Node will be in control of your
+            Theta, you will ALWAYS be able to unstack them.<br>
+            You can find more information on how to stake on the <a
+                  href="https://docs.thetatoken.org/docs/guardian-staking-process">
+            theta website </a>
+          </p>
+
+
+          <div {{on "click" (action this.copySummaryToClipBoard summary)}} class="card-description-summary">
+            <p class="summary-value">{{summary}}</p>
+          </div>
+
+          <p class="text-success">
+            <br>
+            If you like this page and would like to setup your own personal Guardian Node, you can do it following <a
+                  href="https://github.com/momohuri/thetaboard">this instructions.</a>
+          </p>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}
 <div class="row">
-    <div class="col-md-4">
-        {{guardian-status/guardian-status}}
-        {{theta-stakes/theta-stakes}}
-    </div>
-    <div class="col-md-8">
-        {{guardian-logs/guardian-logs}}
-    </div>
+  <div class="col-md-4">
+    {{guardian-status/guardian-status}}
+    {{theta-stakes/theta-stakes}}
+  </div>
+  <div class="col-md-8">
+    {{guardian-logs/guardian-logs}}
+  </div>
 </div>
