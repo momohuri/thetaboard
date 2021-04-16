@@ -6,7 +6,7 @@ You came to the right place ! Thetaboard was made to easily set up a theta guard
 It can also be used to get information about Theta and your wallet.<br>
 <br> 
 
-#### Live demo : https://thetaboard.io/guardian
+#### Live demo : https://thetaboard.io/
 #### Demo Video : https://www.youtube.com/watch?v=R8GLcNzbi0Y
 #### Join us on Discord: https://discord.gg/SGUtY7zBU3
 
@@ -26,8 +26,6 @@ It is provided with a webserver with the following features:
 
 ## Get Started
 ### Prerequisite
-Theta wallet extension on chrome
- - https://chrome.google.com/webstore/detail/theta-wallet/ckelpdlfgochnkdgikcgbimdcfgpkhgk/related?hl=en&authuser=0
 
 Docker with at least 4gb and Make available (installation is only needed on Windows)
 
