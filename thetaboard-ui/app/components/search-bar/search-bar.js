@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default class SearchBarSearchBarComponent extends Component {
   @service('theta-sdk') thetaSdk;
   @service('utils') utils;
+  @service('contract') contract;
   walletAddress = '';
 
   @action
@@ -25,9 +26,25 @@ export default class SearchBarSearchBarComponent extends Component {
       this.walletAddress.substr(1, 1).toLocaleLowerCase() == 'x'
     ) {
       await this.thetaSdk.getWalletInfo([this.walletAddress]);
-      this.args.onRouteChange(this.walletAddress);
+      this.contract.domainName
+        ? this.args.onRouteChange(this.contract.domainName)
+        : this.args.onRouteChange(this.walletAddress);
     } else {
-      this.utils.errorNotify('Invalid Wallet Address');
+      const nameToAddress = await this.contract.getNameToAddress(
+        this.walletAddress
+      );
+      if (
+        nameToAddress.length &&
+        nameToAddress['ownerAddr'] !=
+          '0x0000000000000000000000000000000000000000'
+      ) {
+        await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
+        this.args.onRouteChange(this.walletAddress);
+      } else {
+        this.utils.errorNotify('Invalid Wallet Address or Domain name');
+        this.args.onRouteChange('');
+        this.contract.domainName = '';
+      }
     }
     $('#searchModal').modal('hide');
   }

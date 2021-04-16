@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('dashboard', { path: '/' });
   this.route('guardian');
   this.route('wallet');
+  this.route('domain');
 });

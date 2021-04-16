@@ -16,6 +16,7 @@ export default class ThetaSdkService extends Service {
     this.transactions = [];
     this.pagination = {};
     this.currentAccount = '';
+    this.currentAccountDomainList = [];
     this.prices = {};
     this.getPrices();
   }
@@ -26,6 +27,7 @@ export default class ThetaSdkService extends Service {
   @tracked prices;
   @tracked pagination;
   @tracked transactions;
+  @tracked currentAccountDomainList
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -37,6 +39,10 @@ export default class ThetaSdkService extends Service {
 
   get guardian() {
     return getOwner(this).lookup('service:guardian');
+  }
+
+  get contract() {
+    return getOwner(this).lookup('service:contract');
   }
 
   get utils() {
@@ -126,11 +132,22 @@ export default class ThetaSdkService extends Service {
 
   async getWalletInfo(accounts) {
     let wallets = { wallets: [] };
+    this.contract.domainName = '';
     const walletInfo = await fetch(
       '/wallet-info/' + accounts[0] + this.envManager.config.queryParams
     );
     if (walletInfo.status == 200) {
       wallets = await walletInfo.json();
+    }
+    if (accounts.length) {
+      this.currentAccountDomainList = await this.contract.getAddressToNames(
+        accounts[0]
+      );
+      if (this.currentAccountDomainList.length) {
+        this.contract.domainName = this.currentAccountDomainList[0];
+      }
+    } else {
+      this.currentAccountDomainList = [];
     }
     this.wallets = wallets.wallets;
     this.currentAccount = accounts;

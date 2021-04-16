@@ -1,0 +1,54 @@
+<div class="card card-user">
+    <div class="card-header ">
+        <div class="row">
+            <div class="col-sm-12 text-left">
+                <p class="card-text"></p>
+                <div class="author">
+                <div class="block block-one"></div>
+                <div class="block block-two"></div>
+                <div class="block block-three"></div>
+                <div class="block block-four"></div>
+                <h2 class="card-title domain-title">Address lookup</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-address">
+        <br/>
+            <div class="row">
+                <div class="col-md-10 domain-block-centered">
+                    <div class="form-group domain-body-block">
+                        <label>Enter an address to check the associated domain names:</label> <br/><br/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend border-color-grey">
+                                <span class="input-group-text" id="basic-addon1"><i class="tim-icons icon-wallet-43"></i></span>
+                            </div>
+                             {{#if this.thetaSdk.currentAccount}}
+                                <Input @placeholder="Enter Wallet Address" data-toggle="modal" data-target="#searchModal" value="{{this.thetaSdk.currentAccount}}" readonly @type="text" aria-label="Domain" aria-describedby="basic-addon1" class="form-control border-color"/>
+                            {{else}}
+                                <Input @placeholder="Enter Wallet Address" data-toggle="modal" data-target="#searchModal" value="{{this.thetaSdk.currentAccount}}" readonly @type="text" aria-label="Domain" aria-describedby="basic-addon1" class="form-control border-color"/>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{#if this.thetaSdk.currentAccount}}
+            <div class="domain-list-body-block">
+                {{#if this.contract.addressToName.length}}
+                    <div class="domain-list-title">Domain Name List:</div>
+                {{/if}}
+                {{#each this.contract.addressToName as |domainName|}}
+                    <div class="domain-list-item">{{domainName}}</div>
+                {{else}}
+                    <div class="domain-list-title">No domain associated to the wallet address:<br/><span class="emphezied">{{this.thetaSdk.currentAccount}}</span></div>
+                {{/each}} 
+            </div>
+        {{/if}}
+    </div>
+    <div class="card-footer card-footer-domain">
+        <button {{on 'click' this.connectWallet}} type="submit" class="btn btn-fill btn-primary btn-left">My domain name</button>
+    </div>
+</div>
+
+
+

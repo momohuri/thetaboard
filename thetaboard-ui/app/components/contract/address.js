@@ -3,17 +3,9 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
-export default class ConnectWalletConnectWalletComponent extends Component {
-  @service('theta-sdk') thetaSdk;
+export default class ContractAddressComponent extends Component {
   @service('contract') contract;
-
-  get walletLabel() {
-    if (this.contract.domainName) {
-      return `${this.contract.domainName}: ${this.thetaSdk.currentAccount}`;
-    } else {
-      return this.thetaSdk.currentAccount;
-    }
-  }
+  @service('theta-sdk') thetaSdk;
 
   async getWalletInfo() {
     const account = await this.thetaSdk.getThetaAccount();

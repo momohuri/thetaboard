@@ -4,7 +4,8 @@ import { inject as service } from '@ember/service';
 export default class MenuComponent extends Component {
   menuItems = [
     { name: 'dashboard', icon: 'icon-chart-pie-36' },
-    { name: 'wallet', icon: ' icon-single-02' },
+    { name: 'wallet', icon: 'icon-wallet-43' },
+    { name: 'domain', icon: 'icon-book-bookmark' },
     { name: 'guardian', icon: 'icon-atom' },
   ];
   @service router;

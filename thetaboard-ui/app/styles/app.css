@@ -14,9 +14,9 @@ div.wallet-address-search-container {
   overflow: hidden;
   position: relative;
   z-index: 1051;
-  max-width: 420px;
+  max-width: 500px;
   height: 33px;
-}
+  text-align: center;}
 
 button.connect-wallet-button.btn.btn-fill {
   padding: 7px 20px;
@@ -523,4 +523,108 @@ p.form-inline.forecast-amout-inline {
 
 .price-label-small {
   font-size: 13px;
+}
+
+div.form-group div.input-group div.input-group-prepend.border-color-grey span {
+  border-right: 1px solid;
+  border-color: rgb(189, 189, 196);
+  padding: 10px;
+}
+
+div.form-group div.input-group input[readonly] {
+  background-color: transparent;
+  color: rgb(189, 189, 196);
+  cursor: pointer;
+}
+
+div.form-group.domain-body-block {
+  font-size: 15px;
+  color: #ccc;
+}
+
+div.form-group.domain-body-block label {
+  font-size: 15px;
+  color: #ccc;
+}
+
+
+div.domain-block-centered {
+  margin: auto;
+  text-align: center;
+}
+
+div.card-body.card-domain{
+  min-height: 145px;
+}
+
+div.card-footer.card-footer-domain {
+  text-align: center;
+}
+
+form.domain-available-container {
+  text-align: center;
+}
+
+form.domain-available-container label {
+  font-size: 15px;
+  color: #ccc;
+}
+
+form.domain-available-container label.emphesized {
+  font-size: 18px;
+  font-weight: bolder;
+  color: #ccc;
+}
+
+.card .card-header .card-title.domain-title {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.domain-available-container input {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+}
+
+.domain-list-title {
+  font-size: 15px;
+  color: #ccc;
+}
+
+.domain-list-item {
+  font-size: 18px;
+  font-weight: bolder;
+  color: #ccc;
+}
+.domain-list-body-block {
+  text-align: center;
+}
+
+#domainModal {
+  background: rgb(0,0,0,0.7);
+}
+
+#domainModal .modal-content {
+  text-align: center;
+  
+}
+
+#domainModal .domain-title {
+  font-size: 23px;
+}
+
+#domainModal .modal-content div {
+  font-size: 18px;
+  color: #fff;
+}
+
+#domainModal .modal-content span {
+  font-size: 18px;
+  color: #fff;
+  display: inline-block;
+}
+
+#domainModal .card-user .card-body {
+  min-height: 100px;
 }

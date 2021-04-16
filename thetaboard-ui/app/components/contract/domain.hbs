@@ -1,0 +1,83 @@
+{{contract/domain-assigned-modal domainName=this.domainName walletAddressReceiver=this.walletAddressReceiver}}
+<div {{did-insert this.setupEventListener}} class="card card-user">
+    <div class="card-header ">
+        <div class="row">
+            <div class="col-sm-12 text-left">
+                <p class="card-text"></p>
+                <div class="author">
+                <div class="block block-one"></div>
+                <div class="block block-two"></div>
+                <div class="block block-three"></div>
+                <div class="block block-four"></div>
+                <h2 class="card-title domain-title">Buy a Theta Domain Name</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-domain">
+        <br/>
+        <form {{on "submit" this.nameToAddressAction}}>
+            <div class="row">
+                <div class="col-md-10 domain-block-centered">
+                    <div class="form-group domain-body-block">
+                        <label>Enter a Domain Name to check it's availibility :</label> <br/><br/>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend border-color-grey">
+                                <span class="input-group-text" id="basic-addon1"><i class="tim-icons icon-book-bookmark"></i></span>
+                            </div>
+                            <Input @placeholder="Enter Domain Name" @type="text" aria-label="Domain" aria-describedby="basic-addon1" class="form-control border-color" @value={{this.domainName}}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {{#if this.canByDomain}}
+            <form class="domain-available-container" {{on "submit" this.assignNewName}}>
+                <div class="row">
+                <div class="col-md-12">
+                    <br/>
+                    <label class="alert alert-success emphesized">The domain name: <br/>{{this.domainName}}<br/>is available!<br/>Enter the below information to buy it!</label>
+                    <br/>
+                    <div class="form-group">
+                        <br/>
+                        <label>Wallet address that will be assigned<br/>to the domain name: <label class="emphesized">{{this.domainName}}</label></label>
+                        <Input @placeholder="Enter Receiver's Wallet Address" @type="text" class="form-control border-color" @value={{this.walletAddressReceiver}}/>
+                    </div>
+                </div>
+                </div>
+            </form>
+        {{/if}}
+        {{#if this.canMakeOffer}}
+            <form class="domain-available-container" {{on "submit" this.makeOffer}}>
+                <div class="row">
+                <div class="col-md-12">
+                    <br/>
+                    <label class="alert alert-info emphesized">The domain name:<br/>{{this.domainName}}<br/>is already taken!<br/> But you can make an offer to buy it!</label>
+                    <br/>
+                    <div class="form-group">
+                        <br/>
+                        <label>Amount of your offer in Tfuel:</label>
+                        <Input @placeholder="Amount (in Tfuel)" @type="number" @min="1" class="form-control border-color" @value={{this.offerAmount}}/>
+                    </div>
+                </div>
+                </div>
+            </form>
+        {{/if}}
+    </div>
+    <div class="card-footer card-footer-domain">
+        {{#if canSearch}}
+            <button {{on 'click' nameToAddressAction}} type="submit" class="btn btn-fill btn-primary btn-left">Search</button>
+        {{/if}}
+        {{#if this.canByDomain}}
+            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+            <button {{on 'click' assignNewName}} type="submit" class="btn btn-fill btn-primary btn-left">Review Order</button>
+        {{/if}}
+         {{#if this.canMakeOffer}}
+            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+            <button {{on 'click' makeOffer}} type="submit" class="btn btn-fill btn-primary btn-left">Review offer</button>
+        {{/if}}
+    </div>
+</div>
+
+
+
