@@ -34,6 +34,10 @@ export default class ContractService extends Service {
     return getOwner(this).lookup('service:theta-sdk');
   }
 
+  get isMobile() {
+    return getOwner(this).lookup('service:is-mobile');
+  }
+
   async initContract() {
     let ABI = [
       {
@@ -353,7 +357,10 @@ export default class ContractService extends Service {
       const price = await this.contract.tfuelPrice();
       this.tfuelPrice = thetajs.utils.fromWei(price);
     } catch (error) {
-      this.utils.errorNotify(error.message);
+      if (this.isMobile.any) {
+        return;
+      }
+      return this.utils.errorNotify(error.message);
     }
   }
 
