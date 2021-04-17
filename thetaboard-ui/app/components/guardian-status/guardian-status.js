@@ -9,7 +9,7 @@ export default class GuardianStatusComponent extends Component {
       return;
     }
     this.guardian.statusInterval = 5000;
-    this.guardian.logsAutoRefresh = false;
+    this.guardian.logsAutoRefresh = true;
     if (this.guardian.logsLaterCall) {
       cancel(this.guardian.logsLaterCall);
     }

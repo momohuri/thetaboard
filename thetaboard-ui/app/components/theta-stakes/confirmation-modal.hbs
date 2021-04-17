@@ -1,0 +1,42 @@
+<div {{did-insert this.thetaStakes.setupEventListener}} class="modal modal-search fade" id="stakesModal" tabindex="-1" role="dialog" aria-labelledby="stakesModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="card card-user modal-content">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <p class="card-text"></p>
+                        <div class="author">
+                        <div class="block block-one"></div>
+                        <div class="block block-two"></div>
+                        <div class="block block-three"></div>
+                        <div class="block block-four"></div>
+                        <h2 class="card-title domain-title">Congratulations!!!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-offers">
+                {{#if this.thetaStakes.isDeposit}}
+                    <div>You successfully staked {{format-number this.thetaStakes.stakeAmount}} Theta on the node adress:<br/>{{this.guardian.guardianSummary.msg.Address}}</div>
+                {{else}}
+                    <div>You successfully unstaked your Theta from the node addres:<br/>{{this.guardian.guardianSummary.msg.Address}}<br/>They will be available in a few days!</div>
+                {{/if}}
+            </div>
+            <div class="card-footer card-footer-domain">
+                <button {{on 'click' this.closeModal}} type="submit" class="btn btn-fill btn-primary btn-left">Close</button>
+            </div>
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <div class="author">
+                            <div class="block block-one"></div>
+                            <div class="block block-two"></div>
+                            <div class="block block-three"></div>
+                            <div class="block block-four"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

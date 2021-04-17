@@ -13,6 +13,13 @@ export default class ThetaStakesService extends Service {
   @tracked isDeposit = false;
   @tracked isWithdraw = false;
 
+  @action
+  setupEventListener() {
+    $('#stakesModal').on('hidden.bs.modal', () => {
+      this.showStakes();
+    });
+  }
+
   get thetaSdk() {
     return getOwner(this).lookup('service:theta-sdk');
   }
@@ -48,7 +55,7 @@ export default class ThetaStakesService extends Service {
     try {
       const sendTransaction = await this.thetaSdk.sendThetaTransaction('deposit');
       if (sendTransaction.hash) {
-        this.utils.successNotify('Deposit Successful!');
+        $('#stakesModal').modal('show');
       } else {
         this.utils.errorNotify('Something went wrong, please try again');
       }
@@ -62,7 +69,7 @@ export default class ThetaStakesService extends Service {
     try {
       const withdraw = await this.thetaSdk.sendThetaTransaction('withdraw');
       if (withdraw.hash) {
-        this.utils.successNotify('Withdraw Successful!');
+        $('#stakesModal').modal('show');
       } else {
         this.utils.errorNotify('Something went wrong, please try again');
       }

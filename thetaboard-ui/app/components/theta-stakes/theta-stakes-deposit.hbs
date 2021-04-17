@@ -4,7 +4,7 @@
     <div class="row justify-content-lg-center">
     <form class="stakes-deposit col-md-9">
         <div class="form-group">
-        <label for="stake-amount">Stake Amount</label>
+        <label for="stake-amount">Stake Amount (in Theta)</label>
         {{#if this.guardian.isReady}}
             <Input @id="stake-amount" @type="number" @min="0" class="form-control border-color" @value={{this.thetaStakes.stakeAmount}}/>
         {{else}}
@@ -14,8 +14,8 @@
     </form>
     </div>
     <br/>
-    <button {{on "click" this.thetaStakes.showStakes}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+    <button {{on "click" this.thetaStakes.showStakes}} type="submit" class="btn btn-fill btn-secondary btn-left">Cancel</button>
     {{#if this.guardian.isReady}}
-        <button {{on "click" this.thetaStakes.deposit}} type="submit" class="btn btn-fill btn-primary">Deposit</button>
+        <button {{on "click" this.thetaStakes.deposit}} type="submit" class="btn btn-fill btn-primary">Review Deposit</button>
     {{/if}}
 </div>

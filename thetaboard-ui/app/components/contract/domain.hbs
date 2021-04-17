@@ -69,11 +69,11 @@
             <button {{on 'click' nameToAddressAction}} type="submit" class="btn btn-fill btn-primary btn-left">Search</button>
         {{/if}}
         {{#if this.canByDomain}}
-            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-secondary btn-left">Cancel</button>
             <button {{on 'click' assignNewName}} type="submit" class="btn btn-fill btn-primary btn-left">Review Order</button>
         {{/if}}
          {{#if this.canMakeOffer}}
-            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-primary btn-left">Cancel</button>
+            <button {{on 'click' cancel}} type="submit" class="btn btn-fill btn-secondary btn-left">Cancel</button>
             <button {{on 'click' makeOffer}} type="submit" class="btn btn-fill btn-primary btn-left">Review offer</button>
         {{/if}}
     </div>

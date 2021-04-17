@@ -601,20 +601,20 @@ form.domain-available-container label.emphesized {
   text-align: center;
 }
 
-#domainModal {
+#domainModal, #stakesModal {
   background: rgb(0,0,0,0.7);
 }
 
-#domainModal .modal-content {
+#stakesModal .modal-content, #domainModal .modal-content {
   text-align: center;
   
 }
 
-#domainModal .domain-title {
+#stakesModal .domain-title, #domainModal .domain-title {
   font-size: 23px;
 }
 
-#domainModal .modal-content div {
+#stakesModal .modal-content div, #domainModal .modal-content div {
   font-size: 18px;
   color: #fff;
 }
@@ -625,6 +625,6 @@ form.domain-available-container label.emphesized {
   display: inline-block;
 }
 
-#domainModal .card-user .card-body {
+#stakesModal .card-user .card-body, #domainModal .card-user .card-body {
   min-height: 100px;
 }
