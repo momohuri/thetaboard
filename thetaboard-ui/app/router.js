@@ -11,4 +11,5 @@ Router.map(function () {
   this.route('guardian');
   this.route('wallet');
   this.route('domain');
+  this.route('faq');
 });
