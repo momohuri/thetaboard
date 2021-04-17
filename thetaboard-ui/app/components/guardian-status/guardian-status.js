@@ -5,6 +5,9 @@ import { cancel } from '@ember/runloop';
 export default class GuardianStatusComponent extends Component {
   constructor(...args) {
     super(...args);
+    if (this.isMobile.any) {
+      return;
+    }
     this.guardian.statusInterval = 5000;
     this.guardian.logsAutoRefresh = true;
     if (this.guardian.logsLaterCall) {
@@ -23,6 +26,7 @@ export default class GuardianStatusComponent extends Component {
 
   @service('theta-sdk') thetaSdk;
   @service('guardian') guardian;
+  @service('isMobile') isMobile;
 
   willDestroy() {
     super.willDestroy(...arguments);

@@ -11,7 +11,7 @@ export default class GuardianService extends Service {
     this.guardianLogs = {};
     this.guardianSummary = {};
     this.guardianLatestSnapshot = {};
-    this.statusAutoRefresh = true;
+    this.statusAutoRefresh = this.isMobile.any ? false : true;
     this.logsAutoRefresh = false;
     this.autoRefreshStatus();
     this.autoRefreshLogs();
@@ -24,11 +24,15 @@ export default class GuardianService extends Service {
   @tracked guardianLogs = {};
   @tracked guardianSummary = {};
   @tracked guardianLatestSnapshot = {};
-  @tracked statusAutoRefresh = true;
-  @tracked logsAutoRefresh = false;
+  @tracked statusAutoRefresh;
+  @tracked logsAutoRefresh;
 
   get thetaSdk() {
     return getOwner(this).lookup('service:theta-sdk');
+  }
+
+  get isMobile() {
+    return getOwner(this).lookup('service:is-mobile');
   }
 
   get guardianLatestSnapshotDate() {
