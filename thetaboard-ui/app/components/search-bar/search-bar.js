@@ -45,6 +45,12 @@ export default class SearchBarSearchBarComponent extends Component {
       //   this.args.onRouteChange('');
       //   this.contract.domainName = '';
       // }
+
+
+      this.utils.errorNotify('Invalid Wallet Address');
+      this.args.onRouteChange('');
+      this.contract.domainName = '';
+
     }
     $('#searchModal').modal('hide');
   }
