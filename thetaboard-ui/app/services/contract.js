@@ -7,7 +7,7 @@ import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 export default class ContractService extends Service {
   constructor(...args) {
     super(...args);
-    this.tfuelPrice = 0;
+    this.tfuelPrice = 5;
     this.domainName = '';
     this.walletAddress = '';
     this.contract = {};
