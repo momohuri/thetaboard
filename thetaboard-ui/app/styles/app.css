@@ -639,6 +639,19 @@ form.domain-available-container label.emphesized {
   text-shadow: 2px 2px 8px #555;
 }
 
+@media screen and (max-width: 992px) {
+  #faq-page .card-description {
+    width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+.main-panel .content #faq-page {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 #faq-page .card-description p {
   font-size: 15px;
   font-weight: 500;
