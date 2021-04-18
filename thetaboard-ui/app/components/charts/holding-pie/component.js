@@ -12,6 +12,18 @@ export default class HoldingPieComponent extends Component {
   }
 
   @action
+  async connectWallet(event) {
+    event.preventDefault();
+    const account = await this.thetaSdk.getThetaAccount();
+    const walletInfo = await this.thetaSdk.getWalletInfo(account);
+    // this.contract.domainName
+    //   ? this.args.onRouteChange(this.contract.domainName)
+    //   : this.args.onRouteChange(account[0]);
+    this.args.onRouteChange(account[0]);
+    return walletInfo;
+  }
+
+  @action
   setupChart() {
     let element = document.getElementById('pieChartExample');
     if (!element) return;

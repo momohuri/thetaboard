@@ -8,7 +8,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      {{transactions/transaction-history transactions=@model.transactions pagination=@model.pagination}}
+      {{transactions/transaction-history onRouteChange=this.setQueryParam transactions=@model.transactions pagination=@model.pagination}}
      </div>
   </div>
 </div>

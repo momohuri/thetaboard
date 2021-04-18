@@ -658,7 +658,7 @@ form.domain-available-container label.emphesized {
   font-weight: 500;
   line-height: 27px;
   color: #ddd;
-
+  letter-spacing: 0.35px;
 }
 
 #faq-page .card-description ul li {
@@ -666,6 +666,7 @@ form.domain-available-container label.emphesized {
   font-weight: 500;
   line-height: 22px;
   color: #ddd;
+  letter-spacing: 0.35px;
 }
 
 #faq-page .card-description ul.no-list-deco li {
@@ -675,4 +676,5 @@ form.domain-available-container label.emphesized {
 
 #faq-page .card-description h4 {
   font-weight: bold;
+  letter-spacing: 0.35px;
 }

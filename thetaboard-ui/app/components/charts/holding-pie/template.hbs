@@ -19,7 +19,7 @@
   {{#if this.thetaSdk.wallets.length}}
     <canvas id="pieChartExample" height="266" {{did-insert this.setupChart}}></canvas>
   {{else}}
-    <p class="wallet-placeholder">Please connect your wallet or enter an address</p>
+    <p class="wallet-placeholder">Please <a href="" {{on 'click' this.connectWallet}}>connect your wallet</a> or <a href="" data-toggle="modal" data-target="#searchModal">enter an address</a>.</p>
   {{/if}}
   </div>
 </div>

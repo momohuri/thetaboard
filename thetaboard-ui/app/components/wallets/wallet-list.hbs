@@ -39,7 +39,7 @@
                 <td class="text-right">{{format-number balance.value style='currency' currency='USD'}}</td>
             </tr>
             {{else}}
-            <p>No Wallet</p>
+            <p>No wallet, please <a href="" {{on 'click' this.connectWallet}}>connect your wallet</a> or <a href="" data-toggle="modal" data-target="#searchModal">enter an address</a>.</p>
             {{/each}}
             </tbody>
         </table>
