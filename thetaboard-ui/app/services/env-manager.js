@@ -21,9 +21,17 @@ export default class EnvManagerService extends Service {
     queryParams: '',
     thetaNetwork: '',
     contractAddress: '',
+    isPublic: false,
   };
 
   async setParameters(params) {
+    const isPublicReq = await fetch('/is-public');
+    const isPublic = await isPublicReq.json();
+    if (isPublic && isPublic.success) {
+      if(isPublic.is_public == 'true') {
+        this.config.isPublic = true;
+      }
+    }
     if (params && params.env) {
       this.config.env = params.env;
       if (params.env === 'testnet') {

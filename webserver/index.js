@@ -21,7 +21,6 @@ app.listen(HTTP_PORT, () => {
 // env variables
 const api_token = "API_TOKEN" in process.env && process.env.API_TOKEN ? process.env.API_TOKEN : null;
 const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
-const is_demo = "DEMO" in process.env && process.env.DEMO;
 const is_public = "PUBLIC" in process.env && process.env.PUBLIC;
 const theta_explorer_api_params = {
     https: {rejectUnauthorized: false},
@@ -251,7 +250,7 @@ app.get('/guardian/status', async (req, res) => {
         const uptime = Number(theta_process_uptime.stdout.split('\n')[1]);
 
         if (stderr) {
-            res.json({"status": "error", "msg": stderr, "uptime": uptime, "is_demo": is_demo});
+            res.json({"status": "error", "msg": stderr, "uptime": uptime});
         } else {
             const status = JSON.parse(stdout);
             if (status["syncing"]) {
@@ -259,11 +258,10 @@ app.get('/guardian/status', async (req, res) => {
                     "status": "syncing",
                     "msg": status,
                     "version": version,
-                    "uptime": uptime,
-                    "is_demo": is_demo
+                    "uptime": uptime
                 });
             } else {
-                res.json({"status": "ready", "msg": status, "version": version, "uptime": uptime, "is_demo": is_demo});
+                res.json({"status": "ready", "msg": status, "version": version, "uptime": uptime});
             }
         }
     } catch (e) {
@@ -277,14 +275,13 @@ app.get('/guardian/status', async (req, res) => {
                     "status": "syncing",
                     "msg": {"process": "process up"},
                     "version": version,
-                    "uptime": uptime,
-                    "is_demo": is_demo
+                    "uptime": uptime
                 });
             } else {
-                res.json({"status": "error", "msg": e, "version": version, "is_demo": is_demo, "uptime": 0});
+                res.json({"status": "error", "msg": e, "version": version, "uptime": 0});
             }
         } catch (e) {
-            res.json({"status": "error", "msg": e, "version": version, "is_demo": is_demo, "uptime": 0});
+            res.json({"status": "error", "msg": e, "version": version, "uptime": 0});
         }
     }
 });
