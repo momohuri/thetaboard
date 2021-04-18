@@ -13,7 +13,7 @@ export default class ContractService extends Service {
     this.contract = {};
     this.addressToName = [];
     this.nameToAddress = [];
-    this.initContract();
+    //this.initContract();
   }
 
   @tracked tfuelPrice;

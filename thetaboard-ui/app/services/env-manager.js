@@ -51,13 +51,13 @@ export default class EnvManagerService extends Service {
       if (wa.length == 42 && wa.substr(1, 1).toLocaleLowerCase() == 'x') {
         await this.thetaSdk.getWalletInfo([wa]);
       } else {
-        const nameToAddress = await this.contract.getNameToAddress(wa);
-        if (nameToAddress.length && nameToAddress['ownerAddr'] != '0x0000000000000000000000000000000000000000') {
-          await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
-        } else {
-          this.utils.errorNotify('Invalid Wallet Address or Domain name');
-          this.contract.domainName = '';
-        }
+        // const nameToAddress = await this.contract.getNameToAddress(wa);
+        // if (nameToAddress.length && nameToAddress['ownerAddr'] != '0x0000000000000000000000000000000000000000') {
+        //   await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
+        // } else {
+        //   this.utils.errorNotify('Invalid Wallet Address or Domain name');
+        //   this.contract.domainName = '';
+        // }
       }
     }
     return this.config;

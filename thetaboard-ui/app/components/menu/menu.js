@@ -5,7 +5,7 @@ export default class MenuComponent extends Component {
   menuItems = [
     { name: 'dashboard', icon: 'icon-chart-pie-36' },
     { name: 'wallet', icon: 'icon-wallet-43' },
-    { name: 'domain', icon: 'icon-book-bookmark' },
+    // { name: 'domain', icon: 'icon-book-bookmark' },
     { name: 'guardian', icon: 'icon-atom' },
   ];
   @service router;

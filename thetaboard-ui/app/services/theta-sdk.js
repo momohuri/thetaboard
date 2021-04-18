@@ -139,16 +139,16 @@ export default class ThetaSdkService extends Service {
     if (walletInfo.status == 200) {
       wallets = await walletInfo.json();
     }
-    if (accounts.length) {
-      this.currentAccountDomainList = await this.contract.getAddressToNames(
-        accounts[0]
-      );
-      if (this.currentAccountDomainList.length) {
-        this.contract.domainName = this.currentAccountDomainList[0];
-      }
-    } else {
+    // if (accounts.length) {
+    //   this.currentAccountDomainList = await this.contract.getAddressToNames(
+    //     accounts[0]
+    //   );
+    //   if (this.currentAccountDomainList.length) {
+    //     this.contract.domainName = this.currentAccountDomainList[0];
+    //   }
+    // } else {
       this.currentAccountDomainList = [];
-    }
+    // }
     this.wallets = wallets.wallets;
     this.currentAccount = accounts;
     return wallets;
