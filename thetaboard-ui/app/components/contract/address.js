@@ -8,13 +8,9 @@ export default class ContractAddressComponent extends Component {
   @service('theta-sdk') thetaSdk;
 
   async getWalletInfo() {
-    const account = await this.thetaSdk.getThetaAccount();
-    const walletInfo = await this.thetaSdk.getWalletInfo(account);
+    const address = await this.thetaSdk.connectWallet();
+    this.args.onRouteChange(address);
     $('button.connect-wallet-button').removeClass("disabled");
-    this.contract.domainName
-      ? this.args.onRouteChange(this.contract.domainName)
-      : this.args.onRouteChange(account[0]);
-    return walletInfo;
   }
 
   @action

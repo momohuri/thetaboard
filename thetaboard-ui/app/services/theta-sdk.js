@@ -76,6 +76,13 @@ export default class ThetaSdkService extends Service {
     }
   }
 
+  async connectWallet() {
+    const account = await this.getThetaAccount();
+    await this.getWalletInfo(account);
+    // return this.contract.domainName ? this.contract.domainName : account[0];
+    return account[0];
+  }
+
   setupWalletAddress(account, timeoutId) {
     cancel(timeoutId);
     this.currentAccount = account;
