@@ -19,11 +19,10 @@ export default class GuardianController extends Controller {
   }
 
   @action
-  copySummaryToClipBoard(summary) {
+  copySummaryToClipBoard(label, summary) {
     this.utils.copyToClipboard(
-      summary.value,
-      `${summary.label} was successfully copied to your clipboad`
+      summary,
+      `${label} was successfully copied to your clipboad`
     );
   }
-
 }

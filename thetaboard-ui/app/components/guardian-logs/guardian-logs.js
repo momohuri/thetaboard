@@ -7,7 +7,7 @@ export default class GuardianLogsComponent extends Component {
   @service('utils') utils;
   @service('env-manager') envManager;
   @service('is-mobile') isMobile;
-  
+
   @action
   turnOnLogs() {
     if (this.isMobile.any) {
@@ -27,10 +27,10 @@ export default class GuardianLogsComponent extends Component {
   }
 
   @action
-  copySummaryToClipBoard(summary) {
+  copySummaryToClipBoard(label, value) {
     this.utils.copyToClipboard(
-      summary.value,
-      `${summary.label} was successfully copied to your clipboad`
+      value,
+      `${label} was successfully copied to your clipboad`
     );
   }
 

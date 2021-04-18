@@ -42,11 +42,11 @@
                     <p></p>
                     {{#if this.guardian.snapshotInfo.latestFinalizedBlockTime}}
                         <p class="summary-label">Address</p>
-                        <div {{on "click" (action this.copySummaryToClipBoard guardian.guardianSummary.msg.Address)}} class="card-description-summary">
+                        <div {{on "click" (action this.copySummaryToClipBoard 'Address' this.guardian.guardianSummary.msg.Address)}} class="card-description-summary">
                             <p class="summary-value">{{guardian.guardianSummary.msg.Address}}</p>
                         </div>
                         <p class="summary-label">Summary</p>
-                        <div {{on "click" (action this.copySummaryToClipBoard guardian.guardianSummary.msg.Summary)}} class="card-description-summary">
+                        <div {{on "click" (action this.copySummaryToClipBoard 'Summary' this.guardian.guardianSummary.msg.Summary)}} class="card-description-summary">
                             <p class="summary-value">{{guardian.guardianSummary.msg.Summary}}</p>
                         </div>
                     {{else}}
