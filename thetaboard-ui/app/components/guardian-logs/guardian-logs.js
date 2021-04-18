@@ -11,10 +11,11 @@ export default class GuardianLogsComponent extends Component {
   @action
   turnOnLogs() {
     if (this.isMobile.any) {
-      return;
+      this.guardian.refreshLogs();
+    } else {
+      this.guardian.logsAutoRefresh = true;
+      this.guardian.autoRefreshLogs();
     }
-    this.guardian.logsAutoRefresh = true;
-    this.guardian.autoRefreshLogs();
   }
 
   @action
