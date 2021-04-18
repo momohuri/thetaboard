@@ -632,3 +632,24 @@ form.domain-available-container label.emphesized {
 .card-not-found {
   text-align: center;
 }
+
+#faq-page .card-description {
+  width: 85%;
+  margin: 25px auto;
+  text-shadow: 2px 2px 8px #555;
+}
+
+#faq-page .card-description p {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 27px;
+  color: #ddd;
+
+}
+
+#faq-page .card-description ul li {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #ddd;
+}
