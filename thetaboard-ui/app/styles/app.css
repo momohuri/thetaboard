@@ -628,3 +628,7 @@ form.domain-available-container label.emphesized {
 #stakesModal .card-user .card-body, #domainModal .card-user .card-body {
   min-height: 100px;
 }
+
+.card-not-found {
+  text-align: center;
+}
