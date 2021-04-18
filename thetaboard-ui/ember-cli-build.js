@@ -26,5 +26,14 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  app.import('vendor/black-dashboard/js/core/jquery.min.js');
+  app.import('vendor/black-dashboard/js/core/popper.min.js');
+  app.import('vendor/black-dashboard/js/plugins/perfect-scrollbar.jquery.min.js');
+  app.import('vendor/black-dashboard/js/plugins/chartjs.min.js');
+  app.import('vendor/black-dashboard/js/plugins/chartjs-plugin-datalabels.min.js');
+  app.import('vendor/black-dashboard/js/black-dashboard.js');
+
+  app.import('vendor/black-dashboard/js/core/bootstrap.min.js');
+  app.import('vendor/black-dashboard/js/plugins/bootstrap-notify.js');
   return app.toTree();
 };
