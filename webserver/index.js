@@ -22,6 +22,7 @@ app.listen(HTTP_PORT, () => {
 const api_token = "API_TOKEN" in process.env && process.env.API_TOKEN ? process.env.API_TOKEN : null;
 const guardian_password = "NODE_PASSWORD" in process.env && process.env.NODE_PASSWORD ? process.env.NODE_PASSWORD : "MY_SECRET_NODE_PASSWORD";
 const is_demo = "DEMO" in process.env && process.env.DEMO;
+const is_public = "PUBLIC" in process.env && process.env.PUBLIC;
 const theta_explorer_api_params = {
     https: {rejectUnauthorized: false},
 }
@@ -41,7 +42,18 @@ app.use(function (req, res, next) {
         theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
     }
     next();
-})
+});
+
+
+// isPublic
+app.get("/is-public", async (req, res, next) => {
+    const response = [];
+    try {
+        res.json({success: true, is_public: is_public});
+    } catch (error) {
+        res.status(400).json(error.response.body);
+    }
+});
 
 // wallet infos
 app.get("/prices", async (req, res, next) => {
