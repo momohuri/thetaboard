@@ -174,7 +174,7 @@
               open a pop-up on the <a
                     target="_blank" href="https://chrome.google.com/webstore/detail/Theta-wallet/ckelpdlfgochnkdgikcgbimdcfgpkhgk">official
               Theta Wallet extension</a> to confirm the transaction
-             <br/><br/> 
+             <br/><br/>
              <b>If the domain is already taken:</b><br/>
               An offer can be made for at least 1 Tfuel to the current owner of
               the domain.<br>
@@ -240,9 +240,11 @@
             </p><br>
             <h4> Using Thetaboard public Guardian Node</h4>
             <p style="margin-left: 25px;">
-              Thetaboard hosts a public Guardian Node for the community and anyone can use it by either using the summary on
-              the <LinkTo @route="guardian">Guardian</LinkTo> page and the <a target="_blank" href="https://docs.thetatoken.org/docs/guardian-staking-process">Theta
-              instructions</a> or by using the Stake widget in the <LinkTo @route="guardian">Guardian</LinkTo> page.
+              Thetaboard hosts a public Guardian Node for the community and anyone can use it by either using the summary bellow and the <a target="_blank" href="https://docs.thetatoken.org/docs/guardian-staking-process">Theta
+              instructions</a> or by using the Stake widget in the <LinkTo @route="guardian">Guardian</LinkTo> page.<br><br>
+              <div {{on "click" (action this.copySummaryToClipBoard 'Summary' this.guardian.guardianSummary.msg.Summary)}} class="card-description-summary">
+                <p class="summary-value">{{guardian.guardianSummary.msg.Summary}}</p>
+              </div>
               <br/><br/>
               <b>Staking using the Stakes widget:</b><br/> From the the <LinkTo @route="guardian">Guardian</LinkTo> page click the "Deposit" button
                and enter the amount of Theta to stake. Then click on "Review Deposit" which will open a confirmation pop-up on the <a
@@ -262,7 +264,7 @@
             <h4>Hosting a Guardian Node</h4>
             <p style="margin-left: 25px;">
               For more advanced users it is possible to setup a Guardian Node using the using the <a
-              target="_blank" href="https://docs.thetatoken.org/docs/guardian-node-overview">Theta documentation</a> 
+              target="_blank" href="https://docs.thetatoken.org/docs/guardian-node-overview">Theta documentation</a>
               or by setting up an instance of Thetaboard by running the following commands on a Linux
               terminal: <br><br>
               <code>
