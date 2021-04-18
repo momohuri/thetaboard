@@ -5,7 +5,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
-    fingerprint:{
+    fingerprint: {
       enabled: false
     },
     SRI: {
@@ -25,6 +25,17 @@ module.exports = function (defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+
+  // app.import('assets/js/core/jquery.min.js');
+  // app.import('assets/js/core/popper.min.js');
+  // app.import('assets/js/plugins/perfect-scrollbar.jquery.min.js');
+  //
+  // app.import('assets/js/plugins/chartjs.min.js');
+  // app.import('assets/js/plugins/chartjs-plugin-datalabels.min.js');
+  // app.import('assets/js/black-dashboard.js');
+  // app.import('assets/vendor.js');
+  //   app.import('assets/thetaboard-ui.js');
+  // app.import('assets/js/core/bootstrap.min.js');
 
   return app.toTree();
 };

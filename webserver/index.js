@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const got = require('got');
+const expressStaticGzip = require("express-static-gzip");
 const dateFormat = require("dateformat");
 
 const wei_divider = 1000000000000000000;
@@ -10,7 +11,7 @@ const app = express();
 const router = express.Router();
 const server = http.createServer(app);
 
-app.use(express.static('public'));
+app.use('/', expressStaticGzip('public'));
 // Server port
 const HTTP_PORT = 8000;
 // Start server
