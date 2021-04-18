@@ -7,6 +7,7 @@ export default class MenuComponent extends Component {
     { name: 'wallet', icon: 'icon-wallet-43' },
     // { name: 'domain', icon: 'icon-book-bookmark' },
     { name: 'guardian', icon: 'icon-atom' },
+    { name: 'faq', icon: 'icon-compass-05' },
   ];
   @service router;
 
