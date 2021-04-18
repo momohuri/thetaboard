@@ -11,10 +11,9 @@ export default class GuardianService extends Service {
     this.guardianLogs = {};
     this.guardianSummary = {};
     this.guardianLatestSnapshot = {};
-    this.statusAutoRefresh = this.isMobile.any ? false : true;
+    this.statusAutoRefresh = true;
     this.logsAutoRefresh = false;
     this.autoRefreshStatus();
-    this.autoRefreshLogs();
     this.statusInterval = 60000;
     this.statusLaterCall = null;
     this.logsLaterCall = null;
@@ -29,10 +28,6 @@ export default class GuardianService extends Service {
 
   get thetaSdk() {
     return getOwner(this).lookup('service:theta-sdk');
-  }
-
-  get isMobile() {
-    return getOwner(this).lookup('service:is-mobile');
   }
 
   get guardianLatestSnapshotDate() {
@@ -121,16 +116,14 @@ export default class GuardianService extends Service {
   }
 
   autoRefreshStatus() {
-    if (this.statusAutoRefresh) {
-      this.refreshStatus();
-      this.statusLaterCall = later(
-        this,
-        function () {
-          this.autoRefreshStatus();
-        },
-        this.statusInterval
-      );
-    }
+    this.refreshStatus();
+    this.statusLaterCall = later(
+      this,
+      function () {
+        this.autoRefreshStatus();
+      },
+      this.statusInterval
+    );
   }
 
   autoRefreshLogs() {
@@ -146,6 +139,7 @@ export default class GuardianService extends Service {
     }
   }
 
+  @action
   async refreshLogs() {
     const guardianLogs = await this.thetaSdk.getGuardianLogs();
     this.guardianLogs = guardianLogs;
@@ -167,12 +161,6 @@ export default class GuardianService extends Service {
   toggleAutoRefreshLogs() {
     this.logsAutoRefresh = !this.logsAutoRefresh;
     if (this.logsAutoRefresh) this.autoRefreshLogs();
-  }
-
-  @action
-  toggleAutoRefreshStatus() {
-    this.statusAutoRefresh = !this.statusAutoRefresh;
-    if (this.statusAutoRefresh) this.autoRefreshStatus();
   }
 
   @action

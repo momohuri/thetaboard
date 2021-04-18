@@ -8,9 +8,3 @@
         </div>
     {{/if}}
 {{/if}}
-
-<button {{on "click" this.guardian.toggleAutoRefreshStatus}} 
-    type="submit" 
-    class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Auto refresh 
-    <span><i class="tim-icons {{if this.guardian.statusAutoRefresh 'icon-check-2' 'icon-simple-remove'}}"></i></span>
-</button>

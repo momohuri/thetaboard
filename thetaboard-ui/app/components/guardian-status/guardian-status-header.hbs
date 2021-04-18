@@ -8,9 +8,11 @@
             <p>Guardian Status</p>
             <span><b> {{guardian.status}} 
                 {{#if guardian.isUp}}
-                    since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
-                {{/if}}
-                {{#if guardian.isUp}}
+                    {{#if this.envManager.config.isPublic}}
+                        since {{moment-to '2021-04-14'}}
+                    {{else}}
+                        since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
+                    {{/if}}
                     {{#if guardian.snapshotInfo.latestFinalizedBlockTime}} 
                         <p>The lastest finalized block synced is from: {{moment guardian.snapshotInfo.latestFinalizedBlockTime}}</p>
                     {{/if}}

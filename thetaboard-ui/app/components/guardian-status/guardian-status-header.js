@@ -3,4 +3,5 @@ import { inject as service } from '@ember/service';
 
 export default class GuardianStatusHeaderComponent extends Component {
   @service('guardian') guardian;
+  @service('env-manager') envManager;
 }

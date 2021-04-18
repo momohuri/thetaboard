@@ -22,6 +22,7 @@ export default class EnvManagerService extends Service {
     thetaNetwork: '',
     contractAddress: '',
     isPublic: false,
+    isNotPublic: true,
   };
 
   async setParameters(params) {
@@ -30,6 +31,7 @@ export default class EnvManagerService extends Service {
     if (isPublic && isPublic.success) {
       if(isPublic.is_public == 'true') {
         this.config.isPublic = true;
+        this.config.isNotPublic = false;
       }
     }
     if (params && params.env) {

@@ -9,11 +9,18 @@
     </div>
 {{/if}}
 <div class="card-footer-actions">
-    <button {{on "click" this.guardian.toggleAutoRefreshLogs}} 
-        type="submit" 
-        class="btn btn-fill btn-primary btn-left">Auto refresh 
-        <span><i class="tim-icons {{if this.guardian.logsAutoRefresh 'icon-check-2' 'icon-simple-remove'}}"></i></span>
-    </button>
+    {{#if this.isMobile.any}}
+        <button {{on "click" this.guardian.refreshLogs}} 
+            type="submit" 
+            class="btn btn-fill btn-primary btn-left">Refresh 
+        </button>
+    {{else}}
+        <button {{on "click" this.guardian.toggleAutoRefreshLogs}} 
+            type="submit" 
+            class="btn btn-fill btn-primary btn-left">Auto refresh 
+            <span><i class="tim-icons {{if this.guardian.logsAutoRefresh 'icon-check-2' 'icon-simple-remove'}}"></i></span>
+        </button>
+    {{/if}}
     {{#if guardian.isError}}
         <button {{on "click" this.guardian.startGuardian}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Start Guardian</button>
         <button {{on "click" this.guardian.updateGuardian}} type="submit" class="{{if this.thetaSdk.downloadProgress "disabled"}} btn btn-fill btn-primary btn-left">Update Guardian</button>
@@ -25,7 +32,9 @@
             </div>
         {{/if}}
     {{else if guardian.isSyncing}}
-        <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+        {{#if this.envManager.config.isNotPublic}}
+            <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+        {{/if}}
         {{#if guardian.guardianLatestSnapshotDate}}
             <div>
                 <br/>
@@ -33,6 +42,8 @@
             </div>
         {{/if}}
     {{else if guardian.isReady}}
-        <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+        {{#if this.envManager.config.isNotPublic}}
+            <button {{on "click" this.guardian.stopGuardian}} type="submit" class="btn btn-fill btn-primary btn-left">Stop Guardian</button>
+        {{/if}}
     {{/if}}
 </div>

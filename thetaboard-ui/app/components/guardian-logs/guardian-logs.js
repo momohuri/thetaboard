@@ -5,6 +5,25 @@ import { action } from '@ember/object';
 export default class GuardianLogsComponent extends Component {
   @service('guardian') guardian;
   @service('utils') utils;
+  @service('env-manager') envManager;
+  @service('is-mobile') isMobile;
+  
+  @action
+  turnOnLogs() {
+    if (this.isMobile.any) {
+      return;
+    }
+    this.guardian.logsAutoRefresh = true;
+    this.guardian.autoRefreshLogs();
+  }
+
+  @action
+  turnOffLogs() {
+    if (this.isMobile.any) {
+      return;
+    }
+    this.guardian.logsAutoRefresh = false;
+  }
 
   @action
   copySummaryToClipBoard(summary) {

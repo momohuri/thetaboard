@@ -7,7 +7,6 @@
           <h4 class="card-title">Public Guardian Node</h4>
         </div>
         <div class="card-body">
-
           <p class="text-success">
             If you want to to stake your theta on a Guardian Node, you can do it for free using the stakes widget in
             this page or
@@ -18,19 +17,14 @@
                   href="https://docs.thetatoken.org/docs/guardian-staking-process">
             theta website </a>
           </p>
-
-
           <div {{on "click" (action this.copySummaryToClipBoard summary)}} class="card-description-summary">
             <p class="summary-value">{{summary}}</p>
           </div>
-
           <p class="text-success">
             <br>
             If you like this page and would like to setup your own personal Guardian Node, you can do it following <a
                   href="https://github.com/momohuri/thetaboard">this instructions.</a>
           </p>
-
-
         </div>
       </div>
     </div>
@@ -38,8 +32,8 @@
 {{/if}}
 <div class="row">
   <div class="col-md-4">
-    {{guardian-status/guardian-status}}
     {{theta-stakes/theta-stakes}}
+    {{guardian-status/guardian-status}}
   </div>
   <div class="col-md-8">
     {{guardian-logs/guardian-logs}}

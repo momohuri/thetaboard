@@ -6,6 +6,8 @@ import { action } from '@ember/object';
 export default class GuardianLogsFooterComponent extends Component {
   @service('guardian') guardian;
   @service('theta-sdk') thetaSdk;
+  @service('env-manager') envManager;
+  @service('is-mobile') isMobile;
 
   async fetchLatestSnapshot() {
     await this.guardian.updateGuardianLatestSnapshotLogs();
