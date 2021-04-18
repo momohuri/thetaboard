@@ -321,6 +321,9 @@ app.get('/guardian/start', async (req, res) => {
 });
 
 app.get('/guardian/stop', async (req, res) => {
+    if (is_public) {
+        return res.json({"error": "Not Authorized", "success": false});
+    }
     try {
         const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length === 0) {
@@ -362,6 +365,9 @@ app.get('/guardian/summary', async (req, res) => {
 });
 
 app.get('/guardian/update', async (req, res) => {
+    if (is_public) {
+        return res.json({"error": "Not Authorized", "success": false});
+    }
     try {
         fs.rmSync(`${theta_mainnet_folder}/bin/theta`, {'force': true});
         fs.rmSync(`${theta_mainnet_folder}/bin/thetacli`, {'force': true});
@@ -383,6 +389,9 @@ app.get('/guardian/update', async (req, res) => {
 });
 
 app.get('/guardian/latest_snapshot', async (req, res) => {
+    if (is_public) {
+        return res.json({"error": "Not Authorized", "success": false});
+    }
     try {
         const {birthtime} = fs.statSync(`${theta_mainnet_folder}/guardian_mainnet/node/snapshot`, {'force': true});
         res.json({"success": true, "date": birthtime})
@@ -393,6 +402,9 @@ app.get('/guardian/latest_snapshot', async (req, res) => {
 })
 
 app.get('/guardian/download_snapshot', async (req, res) => {
+    if (is_public) {
+        return res.json({"error": "Not Authorized", "success": false});
+    }
     try {
         const theta_process = await find('name', `${theta_mainnet_folder}/bin/theta`);
         if (theta_process.length > 0) {
@@ -417,13 +429,6 @@ app.get('/guardian/download_snapshot', async (req, res) => {
 
 });
 
-
-// Streams api
-
-app.get('/streams/list', async (req, res) => {
-    const streams = fs.readFileSync('./ressources/streams.json', {encoding: 'utf8', flag: 'r'});
-    res.json({"msg": JSON.parse(streams).result.stream_info, "success": true});
-})
 
 // Default response for any other request
 app.use(function (req, res) {
