@@ -17,7 +17,7 @@
             </div>
             <div class="card-body card-offers">
                 {{#if this.thetaStakes.isDeposit}}
-                    <div>You successfully staked {{format-number this.thetaStakes.stakeAmount}} Theta on the node adress:<br/>{{this.guardian.guardianSummary.msg.Address}}</div>
+                    <div>You successfully staked {{format-number this.thetaStakes.stakeAmount}} Theta on the node address:<br/>{{this.guardian.guardianSummary.msg.Address}}</div>
                 {{else}}
                     <div>You successfully unstaked your Theta from the node addres:<br/>{{this.guardian.guardianSummary.msg.Address}}<br/>They will be available in a few days!</div>
                 {{/if}}

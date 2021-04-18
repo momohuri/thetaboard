@@ -647,9 +647,10 @@ form.domain-available-container label.emphesized {
 
 
 @media screen and (max-width: 768px) {
-.main-panel .content #faq-page {
-    padding-left: 0px;
-    padding-right: 0px;
+  .main-panel .content #faq-page {
+      padding-left: 0px;
+      padding-right: 0px;
+  }
 }
 
 #faq-page .card-description p {
@@ -665,4 +666,13 @@ form.domain-available-container label.emphesized {
   font-weight: 500;
   line-height: 22px;
   color: #ddd;
+}
+
+#faq-page .card-description ul.no-list-deco li {
+  list-style: none;
+}
+
+
+#faq-page .card-description h4 {
+  font-weight: bold;
 }
