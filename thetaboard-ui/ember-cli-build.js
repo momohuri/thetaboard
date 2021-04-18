@@ -26,16 +26,5 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  // app.import('assets/js/core/jquery.min.js');
-  // app.import('assets/js/core/popper.min.js');
-  // app.import('assets/js/plugins/perfect-scrollbar.jquery.min.js');
-  //
-  // app.import('assets/js/plugins/chartjs.min.js');
-  // app.import('assets/js/plugins/chartjs-plugin-datalabels.min.js');
-  // app.import('assets/js/black-dashboard.js');
-  // app.import('assets/vendor.js');
-  //   app.import('assets/thetaboard-ui.js');
-  // app.import('assets/js/core/bootstrap.min.js');
-
   return app.toTree();
 };
