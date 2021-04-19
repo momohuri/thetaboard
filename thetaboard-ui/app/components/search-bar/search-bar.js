@@ -30,27 +30,21 @@ export default class SearchBarSearchBarComponent extends Component {
         ? this.args.onRouteChange(this.contract.domainName)
         : this.args.onRouteChange(this.walletAddress);
     } else {
-      // const nameToAddress = await this.contract.getNameToAddress(
-      //   this.walletAddress
-      // );
-      // if (
-      //   nameToAddress.length &&
-      //   nameToAddress['ownerAddr'] !=
-      //     '0x0000000000000000000000000000000000000000'
-      // ) {
-      //   await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
-      //   this.args.onRouteChange(this.walletAddress);
-      // } else {
-      //   this.utils.errorNotify('Invalid Wallet Address or Domain name');
-      //   this.args.onRouteChange('');
-      //   this.contract.domainName = '';
-      // }
-
-
-      this.utils.errorNotify('Invalid Wallet Address');
-      this.args.onRouteChange('');
-      this.contract.domainName = '';
-
+      const nameToAddress = await this.contract.getNameToAddress(
+        this.walletAddress
+      );
+      if (
+        nameToAddress.length &&
+        nameToAddress['ownerAddr'] !=
+          '0x0000000000000000000000000000000000000000'
+      ) {
+        await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
+        this.args.onRouteChange(this.walletAddress);
+      } else {
+        this.utils.errorNotify('Invalid Wallet Address or Domain name');
+        this.args.onRouteChange('');
+        this.contract.domainName = '';
+      }
     }
     $('#searchModal').modal('hide');
   }

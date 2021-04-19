@@ -1,0 +1,39 @@
+<div class="modal modal-search fade" id="offerMadeModal" tabindex="-1" role="dialog" aria-labelledby="offerMadeModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="card card-user modal-content">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <p class="card-text"></p>
+                        <div class="author">
+                        <div class="block block-one"></div>
+                        <div class="block block-two"></div>
+                        <div class="block block-three"></div>
+                        <div class="block block-four"></div>
+                        <h2 class="card-title domain-title">Your offer was sent!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-offers">
+                You offered {{this.offerAmount}} Tfuel to buy the domain name <b>{{this.domainName}}</b> from the wallet address:
+                <div>{{this.ownerAddress}}</div>
+            </div>
+            <div class="card-footer card-footer-domain">
+                <button {{on 'click' this.closeModal}} type="submit" class="btn btn-fill btn-primary btn-left">Close</button>
+            </div>
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <div class="author">
+                            <div class="block block-one"></div>
+                            <div class="block block-two"></div>
+                            <div class="block block-three"></div>
+                            <div class="block block-four"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

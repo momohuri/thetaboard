@@ -13,6 +13,7 @@ export default class ContractDomainComponent extends Component {
     this.offerAmount = 0;
     this.walletAddressPayer = '';
     this.walletAddressReceiver = '';
+    this.assignToBuyer = true;
   }
 
   @service('contract') contract;
@@ -25,11 +26,20 @@ export default class ContractDomainComponent extends Component {
   @tracked walletAddressPayer;
   @tracked walletAddressReceiver;
   @tracked nameToAddress;
+  @tracked assignToBuyer;
 
   @action
   setupEventListener() {
     $('#domainModal').on('hidden.bs.modal', () => {
-      this.domainName = "";
+      this.domainName = '';
+    });
+  }
+
+  @action
+  setupOfferMadeEventListener() {
+    $('#offerMadeModal').on('hidden.bs.modal', () => {
+      this.domainName = '';
+      this.offerAmount = '';
     });
   }
 
@@ -77,7 +87,6 @@ export default class ContractDomainComponent extends Component {
     }
     try {
       this.nameToAddress = await this.contract.contract.nameToAddress(this.domainName);
-
       this.searchedDomain = this.domainName;
     } catch (error) {
       this.utils.errorNotify(error.message);
@@ -87,6 +96,7 @@ export default class ContractDomainComponent extends Component {
   @action
   cancel() {
     this.domainName = '';
+    this.assignToBuyer = true;
   }
 
   @action
@@ -94,6 +104,7 @@ export default class ContractDomainComponent extends Component {
     event.preventDefault();
     const assignedNewName = await this.contract.assignNewName(this.domainName, this.walletAddressReceiver);
     if (assignedNewName) {
+      this.walletAddressReceiver = assignedNewName.walletReceiver;
       $('#domainModal').modal('show');
     }
   }
@@ -101,6 +112,20 @@ export default class ContractDomainComponent extends Component {
   @action
   async makeOffer(event) {
     event.preventDefault();
-    return await this.contract.makeOffer(this.offerAmount);
+    const offerMade =  await this.contract.makeOffer(this.offerAmount, this.nameToAddress);
+    if (offerMade) {
+      $('#offerMadeModal').modal('show');
+    }
+  }
+
+  @action
+  giftDomain() {
+    this.assignToBuyer = false;
+  }
+
+  @action
+  resetGiftDomain() {
+    this.assignToBuyer = true;
+    this.walletAddressReceiver = '';
   }
 }

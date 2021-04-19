@@ -13,7 +13,7 @@ export default class ContractService extends Service {
     this.contract = {};
     this.addressToName = [];
     this.nameToAddress = [];
-    //this.initContract();
+    this.initContract();
   }
 
   @tracked tfuelPrice;
@@ -395,9 +395,6 @@ export default class ContractService extends Service {
   }
 
   async assignNewName(domainName, walletAddress) {
-    if (!walletAddress) {
-      return this.utils.errorNotify("Please enter the receiver's address.");
-    }
     if (
       domainName.length == 42 &&
       domainName.substr(1, 1).toLocaleLowerCase() == 'x'
@@ -410,13 +407,14 @@ export default class ContractService extends Service {
         from: walletPayer[0],
         value: thetajs.utils.toWei(this.tfuelPrice),
       };
-
+      const walletReceiver = walletAddress ? walletAddress : walletPayer[0];
       const transaction = await this.contract.populateTransaction.assignNewName(
         domainName,
-        walletAddress,
+        walletReceiver,
         options
       );
       const result = await ThetaWalletConnect.sendTransaction(transaction);
+      result.walletReceiver = walletReceiver;
       return result;
     } catch (error) {
       this.utils.errorNotify(error.message);
@@ -424,12 +422,15 @@ export default class ContractService extends Service {
     }
   }
 
-  async makeOffer(offerAmount) {
+  async makeOffer(offerAmount, owner) {
     if (offerAmount < 1) {
       return this.utils.errorNotify('You must offer at least 1 Tfuel to buy this domain.');
     } else {
       try {
         const walletPayer = await this.thetaSdk.getThetaAccount();
+        if (owner[0] == walletPayer[0]) {
+          return this.utils.errorNotify("You already own this domain and can't make an offer.");
+        }
         const options = {
           from: walletPayer[0],
           value: thetajs.utils.toWei(offerAmount),

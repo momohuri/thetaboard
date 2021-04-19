@@ -1,5 +1,6 @@
 {{contract/domain-assigned-modal domainName=this.domainName walletAddressReceiver=this.walletAddressReceiver}}
-<div {{did-insert this.setupEventListener}} class="card card-user">
+{{contract/offer-made-modal domainName=this.domainName ownerAddress=this.domainOwner offerAmount=this.offerAmount}}
+<div {{did-insert this.setupEventListener}} {{did-insert this.setupOfferMadeEventListener}} class="card card-user">
     <div class="card-header ">
         <div class="row">
             <div class="col-sm-12 text-left">
@@ -36,12 +37,19 @@
                 <div class="row">
                 <div class="col-md-12">
                     <br/>
-                    <label class="alert alert-success emphesized">The domain name: <br/>{{this.domainName}}<br/>is available!<br/>Enter the below information to buy it!</label>
+                    <label class="alert alert-success emphesized">The domain name: <br/>{{this.domainName}}<br/>is available!</label>
                     <br/>
                     <div class="form-group">
                         <br/>
-                        <label>Wallet address that will be assigned<br/>to the domain name: <label class="emphesized">{{this.domainName}}</label></label>
-                        <Input @placeholder="Enter Receiver's Wallet Address" @type="text" class="form-control border-color" @value={{this.walletAddressReceiver}}/>
+                        {{#if this.assignToBuyer}}
+                            <label>The domain name <label class="emphesized">{{this.domainName}}</label> will be assigned to your wallet address per default.<br/>
+                            But you can also assign/gift it to another wallet address</label>
+                            <button {{on 'click' this.giftDomain}} type="submit" class="btn btn-fill btn-primary btn-left">Gift someone else with this domain name!</button>
+                        {{else}}
+                            <label>Enter the wallet address that will be assigned<br/>to the domain name: <label class="emphesized">{{this.domainName}}</label></label>
+                            <Input @placeholder="Enter Receiver's Wallet Address" @type="text" class="form-control border-color" @value={{this.walletAddressReceiver}}/>
+                            <button {{on 'click' this.resetGiftDomain}} type="submit" class="btn btn-fill btn-primary btn-left">Or assign it to my wallet address!</button>
+                        {{/if}}
                     </div>
                 </div>
                 </div>
@@ -78,6 +86,3 @@
         {{/if}}
     </div>
 </div>
-
-
-
