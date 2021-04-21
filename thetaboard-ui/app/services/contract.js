@@ -406,7 +406,11 @@ export default class ContractService extends Service {
       this.envManager.config.thetaNetwork
     );
     try {
-      this.contract = new thetajs.Contract(this.envManager.config.contractAddress, ABI, provider);
+      this.contract = new thetajs.Contract(
+        this.envManager.config.contractAddress,
+        ABI,
+        provider
+      );
       const price = await this.contract.tfuelPrice();
       this.tfuelPrice = thetajs.utils.fromWei(price);
     } catch (error) {
@@ -418,12 +422,18 @@ export default class ContractService extends Service {
   }
 
   async getAddressToNames(address) {
-    if (address.length != 42 && address.substr(1, 1).toLocaleLowerCase() != 'x') {
+    if (
+      address.length != 42 &&
+      address.substr(1, 1).toLocaleLowerCase() != 'x'
+    ) {
       this.utils.errorNotify('Please enter a valid address.');
       return null;
     }
     try {
-      this.addressToName = await this.contract.getAddressToNames(address);
+      const allAddressToName = await this.contract.getAddressToNames(address);
+      this.addressToName = allAddressToName
+        .filter(this.onlyUnique)
+        .filter(this.filtered);
       this.walletAddress = address;
       return this.addressToName;
     } catch (error) {
@@ -462,11 +472,20 @@ export default class ContractService extends Service {
     const offersMadeName = filteredOffersMadeName.filter(this.filtered);
     if (offersMadeName) {
       for (let i = 0; i < offersMadeName.length; i++) {
-        const offersMadeIds = await this.contract.getOffersMadeNameId(walletAddress, offersMadeName[i]);
+        const offersMadeIds = await this.contract.getOffersMadeNameId(
+          walletAddress,
+          offersMadeName[i]
+        );
         for (let j = 0; j < offersMadeIds.length; j++) {
-          const offer = await this.contract.offersForName(offersMadeName[i], offersMadeIds[j]);
-          console.log("offer.walletMakingOffer", offer.walletMakingOffer);
-          if (offer.length && offer.walletMakingOffer != '0x0000000000000000000000000000000000000000') {
+          const offer = await this.contract.offersForName(
+            offersMadeName[i],
+            offersMadeIds[j]
+          );
+          if (
+            offer.length &&
+            offer.walletMakingOffer !=
+              '0x0000000000000000000000000000000000000000'
+          ) {
             const result = {
               domainName: offersMadeName[i],
               offer: this.serializeOffer(offer),
@@ -501,7 +520,6 @@ export default class ContractService extends Service {
   async offersForName(domainName) {
     let offersForName = [];
     const maxOfferId = await this.contract.maxOfferIds(domainName);
-    console.log("maxOfferId", maxOfferId);
     for (let i = 1; i < maxOfferId.toNumber() + 1; i++) {
       offersForName.push(await this.contract.offersForName(domainName, i));
     }
@@ -511,7 +529,11 @@ export default class ContractService extends Service {
   serializeOffers(offers) {
     let offersSerialized = [];
     for (let i = 0; i < offers.length; i++) {
-      if (offers[i].length && offers[i].walletMakingOffer != '0x0000000000000000000000000000000000000000') {
+      if (
+        offers[i].length &&
+        offers[i].walletMakingOffer !=
+          '0x0000000000000000000000000000000000000000'
+      ) {
         const offer = this.serializeOffer(offers[i]);
         offersSerialized.push(offer);
       }

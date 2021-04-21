@@ -3,13 +3,13 @@
 <div class="content" id="domain-page-content">
   <div class="row">
     <div class="col-lg-6 col-md-6">
-        {{contract/domain}}
+        {{contract/domain onRouteChange=this.setQueryParam}}
     </div>
     <div class="col-lg-6 col-md-6">
         {{contract/address onRouteChange=this.setQueryParam}}
     </div>
   </div>
  <div class="row">
-    {{contract/offers}}
+    {{contract/offers onRouteChange=this.setQueryParam}}
   </div>
 </div>

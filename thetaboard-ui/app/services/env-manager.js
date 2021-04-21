@@ -62,7 +62,11 @@ export default class EnvManagerService extends Service {
         await this.thetaSdk.getWalletInfo([wa]);
       } else {
         const nameToAddress = await this.contract.getNameToAddress(wa);
-        if (nameToAddress.length && nameToAddress['ownerAddr'] != '0x0000000000000000000000000000000000000000') {
+        if (
+          nameToAddress.length &&
+          nameToAddress['ownerAddr'] !=
+            '0x0000000000000000000000000000000000000000'
+        ) {
           await this.thetaSdk.getWalletInfo([nameToAddress['ownerAddr']]);
         } else {
           this.utils.errorNotify('Invalid Wallet Address or Domain name');

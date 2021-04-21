@@ -6,6 +6,7 @@ import { action } from '@ember/object';
 export default class ConnectWalletConnectWalletComponent extends Component {
   @service('theta-sdk') thetaSdk;
   @service('contract') contract;
+  @service('offer') offer;
 
   get walletLabel() {
     if (this.contract.domainName) {
@@ -16,7 +17,8 @@ export default class ConnectWalletConnectWalletComponent extends Component {
   }
 
   async getWalletInfo() {
-    const address = await this.thetaSdk.connectWallet();
+    // const address = await this.thetaSdk.connectWallet();
+    const address = await this.offer.connectWallet();
     this.args.onRouteChange(address);
     $('button.connect-wallet-button').removeClass("disabled");
   }

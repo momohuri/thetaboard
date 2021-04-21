@@ -6,9 +6,10 @@ import { action } from '@ember/object';
 export default class ContractAddressComponent extends Component {
   @service('contract') contract;
   @service('theta-sdk') thetaSdk;
+  @service('offer') offer;
 
   async getWalletInfo() {
-    const address = await this.thetaSdk.connectWallet();
+    const address = await this.offer.connectWallet();
     this.args.onRouteChange(address);
     $('button.connect-wallet-button').removeClass("disabled");
   }

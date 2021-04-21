@@ -256,7 +256,8 @@ nav[aria-label="Page navigation"] .pager li.pager-inner {
   background: transparent;
 }
 
-.card.card-user.card-logs .card-body, .card.card-user.card-status .card-body {
+.card.card-user.card-logs .card-body,
+.card.card-user.card-status .card-body {
   min-height: 100px;
 }
 
@@ -762,4 +763,23 @@ form.domain-available-container label.emphesized {
 .offer-made-cards button {
   padding: 10px 30px;
   display: inline-block;
+}
+
+.offer-placeholder {
+  font-size: 20px;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+.card.card-user .card-offers.card-body {
+  min-height: 150px;
+}
+
+.card.card-user .card-offers.card-body .connection-offer {
+  margin-top: 30px;
+}
+
+button.btn.btn-fill.btn-primary.connect-wallet-offer-button.refresh-offer {
+  display: block;
+  margin: auto;
 }

@@ -1,9 +1,22 @@
-{{contract/offer-received-modal  offer=this.offer ownerAddress=this.ownerAddress acceptedOffer=this.acceptedOffer}}
-{{contract/offer-canceled-modal offer=this.offer}}
+{{contract/offer-received-modal  
+    offer=this.offer.offer 
+    ownerAddress=this.offer.ownerAddress 
+    acceptedOffer=this.offer.acceptedOffer}}
+
+{{contract/offer-canceled-modal offer=this.offer.offer}}
 
 <div {{did-insert setupOfferReceivedEventListener}} class="col-lg-6 col-md-6">
-    {{contract/offer-made-list isConnectedWallet=this.isConnectedWallet offersMade=this.offersMade connectWallet=this.connectWallet cancelOffer=this.cancelOffer}}
+    {{contract/offer-made-list
+        isConnectedWallet=this.offer.isConnectedWallet
+        offersMade=this.offer.offersMade
+        connectWallet=this.offer.connectWallet
+        cancelOffer=this.offer.cancelOffer}}
 </div>
 <div {{did-insert setupOfferMadeEventListener}} class="col-lg-6 col-md-6">
-    {{contract/offer-received-list isConnectedWallet=this.isConnectedWallet offersReceived=this.offersReceived connectWallet=this.connectWallet acceptOffer=this.acceptOffer rejectOffer=this.rejectOffer}}
+    {{contract/offer-received-list
+        isConnectedWallet=this.offer.isConnectedWallet
+        offersReceived=this.offer.offersReceived
+        connectWallet=this.offer.connectWallet
+        acceptOffer=this.offer.acceptOffer
+        rejectOffer=this.offer.rejectOffer}}
 </div>

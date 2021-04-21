@@ -32,10 +32,11 @@
                     </div>
                 {{/each}}
             {{else}}
-                No Offer received
+                <p class="offer-placeholder">No offer received.</p>
             {{/each}}
+                <button type="submit" {{on 'click' this.connectWallet}} class="btn btn-fill btn-primary connect-wallet-offer-button refresh-offer">Refresh</button>
         {{else}}
-            <p class="wallet-placeholder">Please <a href="" {{on 'click' this.connectWallet}}>connect your wallet</a> to access your offers.</p>
+            <p class="offer-placeholder connection-offer">Please <a href="" class="connect-wallet-offer-button" {{on 'click' this.connectWallet}}>connect your wallet</a> to access your offers.</p>
         {{/if}}
     </div>
 </div>

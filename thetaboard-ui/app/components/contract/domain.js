@@ -19,6 +19,7 @@ export default class ContractDomainComponent extends Component {
   @service('contract') contract;
   @service('theta-sdk') thetaSdk;
   @service('utils') utils;
+  @service('offer') offer;
 
   @tracked domainName;
   @tracked walletAddress;
@@ -33,6 +34,8 @@ export default class ContractDomainComponent extends Component {
     $('#domainModal').on('hidden.bs.modal', () => {
       this.domainName = '';
       this.searchedDomain = '';
+      this.walletAddressReceiver = '';
+      this.offer.connectWallet();
     });
   }
 
@@ -42,6 +45,7 @@ export default class ContractDomainComponent extends Component {
       this.domainName = '';
       this.offerAmount = '';
       this.searchedDomain = '';
+      this.offer.connectWallet();
     });
   }
 
@@ -98,6 +102,7 @@ export default class ContractDomainComponent extends Component {
   @action
   cancel() {
     this.domainName = '';
+    this.walletAddressReceiver = '';
     this.assignToBuyer = true;
   }
 
@@ -123,6 +128,7 @@ export default class ContractDomainComponent extends Component {
   @action
   giftDomain() {
     this.assignToBuyer = false;
+    this.walletAddressReceiver = '';
   }
 
   @action
