@@ -1,0 +1,42 @@
+<div class="modal modal-search fade" id="offerReceivedModal" tabindex="-1" role="dialog" aria-labelledby="offerReceivedModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="card card-user modal-content">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <p class="card-text"></p>
+                        <div class="author">
+                        <div class="block block-one"></div>
+                        <div class="block block-two"></div>
+                        <div class="block block-three"></div>
+                        <div class="block block-four"></div>
+                        <h2 class="card-title domain-title">You {{if this.acceptedOffer 'accepted' 'rejected'}} the offer!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-offers">
+                The offer to buy your domain name <b>{{this.domainName}}</b> for {{this.offerAmount}} Tfuel from the wallet address:
+                <div>{{this.ownerAddress}}<br/> was {{if this.acceptedOffer 'accepted' 'rejected'}}.</div>
+                {{#if this.acceptedOffer}}
+                    <div>{{this.ownerAddress}} now owns the domain name <b>{{this.domainName}}</b></div>
+                {{/if}}
+            </div>
+            <div class="card-footer card-footer-domain">
+                <button {{on 'click' this.closeModal}} type="submit" class="btn btn-fill btn-primary btn-left">Close</button>
+            </div>
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <div class="author">
+                            <div class="block block-one"></div>
+                            <div class="block block-two"></div>
+                            <div class="block block-three"></div>
+                            <div class="block block-four"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

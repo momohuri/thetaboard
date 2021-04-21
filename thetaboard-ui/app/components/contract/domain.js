@@ -10,7 +10,7 @@ export default class ContractDomainComponent extends Component {
     this.searchedDomain = '';
     this.walletAddress = '';
     this.nameToAddress = [];
-    this.offerAmount = 0;
+    this.offerAmount = '';
     this.walletAddressPayer = '';
     this.walletAddressReceiver = '';
     this.assignToBuyer = true;
@@ -32,6 +32,7 @@ export default class ContractDomainComponent extends Component {
   setupEventListener() {
     $('#domainModal').on('hidden.bs.modal', () => {
       this.domainName = '';
+      this.searchedDomain = '';
     });
   }
 
@@ -40,6 +41,7 @@ export default class ContractDomainComponent extends Component {
     $('#offerMadeModal').on('hidden.bs.modal', () => {
       this.domainName = '';
       this.offerAmount = '';
+      this.searchedDomain = '';
     });
   }
 
@@ -103,7 +105,7 @@ export default class ContractDomainComponent extends Component {
   async assignNewName(event) {
     event.preventDefault();
     const assignedNewName = await this.contract.assignNewName(this.domainName, this.walletAddressReceiver);
-    if (assignedNewName) {
+    if (assignedNewName && assignedNewName.hash) {
       this.walletAddressReceiver = assignedNewName.walletReceiver;
       $('#domainModal').modal('show');
     }
@@ -112,8 +114,8 @@ export default class ContractDomainComponent extends Component {
   @action
   async makeOffer(event) {
     event.preventDefault();
-    const offerMade =  await this.contract.makeOffer(this.offerAmount, this.nameToAddress);
-    if (offerMade) {
+    const offerMade =  await this.contract.makeOffer(this.domainName, this.offerAmount, this.nameToAddress);
+    if (offerMade && offerMade.hash) {
       $('#offerMadeModal').modal('show');
     }
   }

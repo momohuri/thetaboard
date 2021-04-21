@@ -41,20 +41,20 @@ export default class EnvManagerService extends Service {
         this.config.thetaNetwork = thetajs.networks.ChainIds.Testnet;
         this.config.explorerEndpoint =
           'https://guardian-testnet-explorer.thetatoken.org';
-        this.config.contractAddress = '0x053cd0e05e6df3990ee35bd7a640b5aa92e77176';
+        this.config.contractAddress = '0xe53ce9d69ca8718a1528cb0d7cf25fef9e8f4337';
       } else if (params.env === 'smart-contracts') {
         this.config.queryParams = '?env=smart-contracts';
         this.config.thetaNetwork = thetajs.networks.ChainIds.Privatenet;
         this.config.explorerEndpoint =
           'https://smart-contracts-sandbox-explorer.thetatoken.org';
-        this.config.contractAddress = '0x053cd0e05e6df3990ee35bd7a640b5aa92e77176';
+        this.config.contractAddress = '0xe53ce9d69ca8718a1528cb0d7cf25fef9e8f4337';
       }
     } else {
       this.config.queryParams = '';
       this.config.thetaNetwork = thetajs.networks.ChainIds.Mainnet;
       this.config.env = '';
       this.config.explorerEndpoint = 'https://explorer.thetatoken.org';
-      this.config.contractAddress = '0x053cd0e05e6df3990ee35bd7a640b5aa92e77176';
+      this.config.contractAddress = '0xe53ce9d69ca8718a1528cb0d7cf25fef9e8f4337';
     }
     if (params && params.wa) {
       const wa = params.wa;

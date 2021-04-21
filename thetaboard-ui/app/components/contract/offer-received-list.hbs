@@ -1,0 +1,41 @@
+<div class="card card-user">
+    <div class="card-header ">
+        <div class="row">
+            <div class="col-sm-12 text-left">
+                <p class="card-text"></p>
+                <div class="author">
+                <div class="block block-one"></div>
+                <div class="block block-two"></div>
+                <div class="block block-three"></div>
+                <div class="block block-four"></div>
+                <h2 class="card-title domain-title">Offer Received</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-offers">
+        {{#if this.isConnectedWallet}}   
+            {{#each this.offersReceived as |offerReceived|}}
+                 {{#each offerReceived.offers as |offer|}}
+                    <div class="offer-made-cards">
+                        <h3>{{offerReceived.domainName}}</h3>
+                        <div class="alert-success alert emphesized">
+                            <span>Offer amount:</span>
+                            <p>{{offer.offerAmount}} Tfuel</p>
+                        </div>
+                        <br/><br/>
+                        <div>{{offer.walletMakingOffer}}<br/> made an offer to buy your Domain:</div><br/>
+                        <div class="buttons-container">
+                            <button type="submit" {{on 'click' (fn this.rejectOffer offerReceived)}} class="btn btn-fill btn-secondary">Reject Offer</button>
+                            <button type="submit" {{on 'click' (fn this.acceptOffer offerReceived)}} class="btn btn-fill btn-primary">Accept Offer</button>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                No Offer received
+            {{/each}}
+        {{else}}
+            <p class="wallet-placeholder">Please <a href="" {{on 'click' this.connectWallet}}>connect your wallet</a> to access your offers.</p>
+        {{/if}}
+    </div>
+</div>

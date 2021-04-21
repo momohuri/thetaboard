@@ -3,6 +3,7 @@ import { getOwner } from '@ember/application';
 import * as thetajs from '@thetalabs/theta-js';
 import { tracked } from '@glimmer/tracking';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
+import BigNumber from "bignumber.js";
 
 export default class ContractService extends Service {
   constructor(...args) {
@@ -13,6 +14,8 @@ export default class ContractService extends Service {
     this.contract = {};
     this.addressToName = [];
     this.nameToAddress = [];
+    this.offersReceived = [];
+    this.offersMade = [];
     this.initContract();
   }
 
@@ -21,6 +24,8 @@ export default class ContractService extends Service {
   @tracked addressToName;
   @tracked nameToAddress;
   @tracked walletAddress;
+  @tracked offersReceived;
+  @tracked offersMade;
 
   get envManager() {
     return getOwner(this).lookup('service:env-manager');
@@ -158,6 +163,49 @@ export default class ContractService extends Service {
       {
         "inputs": [
           {
+            "internalType": "address payable",
+            "name": "walletAddr",
+            "type": "address"
+          }
+        ],
+        "name": "getOffersMadeName",
+        "outputs": [
+          {
+            "internalType": "string[]",
+            "name": "",
+            "type": "string[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address payable",
+            "name": "walletAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "name": "getOffersMadeNameId",
+        "outputs": [
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
             "internalType": "string",
             "name": "name",
             "type": "string"
@@ -244,6 +292,11 @@ export default class ContractService extends Service {
           {
             "internalType": "uint256",
             "name": "offersMadeNameIdIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "offerId",
             "type": "uint256"
           }
         ],
@@ -394,6 +447,89 @@ export default class ContractService extends Service {
     }
   }
 
+  onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+  filtered(value) {
+    return value != '';
+  }
+
+  async getOffersMade(walletAddress) {
+    this.offersMade = [];
+    const allOffersMadeName = await this.contract.getOffersMadeName(walletAddress);
+    const filteredOffersMadeName = allOffersMadeName.filter(this.onlyUnique);
+    const offersMadeName = filteredOffersMadeName.filter(this.filtered);
+    if (offersMadeName) {
+      for (let i = 0; i < offersMadeName.length; i++) {
+        const offersMadeIds = await this.contract.getOffersMadeNameId(walletAddress, offersMadeName[i]);
+        for (let j = 0; j < offersMadeIds.length; j++) {
+          const offer = await this.contract.offersForName(offersMadeName[i], offersMadeIds[j]);
+          console.log("offer.walletMakingOffer", offer.walletMakingOffer);
+          if (offer.length && offer.walletMakingOffer != '0x0000000000000000000000000000000000000000') {
+            const result = {
+              domainName: offersMadeName[i],
+              offer: this.serializeOffer(offer),
+            };
+            this.offersMade.push(result);
+          }
+        }
+      }
+    }
+    return this.offersMade;
+  }
+
+  async getOfferReceived(walletAdress) {
+    this.offersReceived = [];
+    const domainList = await this.contract.getAddressToNames(walletAdress);
+    for (let i = 0; i < domainList.length; i++) {
+      const offers = await this.offersForName(domainList[i]);
+      if (offers.length) {
+        const offersSerialized = this.serializeOffers(offers);
+        if (offersSerialized.length) {
+          const result = {
+            domainName: domainList[i],
+            offers: offersSerialized,
+          };
+          this.offersReceived.push(result);
+        }
+      }
+    }
+    return this.offersReceived;
+  }
+
+  async offersForName(domainName) {
+    let offersForName = [];
+    const maxOfferId = await this.contract.maxOfferIds(domainName);
+    console.log("maxOfferId", maxOfferId);
+    for (let i = 1; i < maxOfferId.toNumber() + 1; i++) {
+      offersForName.push(await this.contract.offersForName(domainName, i));
+    }
+    return offersForName;
+  }
+
+  serializeOffers(offers) {
+    let offersSerialized = [];
+    for (let i = 0; i < offers.length; i++) {
+      if (offers[i].length && offers[i].walletMakingOffer != '0x0000000000000000000000000000000000000000') {
+        const offer = this.serializeOffer(offers[i]);
+        offersSerialized.push(offer);
+      }
+    }
+    return offersSerialized;
+  }
+
+  serializeOffer(offer) {
+    const serializedOffer = {
+      offerId: offer.offerId.toNumber(),
+      offerAmount: thetajs.utils.fromWei(offer.offerAmount._hex),
+      walletMakingOffer: offer.walletMakingOffer,
+      offersMadeNameIndex: offer.offersMadeNameIndex.toNumber(),
+      offersMadeNameIdIndex: offer.offersMadeNameIdIndex.toNumber(),
+    };
+    return serializedOffer;
+  }
+
   async assignNewName(domainName, walletAddress) {
     if (
       domainName.length == 42 &&
@@ -414,15 +550,17 @@ export default class ContractService extends Service {
         options
       );
       const result = await ThetaWalletConnect.sendTransaction(transaction);
-      result.walletReceiver = walletReceiver;
-      return result;
+      if (result && result.hash) {
+        result.walletReceiver = walletReceiver;
+        return result;
+      }
     } catch (error) {
       this.utils.errorNotify(error.message);
       return error;
     }
   }
 
-  async makeOffer(offerAmount, owner) {
+  async makeOffer(domainName, offerAmount, owner) {
     if (offerAmount < 1) {
       return this.utils.errorNotify('You must offer at least 1 Tfuel to buy this domain.');
     } else {
@@ -436,15 +574,95 @@ export default class ContractService extends Service {
           value: thetajs.utils.toWei(offerAmount),
         };
         const transaction = await this.contract.populateTransaction.makeOffer(
-          this.domainName,
+          domainName,
           options
         );
         const result = await ThetaWalletConnect.sendTransaction(transaction);
-        return result;
+        if (result && result.hash) {
+          return result;
+        }
       } catch (error) {
         this.utils.errorNotify(error.message);
         return error;
       }
+    }
+  }
+
+  async cancelOffer(offer) {
+    try {
+      const walletPayer = await this.thetaSdk.getThetaAccount();
+      if (offer.offer.walletMakingOffer != walletPayer[0]) {
+        return this.utils.errorNotify("Only the owner of the offer can cancel it.");
+      }
+      const options = {
+        from: walletPayer[0],
+      };
+      const transaction = await this.contract.populateTransaction.cancelOffer(
+        offer.domainName,
+        offer.offer.offerId,
+        options
+      );
+      const result = await ThetaWalletConnect.sendTransaction(transaction);
+      if (result && result.hash) {
+        return result;
+      }
+    } catch (error) {
+      this.utils.errorNotify(error.message);
+      return error;
+    }
+  }
+
+  async acceptOffer(offer) {
+    try {
+      const walletPayer = await this.thetaSdk.getThetaAccount();
+      const ownerAddress = await this.contract.nameToAddress(offer.domainName);
+      if (ownerAddress.ownerAddr != walletPayer[0]) {
+        return this.utils.errorNotify("Only the owner of the domain can accpept this offer. You are now connected to the address " + walletPayer[0]);
+      }
+      const options = {
+        from: walletPayer[0],
+      };
+      const transaction = await this.contract.populateTransaction.acceptOffer(
+        offer.domainName,
+        offer.offer.offerId,
+        options
+      );
+      const result = await ThetaWalletConnect.sendTransaction(transaction);
+      if (result && result.hash) {
+        result.offer = offer;
+        result.ownerAddr = ownerAddress.ownerAddr;
+        return result;
+      }
+    } catch (error) {
+      this.utils.errorNotify(error.message);
+      return error;
+    }
+  }
+
+  async rejectOffer(offer) {
+    try {
+      const walletPayer = await this.thetaSdk.getThetaAccount();
+      const ownerAddress = await this.contract.nameToAddress(offer.domainName);
+      if (ownerAddress.ownerAddr != walletPayer[0]) {
+        return this.utils.errorNotify("Only the owner of the domain can reject this offer.");
+      }
+      const options = {
+        from: walletPayer[0],
+      };
+      const transaction = await this.contract.populateTransaction.rejectOffer(
+        offer.domainName,
+        offer.offer.offerId,
+        options
+      );
+      const result = await ThetaWalletConnect.sendTransaction(transaction);
+      if (result && result.hash) {
+        result.offer = offer;
+        result.ownerAddr = ownerAddress.ownerAddr;
+        return result;
+      }
+    } catch (error) {
+      this.utils.errorNotify(error.message);
+      return error;
     }
   }
 }
