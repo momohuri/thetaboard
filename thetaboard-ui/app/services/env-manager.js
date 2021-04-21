@@ -54,7 +54,7 @@ export default class EnvManagerService extends Service {
       this.config.thetaNetwork = thetajs.networks.ChainIds.Mainnet;
       this.config.env = '';
       this.config.explorerEndpoint = 'https://explorer.thetatoken.org';
-      this.config.contractAddress = '0xe53ce9d69ca8718a1528cb0d7cf25fef9e8f4337';
+      this.config.contractAddress = '0x5191de7a7f17dfcbb0e4e552188450abb13ff14b';
     }
     if (params && params.wa) {
       const wa = params.wa;
