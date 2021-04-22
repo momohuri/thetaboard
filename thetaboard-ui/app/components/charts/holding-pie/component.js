@@ -40,9 +40,7 @@ export default class HoldingPieComponent extends Component {
     const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
     let guardian_value = 0;
     if (guardian.length > 0) {
-      guardian_value = guardian.reduce((a, b) => a.value + b.value, {
-        value: 0,
-      });
+      guardian_value = guardian.reduce((a, b) => a + b.value, 0);
     }
     const types = [
       {
@@ -54,14 +52,14 @@ export default class HoldingPieComponent extends Component {
         label: 'Theta',
         value: this.thetaSdk.wallets
           .filter((x) => x.type === 'wallet' && x.currency === 'theta')
-          .reduce((a, b) => a.value + b.value, {value: 0}),
+          .reduce((a, b) => a + b.value, 0),
         color: '#2BB7E5',
       },
       {
         label: 'Tfuel',
         value: this.thetaSdk.wallets
           .filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
-          .reduce((a, b) => a.value + b.value, {value: 0}),
+          .reduce((a, b) => a + b.value, 0),
         color: '#FFA500',
       },
     ];
