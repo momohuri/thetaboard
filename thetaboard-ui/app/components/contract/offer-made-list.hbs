@@ -14,8 +14,8 @@
         </div>
     </div>
     <div class="card-body card-offers">
-        {{#if this.isConnectedWallet}}
-            {{#each this.offersMade as |offerMade|}}
+        {{#if this.offer.isConnectedWallet}}
+            {{#each this.offer.offersMade as |offerMade|}}
                 <div class="offer-made-cards made-offer-div">
                     <div>You made an offer to buy the Domain:</div>
                     <h3>{{offerMade.domainName}}</h3>
@@ -25,7 +25,7 @@
                     </div>
                     <br/><br/>
                     <div class="buttons-container">
-                        <button {{on 'click' (fn this.cancelOffer offerMade)}} type="submit" class="btn btn-fill btn-primary">Cancel Offer</button>
+                        <button {{on 'click' (fn this.offer.cancelOffer offerMade)}} type="submit" class="btn btn-fill btn-primary">Cancel Offer</button>
                     </div>
                 </div>
             {{else}}

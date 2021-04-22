@@ -4,17 +4,27 @@ import { action } from '@ember/object';
 import { getOwner } from '@ember/application';
 
 export default class OfferService extends Service {
-  @tracked isConnectedWallet = false;
+  constructor(...args) {
+    super(...args);
+    this.isConnectedWallet = false;
+    this.offersReceived = [];
+    this.offersMade = [];
+    this.acceptedOffer = false;
+    this.offer = {
+      domain: '',
+      offer: {
+        offerAmount: 0,
+      },
+    };
+    this.ownerAddress = '';
+  }
+
+  @tracked isConnectedWallet;
   @tracked offersReceived;
   @tracked offersMade;
-  @tracked acceptedOffer = false;
-  @tracked offer = {
-    domain: '',
-    offer: {
-      offerAmount: 0,
-    },
-  };
-  @tracked ownerAddress = '';
+  @tracked acceptedOffer;
+  @tracked offer;
+  @tracked ownerAddress;
 
   get thetaSdk() {
     return getOwner(this).lookup('service:theta-sdk');
@@ -24,26 +34,14 @@ export default class OfferService extends Service {
     return getOwner(this).lookup('service:contract');
   }
 
-
   @action
-  async connectWallet(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    $('.connect-wallet-offer-button').addClass("disabled");
-    Ember.run.debounce(this, this.connectToWallet, null, 500);
-  }
-
-  @action
-  async connectToWallet() {
-    const address = await this.thetaSdk.getThetaAccount();
-    await this.thetaSdk.getWalletInfo(address);
+  async setupOffers(address) {
     if (address) {
       this.isConnectedWallet = true;
       this.offersMade = await this.contract.getOffersMade(address[0]);
       this.offersReceived = await this.contract.getOfferReceived(address[0]);
     }
-    $('.connect-wallet-offer-button').removeClass("disabled");
+    return address;
   }
 
   @action

@@ -45,6 +45,10 @@ export default class ThetaSdkService extends Service {
     return getOwner(this).lookup('service:contract');
   }
 
+  get offer() {
+    return getOwner(this).lookup('service:offer');
+  }
+
   get utils() {
     return getOwner(this).lookup('service:utils');
   }
@@ -77,9 +81,14 @@ export default class ThetaSdkService extends Service {
   }
 
   async connectWallet() {
-    const account = await this.getThetaAccount();
-    await this.getWalletInfo(account);
-    return this.contract.domainName ? this.contract.domainName : account[0];
+    $('.connect-wallet-offer-button').addClass("disabled");
+    $('.connect-wallet-button').addClass("disabled");
+    const address = await this.getThetaAccount();
+    await this.getWalletInfo(address);
+    await this.offer.setupOffers(address);
+    $('.connect-wallet-offer-button').removeClass("disabled");
+    $('.connect-wallet-button').removeClass("disabled");
+    return this.contract.domainName ? this.contract.domainName : address[0];
   }
 
   setupWalletAddress(account, timeoutId) {

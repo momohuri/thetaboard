@@ -18,6 +18,6 @@ export default class GuardianLogsFooterComponent extends Component {
   @action
   downloadLatestSnapshot() {
     $('button.download-latest-snapshot').addClass("disabled");
-    Ember.run.debounce(this, this.fetchLatestSnapshot, null, 500);
+    Ember.run.debounce(this, this.fetchLatestSnapshot, 500, true);
   }
 }

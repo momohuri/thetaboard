@@ -6,17 +6,8 @@
 {{contract/offer-canceled-modal offer=this.offer.offer}}
 
 <div {{did-insert setupOfferReceivedEventListener}} class="col-lg-6 col-md-6">
-    {{contract/offer-made-list
-        isConnectedWallet=this.offer.isConnectedWallet
-        offersMade=this.offer.offersMade
-        connectWallet=this.offer.connectWallet
-        cancelOffer=this.offer.cancelOffer}}
+    {{contract/offer-made-list connectWallet=this.connectWallet}}
 </div>
 <div {{did-insert setupOfferMadeEventListener}} class="col-lg-6 col-md-6">
-    {{contract/offer-received-list
-        isConnectedWallet=this.offer.isConnectedWallet
-        offersReceived=this.offer.offersReceived
-        connectWallet=this.offer.connectWallet
-        acceptOffer=this.offer.acceptOffer
-        rejectOffer=this.offer.rejectOffer}}
+    {{contract/offer-received-list connectWallet=this.connectWallet}}
 </div>

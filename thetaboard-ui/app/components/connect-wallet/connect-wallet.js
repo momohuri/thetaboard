@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 export default class ConnectWalletConnectWalletComponent extends Component {
   @service('theta-sdk') thetaSdk;
   @service('contract') contract;
-  @service('offer') offer;
 
   get walletLabel() {
     if (this.contract.domainName) {
@@ -16,16 +15,16 @@ export default class ConnectWalletConnectWalletComponent extends Component {
     }
   }
 
-  async getWalletInfo() {
-    // const address = await this.thetaSdk.connectWallet();
-    const address = await this.offer.connectWallet();
+  async connectToWallet() {
+    const address = await this.thetaSdk.connectWallet();
     this.args.onRouteChange(address);
-    $('button.connect-wallet-button').removeClass("disabled");
   }
 
   @action
-  async connectWallet() {
-    $('button.connect-wallet-button').addClass("disabled");
-    Ember.run.debounce(this, this.getWalletInfo, null, 500);
+  async connectWallet(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    Ember.run.debounce(this, this.connectToWallet, 500, true);
   }
 }
