@@ -19,16 +19,15 @@ export default class EarningsProjectionsComponent extends Component {
     currency: 'USD',
   });
 
-  async initialize() {
-  }
-
   get setUpChart() {
     if (this.thetaSdk.currentAccount != this.account || this.walletLength != this.thetaSdk.wallets.length) {
       this.account = this.thetaSdk.currentAccount;
       this.walletLength = this.thetaSdk.wallets.length;
       const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
-      if (guardian.length > 0) {
-        this.thetaAmount = Math.round(guardian.reduce((a, b) => a.amount + b.amount, {'amount': 0}));
+      if (guardian.length > 1) {
+        this.thetaAmount = Math.round(guardian.reduce((a, b) => a + b.amount, 0));
+      } else if (guardian.length > 0) {
+        this.thetaAmount = guardian.amount;
       }
       this.transactions = this.thetaSdk.transactions;
       this.setupChart();
