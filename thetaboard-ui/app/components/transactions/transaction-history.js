@@ -44,6 +44,6 @@ export default class TransactionHistoryComponent extends Component {
   @action
    pageChanged(current) {
     $('nav[aria-label="Page navigation"] .pager li').addClass("disabled");
-    Ember.run.debounce(this, this.changePagination, current, 1000);
+    Ember.run.debounce(this, this.changePagination, current, 1000, true);
   }
 }

@@ -14,10 +14,16 @@ export default class WalletListComponent extends Component {
     return this.thetaSdk.wallets;
   }
 
-  @action
-  async connectWallet(event) {
-    event.preventDefault();
+  async connectToWallet() {
     const address = await this.thetaSdk.connectWallet();
     this.args.onRouteChange(address);
+  }
+
+  @action
+  async connectWallet(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    Ember.run.debounce(this, this.connectToWallet, 500, true);
   }
 }

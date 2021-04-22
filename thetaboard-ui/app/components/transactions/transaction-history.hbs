@@ -22,18 +22,18 @@
             <tr>
             <td class="text-center transaction-type"><img src="{{rootURL}}assets/img/transactions/{{transaction.type}}.png"/> {{transaction.typeName}}</td>
             <td class="text-center">
-              <a class="a-elipsis" href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}">{{transaction.txn_hash}}</a>
+              <a class="a-elipsis" href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}" {{shortener transaction.txn_hash}}>{{transaction.txn_hash}}</a>
             </td>
             <td class="text-center d-none d-sm-none d-md-table-cell">{{transaction.block}}</td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{moment-from transaction.timestamp}}</td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
-              <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.from_wallet_address}}">
+              <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.from_wallet_address}}"  {{shortener transaction.from_wallet_address}}>
                 {{transaction.from_wallet_address}}
               </a>
             </td>
             <td class="text-center d-none d-sm-table-cell" id="in-or-out"><img src="assets/img/transaction-{{transaction.in_or_out}}.png"/></td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
-              <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.to_wallet_address}}">
+              <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.to_wallet_address}}"   {{shortener transaction.to_wallet_address}}>
                 {{transaction.to_wallet_address}}
               </a>
             </td>
