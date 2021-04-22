@@ -24,20 +24,6 @@ export default class UtilsService extends Service {
   }
 
   @action
-  walletAddress(address) {
-    if (Array.isArray(address)) {
-      address = address[0];
-    }
-    debugger
-    if (address && address.length == 42) {
-      const front = address.substr(0, 4);
-      const end = address.substr(-4);
-      address = `${front}...${end}`;
-    }
-    return address;
-  }
-
-  @action
   errorNotify(message) {
     $.notify(
       {

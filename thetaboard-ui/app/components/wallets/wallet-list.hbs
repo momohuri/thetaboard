@@ -25,12 +25,12 @@
                 </td>
                 <td class="text-center d-none d-sm-none d-md-table-cell">{{balance.type}}</td>
                 <td class="text-center ">
-                <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.wallet_address}}">
-                {{balance.wallet_address}}
+                <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.wallet_address}}" {{shortener balance.wallet_address}}>
+                {{balance.wallet_address}} 
                 </a>
                 </td>
                 <td class="text-center d-none d-sm-none d-md-table-cell">
-                <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.node_address}}">
+                <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.node_address}}" {{shortener balance.node_address}}>
                     {{balance.node_address}}
                 </a>
                 </td>
