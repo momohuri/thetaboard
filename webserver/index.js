@@ -47,7 +47,6 @@ app.use(function (req, res, next) {
 
 // isPublic
 app.get("/is-public", async (req, res, next) => {
-    const response = [];
     try {
         res.json({success: true, is_public: is_public});
     } catch (error) {
@@ -55,11 +54,10 @@ app.get("/is-public", async (req, res, next) => {
     }
 });
 
-// wallet infos
-app.get("/prices", async (req, res, next) => {
-    const response = [];
+// Explorer Info
+app.get("/explorer/prices", async (req, res, next) => {
     try {
-        // get price
+        // get prices
         const prices = await got(`${theta_explorer_api_domain}/api/price/all`, theta_explorer_api_params);
         const tfuel_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'TFUEL')[0];
         const theta_price = JSON.parse(prices.body).body.filter(x => x['_id'] === 'THETA')[0];
@@ -71,6 +69,16 @@ app.get("/prices", async (req, res, next) => {
         res.status(400).json(error.response.body);
     }
 });
+
+app.get("/explorer/totalStake", async (req, res, next) => {
+    try {
+        // get stake
+        const stake = await got(`${theta_explorer_api_domain}/api/stake/totalAmount`, theta_explorer_api_params);
+        res.json(JSON.parse(stake.body).body);
+    } catch (error) {
+        res.status(400).json(error.response.body);
+    }
+})
 
 
 // wallet infos

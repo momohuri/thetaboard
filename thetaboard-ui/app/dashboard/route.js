@@ -7,6 +7,9 @@ export default class DashboardRoute extends Route {
     const historicPrice = await fetch(
       `https://www.thetascan.io/api/price/?start_date=${oneYearBack}&end_date=${today}`
     );
+    const currentStake = await fetch(
+      `https://www.thetascan.io/api/price/?start_date=${oneYearBack}&end_date=${today}`
+    );
     return {
       historicPrice: await historicPrice.json(),
     };

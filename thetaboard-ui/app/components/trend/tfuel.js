@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import {inject as service} from '@ember/service';
+import {tracked} from '@glimmer/tracking';
 
 export default class TrendTfuelComponent extends Component {
   constructor(...args) {
@@ -9,6 +9,7 @@ export default class TrendTfuelComponent extends Component {
     this.trendYesterday = {};
     this.initialize();
   }
+
   @service('theta-sdk') thetaSdk;
 
   @tracked trendLastWeek;
@@ -23,6 +24,11 @@ export default class TrendTfuelComponent extends Component {
     });
   }
 
+  get ratio() {
+    return Math.round(this.thetaSdk.prices.theta.price / this.thetaSdk.prices.tfuel.price) ;
+  }
+
+
   setTrend(currentPrice, previousPrice) {
     const change = (currentPrice - previousPrice).toFixed(3);
     const percentChange = (change / previousPrice * 100).toFixed(2);
@@ -35,8 +41,8 @@ export default class TrendTfuelComponent extends Component {
   }
 
   async getDates() {
-    const yesterday = await moment(new Date(new Date() -3600000*24)).format('YYYY-MM-DD');
-    const lastWeek = await moment(new Date(new Date() -3600000*24*7)).format('YYYY-MM-DD');
-    return { yesterday: yesterday, lastWeek: lastWeek };
+    const yesterday = await moment(new Date(new Date() - 3600000 * 24)).format('YYYY-MM-DD');
+    const lastWeek = await moment(new Date(new Date() - 3600000 * 24 * 7)).format('YYYY-MM-DD');
+    return {yesterday: yesterday, lastWeek: lastWeek};
   }
 }

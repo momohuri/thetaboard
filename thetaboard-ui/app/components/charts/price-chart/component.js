@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import {action} from '@ember/object';
+import {tracked} from '@glimmer/tracking';
 
 export default class PriceChartComponent extends Component {
   @tracked time_range = 'year';
@@ -25,6 +25,9 @@ export default class PriceChartComponent extends Component {
     const labels = Object.keys(historic_data).map((x) =>
       moment(x, 'YYYY-MM-DD')
     );
+    const theta_price = Object.values(historic_data).map((x) => x.theta_price);
+    const tfuel_price = Object.values(historic_data).map((x) => x.tfuel_price);
+    const ratio = theta_price.map((n, i) => n / tfuel_price[i]);
     return {
       labels: labels,
       datasets: [
@@ -46,6 +49,16 @@ export default class PriceChartComponent extends Component {
           borderColor: '#FFA500',
           pointBackgroundColor: '#FFA500',
           data: Object.values(historic_data).map((x) => x.tfuel_price),
+          borderWidth: 1,
+        },
+        {
+          label: 'Theta/Tfuel ratio',
+          yAxisID: 'ratio',
+          pointStyle: 'point',
+          radius: 0,
+          borderColor: '#5C5852FF',
+          pointBackgroundColor: '#5C5852FF',
+          data: ratio,
           borderWidth: 1,
         },
       ],
@@ -75,6 +88,9 @@ export default class PriceChartComponent extends Component {
             return moment(new Date(tooltipItem[0].label)).format('LL');
           },
           label: (tooltipItem) => {
+            if (tooltipItem.datasetIndex === 2) {
+              return `1 Theta is worth ${Math.round(Number(tooltipItem.yLabel), 1)} Tfuels`;
+            }
             if (Number(tooltipItem.yLabel) > 0.01) {
               return formatter.format(Number(tooltipItem.yLabel));
             } else {
@@ -120,6 +136,10 @@ export default class PriceChartComponent extends Component {
                 return formatter.format(Number(value.toString()));
               },
             },
+          },
+          {
+            id: 'ratio',
+            display: false
           },
         ],
         xAxes: [

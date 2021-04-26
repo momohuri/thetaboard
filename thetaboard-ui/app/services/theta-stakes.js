@@ -8,7 +8,7 @@ export default class ThetaStakesService extends Service {
     super(...args);
   }
 
-  @tracked stakeAmount = 0;
+  @tracked stakeAmount = 1000;
   @tracked isStakes = true;
   @tracked isDeposit = false;
   @tracked isWithdraw = false;

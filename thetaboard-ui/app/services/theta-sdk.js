@@ -19,6 +19,8 @@ export default class ThetaSdkService extends Service {
     this.currentAccountDomainList = [];
     this.prices = {};
     this.getPrices();
+    this.totalStake = {};
+    this.getTotalStake();
   }
 
   @tracked downloadProgress;
@@ -136,13 +138,26 @@ export default class ThetaSdkService extends Service {
   async getPrices() {
     let prices = { theta: 0, tfuel: 0 };
     const getPrices = await fetch(
-      '/prices' + this.envManager.config.queryParams
+      'explorer/prices' + this.envManager.config.queryParams
     );
     if (getPrices.status == 200) {
       prices = await getPrices.json();
     }
     this.prices = prices;
     return prices;
+  }
+
+  async getTotalStake() {
+    let totalStake = { totalAmount: '0', totalNodes: 0 };
+    const getStake = await fetch(
+      'explorer/totalStake' + this.envManager.config.queryParams
+    );
+    if (getStake.status == 200) {
+      totalStake = await getStake.json();
+    }
+    totalStake.totalAmount = thetajs.utils.fromWei(totalStake.totalAmount);
+    this.totalStake = totalStake;
+    return totalStake;
   }
 
   async getWalletInfo(accounts) {
