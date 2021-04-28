@@ -24,10 +24,8 @@ export default class EarningsProjectionsComponent extends Component {
       this.account = this.thetaSdk.currentAccount;
       this.walletLength = this.thetaSdk.wallets.length;
       const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
-      if (guardian.length > 1) {
-        this.thetaAmount = Math.round(guardian.reduce((a, b) => a + b.amount, 0));
-      } else if (guardian.length > 0) {
-        this.thetaAmount = guardian.amount;
+      if (guardian.length > 0) {
+        this.thetaAmount = Math.round(guardian.reduce((a, b) =>  a + b.amount, 0));
       }
       this.transactions = this.thetaSdk.transactions;
       this.setupChart();
@@ -63,7 +61,7 @@ export default class EarningsProjectionsComponent extends Component {
   }
 
   get chartData() {
-    this.avg_tfuel_per_day = this.thetaAmount * 0.00118;
+    this.avg_tfuel_per_day = this.thetaAmount * 0.00104;
     const labels = [];
     for (let i = 0; i < 13; i++) {
       labels.push(moment().add(i, 'months'));
