@@ -3,14 +3,13 @@
     <h4 class="card-title">Transactions</h4>
   </div>
   <div class="card-body">
-    <div class="table-responsive">
+    <div class="table-responsive transac-history-table">
       <table class="table">
         <thead>
           <tr>
             <th class="text-center">Type</th>
-            <th class="text-center">TXN Hash</th>
             <th class="text-center d-none d-sm-none d-md-table-cell">Block</th>
-            <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Age</th>
+            <th class="text-center">Age</th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">From</th>
             <th class="text-center d-none d-sm-table-cell"></th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">To</th>
@@ -21,11 +20,8 @@
           {{#each transactionList as |transaction|}}
             <tr>
             <td class="text-center transaction-type"><img src="{{rootURL}}assets/img/transactions/{{transaction.type}}.png"/> {{transaction.typeName}}</td>
-            <td class="text-center">
-              <a class="a-elipsis" href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}" {{shortener transaction.txn_hash}}>{{transaction.txn_hash}}</a>
-            </td>
             <td class="text-center d-none d-sm-none d-md-table-cell">{{transaction.block}}</td>
-            <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{moment-from transaction.timestamp}}</td>
+            <td class="text-center"><a href="{{explorerEndpoint}}/txs/{{transaction.txn_hash}}" target="_blank">{{moment-from transaction.timestamp}}</a></td>
             <td class="text-center d-none d-sm-none d-md-none d-lg-none d-xl-table-cell">
               <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{transaction.from_wallet_address}}"  {{shortener transaction.from_wallet_address}}>
                 {{transaction.from_wallet_address}}

@@ -672,6 +672,18 @@ form.domain-available-container label.emphesized {
 
 
 @media screen and (max-width: 768px) {
+  .table-responsive.transac-history-table,
+  .table-responsive.wallet-list-table,
+  .table-responsive.transac-history-table .table>thead>tr>th,
+  .table-responsive.wallet-list-table .table>thead>tr>th  {
+    font-size: 0.8em;
+  }
+
+  .table-responsive.transac-history-table .a-elipsis,
+  .table-responsive.wallet-list-table .a-elipsis {
+    display: inline;
+  }
+
   .main-panel .content #faq-page, .main-panel .content #domain-page-content {
       padding-left: 0px;
       padding-right: 0px;
