@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 
 export default class MenuComponent extends Component {
   menuItems = [
@@ -28,13 +27,5 @@ export default class MenuComponent extends Component {
       })
     );
     return finalList;
-  }
-
-  @action
-  transitionTo(event) {
-    if ($('#toggler-navigation.toggled').length) {
-      $('.navbar-toggle').click();
-    }
-    return this.router.transitionTo(event.currentTarget.innerText.toLocaleLowerCase());
   }
 }

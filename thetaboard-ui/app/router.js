@@ -13,6 +13,13 @@ export default class Router extends EmberRouter {
 
   location = config.locationType;
   rootURL = config.rootURL;
+
+  didTransition() {
+    this._super(...arguments);
+    if ($('#toggler-navigation.toggled').length) {
+      $('.navbar-toggle').click();
+    }
+  }
 }
 
 Router.map(function () {
