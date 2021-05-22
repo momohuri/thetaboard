@@ -29,7 +29,7 @@ export default class EnvManagerService extends Service {
     const isPublicReq = await fetch('/is-public');
     const isPublic = await isPublicReq.json();
     if (isPublic && isPublic.success) {
-      if(isPublic.is_public == 'true') {
+      if (isPublic.is_public == 'true') {
         this.config.isPublic = true;
         this.config.isNotPublic = false;
       }

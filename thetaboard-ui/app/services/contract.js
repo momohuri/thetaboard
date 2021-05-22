@@ -413,6 +413,7 @@ export default class ContractService extends Service {
       );
       const price = await this.contract.tfuelPrice();
       this.tfuelPrice = thetajs.utils.fromWei(price);
+      return;
     } catch (error) {
       if (this.isMobile.any) {
         return;
