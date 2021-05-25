@@ -21,5 +21,6 @@ Router.map(function () {
   this.route('wallet');
   this.route('domain');
   this.route('faq');
+  this.route('deployment');
   this.route('not-found', { path: '/*path' });
 });

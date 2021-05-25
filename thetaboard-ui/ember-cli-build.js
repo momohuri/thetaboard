@@ -4,6 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
+
     // Add options here
     fingerprint: {
       enabled: false
@@ -11,6 +12,15 @@ module.exports = function (defaults) {
     SRI: {
       enabled: false,
     },
+    autoImport: {
+      webpack: {
+        node: {
+          Buffer: false,
+          global: true,
+          process: true,
+        },
+      }
+    }
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -35,5 +45,10 @@ module.exports = function (defaults) {
 
   app.import('vendor/black-dashboard/js/core/bootstrap.min.js');
   app.import('vendor/black-dashboard/js/plugins/bootstrap-notify.js');
+
+  // smart contracts:
+  // app.import('node_modules/web3-utils/src/index.js');
+
+
   return app.toTree();
 };
