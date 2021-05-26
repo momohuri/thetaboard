@@ -6,7 +6,7 @@ const expressStaticGzip = require("express-static-gzip");
 const dateFormat = require("dateformat");
 
 const wei_divider = 1000000000000000000;
-let theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
+let theta_explorer_api_domain = "https://explorer.thetatoken.org:8443";
 const app = express();
 const router = express.Router();
 const server = http.createServer(app);
@@ -34,12 +34,12 @@ if (api_token) {
 app.use(function (req, res, next) {
     if (req.query && req.query.env) {
         if (req.query.env === 'testnet') {
-            theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:9000";
+            theta_explorer_api_domain = "https://guardian-testnet-explorer.thetatoken.org:8443";
         } else if (req.query.env === 'smart-contracts') {
-            theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:9000";
+            theta_explorer_api_domain = "https://smart-contracts-sandbox-explorer.thetatoken.org:8443";
         }
     } else {
-        theta_explorer_api_domain = "https://explorer.thetatoken.org:9000";
+        theta_explorer_api_domain = "https://explorer.thetatoken.org:8443";
     }
     next();
 });
