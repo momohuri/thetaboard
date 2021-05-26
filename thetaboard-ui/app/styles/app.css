@@ -111,6 +111,11 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
     width: 100px; 
 }
 
+.main-loader.rotate.coinbases {
+  width: 40px; 
+  margin-top: 30px;
+}
+
 .rotate {
     animation: rotation 2s infinite linear;
   }
@@ -794,4 +799,8 @@ form.domain-available-container label.emphesized {
 button.btn.btn-fill.btn-primary.connect-wallet-offer-button.refresh-offer {
   display: block;
   margin: auto;
+}
+
+.coinbases {
+  color:rgba(255, 255, 255, .8)
 }

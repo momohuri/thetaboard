@@ -1,5 +1,6 @@
 import EmberRouter from '@ember/routing/router';
 import config from 'thetaboard-ui/config/environment';
+import Route from '@ember/routing/route';
 
 export default class Router extends EmberRouter {
   constructor(...args) {
@@ -14,11 +15,13 @@ export default class Router extends EmberRouter {
   location = config.locationType;
   rootURL = config.rootURL;
 
-  didTransition() {
+  init() {
     this._super(...arguments);
-    if ($('#toggler-navigation.toggled').length) {
-      $('.navbar-toggle').click();
-    }
+    this.on('routeDidChange', transition => {
+      if ($('#toggler-navigation.toggled').length) {
+        $('.navbar-toggle').click();
+      }
+    });
   }
 }
 
