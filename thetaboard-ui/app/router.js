@@ -1,6 +1,5 @@
 import EmberRouter from '@ember/routing/router';
 import config from 'thetaboard-ui/config/environment';
-import Route from '@ember/routing/route';
 
 export default class Router extends EmberRouter {
   constructor(...args) {
