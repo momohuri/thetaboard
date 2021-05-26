@@ -34,10 +34,6 @@ export default class DashboardRoute extends Route {
       bc = await fetch('build/BaseRegistrarImplementation.BC');
       const BaseRegistrarImplementation_ABI = await abi.json();
       const BaseRegistrarImplementation_BC = await bc.json();
-      abi = await fetch('build/DummyOracle.ABI');
-      bc = await fetch('build/DummyOracle.BC');
-      const DummyOracle_ABI = await abi.json();
-      const DummyOracle_BC = await bc.json()
       abi = await fetch('build/StablePriceOracle.ABI');
       bc = await fetch('build/StablePriceOracle.BC');
       const StablePriceOracle_ABI = await abi.json();
@@ -53,9 +49,13 @@ export default class DashboardRoute extends Route {
       const base_registrar_contract = await _deploy_contract(BaseRegistrarImplementation_ABI, BaseRegistrarImplementation_BC, [ens_contract.address, LTD_hash])
       const transaction = await ens_contract.populateTransaction.setSubnodeOwner('0x0000000000000000000000000000000000000000000000000000000000000000', web_utils.sha3(LTD), base_registrar_contract.address);
       await ThetaWalletConnect.sendTransaction(transaction);
-      const dummy_oracle_contract = await _deploy_contract(DummyOracle_ABI, DummyOracle_BC, [thetajs.utils.bnFromString('100000000')]);
+
+      const tfuel_price_per_year = [1000, 100, 30, 5];
+      const seconds_in_year = 31556952;
+      // get price in wei, remove everything after the comma ( shouldn't have a big impact)
+      const price_wei_in_seconds = tfuel_price_per_year.map((x)=> thetajs.utils.toWei(x / seconds_in_year).split('.')[0]);
       const price_oracle_contract = await _deploy_contract(StablePriceOracle_ABI, StablePriceOracle_BC,
-        [dummy_oracle_contract.address, [100, 50, 30, 5]]);
+        [price_wei_in_seconds]);
 
       const registrar_controller_contract = await _deploy_contract(ETHRegistrarController_ABI, ETHRegistrarController_BC, [base_registrar_contract.address, price_oracle_contract.address, 600, 86400]);
 
@@ -66,10 +66,8 @@ export default class DashboardRoute extends Route {
       console.log(`ens_contract:${ens_contract.address} \n
       public_resolver_contract:${public_resolver_contract.address} \n
       base_registrar_contract:${base_registrar_contract.address} \n
-      dummy_oracle_contract:${dummy_oracle_contract.address} \n
       price_oracle_contract:${price_oracle_contract.address} \n
       registrar_controller_contract:${registrar_controller_contract.address} \n
-      ens_contract:${ens_contract.address} \n
       `)
     }
     load_contracts();
