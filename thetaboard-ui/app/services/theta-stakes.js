@@ -4,10 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 
 export default class ThetaStakesService extends Service {
-  constructor(...args) {
-    super(...args);
-  }
-
   @tracked stakeAmount = 1000;
   @tracked isStakes = true;
   @tracked isDeposit = false;

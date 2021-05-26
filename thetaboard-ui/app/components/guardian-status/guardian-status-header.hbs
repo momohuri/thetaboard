@@ -9,7 +9,7 @@
             <span><b> {{guardian.status}} 
                 {{#if guardian.isUp}}
                     {{#if this.envManager.config.isPublic}}
-                        since {{moment-to '2021-04-14'}}
+                        for {{moment-to-now '2021-04-14' hideAffix=true}}
                     {{else}}
                         since {{moment-duration guardian.guardianStatus.uptime 'seconds'}}
                     {{/if}}

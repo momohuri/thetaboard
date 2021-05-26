@@ -7,6 +7,14 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-lg-6 col-md-12">
+      {{charts/holding-pie onRouteChange=this.setQueryParam}}
+    </div>
+    <div class="col-lg-6 col-md-12">
+      {{coinbases/coinbase-history onRouteChange=this.setQueryParam}}
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-12">
       {{transactions/transaction-history transactions=@model.transactions pagination=@model.pagination}}
      </div>

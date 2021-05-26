@@ -26,7 +26,7 @@ export default class ApplicationRoute extends Route {
     const guardianStatus = await this.thetaSdk.getGuardianStatus();
     const guardianSummary = await this.thetaSdk.getGuardianSummary();
     const guardianLatestSnapshot = await this.thetaSdk.getGuardianLatestSnapshot();
-    this.guardian.setup({
+    return this.guardian.setup({
       guardianStatus: guardianStatus,
       guardianSummary: guardianSummary,
       guardianLatestSnapshot: guardianLatestSnapshot,

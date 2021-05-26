@@ -1,0 +1,70 @@
+<div class="card card-user">
+  <div class="card-body card-min-412">
+    <p class="card-text"></p>
+    <div class="author">
+      <div class="block block-one"></div>
+      <div class="block block-two"></div>
+      <div class="block block-three"></div>
+      <div class="block block-four"></div>
+      <img class="avatar" src="{{rootURL}}assets/img/logo/theta.png" alt="...">
+    </div>
+      <div class="card-body-stake" data-test="{{coinbasesLastDay}}">
+        <h5 class="title">Theta Staking Rewards</h5>
+        {{#if this.thetaSdk.wallets.length}}
+          {{#if this.thetaSdk.coinbasesLoaded}}
+            <hr/>
+            <div class="trends-percent-conatiner">
+              <div class="trend-activity trends-percent border-separation">
+                  <p class="description">Last 24h</p>
+                  <p class="title">{{coinbasesLastDayTfuelAmount}} <img src="{{rootURL}}assets/img/logo/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;"></p>
+                  <span class="trend-usd-change coinbases">({{format-number coinbasesLastDayUsdValue style='currency' currency="USD"}} | {{coinbasesLastDay.length}} reward(s) received)</span>
+              </div>
+              <div class="trend-activity trends-percent">
+                  <p class="description">Last 7 days</p>
+                  <p class="title"> {{coinbasesLastWeekTfuelAmount}} <img src="{{rootURL}}assets/img/logo/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;"></p>
+                  <span class="trend-usd-change coinbases">({{format-number coinbasesLastWeekUsdValue style='currency' currency="USD"}} | {{coinbasesLastWeek.length}} reward(s) received))</span>
+              </div>
+            </div>
+            <hr/>
+            {{#if showLastTwoMonth}}
+              <div class="trends-percent-conatiner">
+                <div class="trend-activity trends-percent border-separation">
+                    <p class="description">Last months</p>
+                    <p class="title">{{coinbasesLastMonthTfuelAmount}} <img src="{{rootURL}}assets/img/logo/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;"></p>
+                    <span class="trend-usd-change coinbases">({{format-number coinbasesLastMonthUsdValue style='currency' currency="USD"}} | {{coinbasesLastMonth.length}} reward(s) received))</span>
+                </div>
+                <div class="trend-activity trends-percent">
+                    <p class="description">Last 2 months</p>
+                    <p class="title">{{coinbasesLastTwoMonthsTfuelAmount}} <img src="{{rootURL}}assets/img/logo/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;"></p>
+                    <span class="trend-usd-change coinbases">({{format-number coinbasesLastTwoMonthsUsdValue style='currency' currency="USD"}} | {{coinbasesLastTwoMonths.length}} reward(s) received))</span>
+                </div>
+              </div>
+            {{else if showLastMonth}}
+              <div class="trends-percent-conatiner">
+                <div class="trend-activity trends-percent">
+                    <p class="description">Last months</p>
+                    <p class="title">{{coinbasesLastMonthTfuelAmount}} <img src="{{rootURL}}assets/img/logo/tfuel.png" class="img-fluid rounded-circle" style="width: 20px;"></p>
+                    <span class="trend-usd-change coinbases">({{format-number coinbasesLastMonthUsdValue style='currency' currency="USD"}} | {{coinbasesLastMonth.length}} reward(s) received))</span>
+                </div>
+              </div>
+            {{/if}}
+          {{else}}
+            <p><img class="main-loader rotate coinbases" width="50" src="{{rootURL}}assets/img/theta-logo.png"/></p>
+          {{/if}}
+        {{else}}
+          <p class="wallet-placeholder">Please <a href="" {{on 'click' this.connectWallet}}>connect your wallet</a> or <a href="" data-toggle="modal" data-target="#searchModal">enter an address</a>.</p>
+        {{/if}}
+      </div>
+  </div>
+</div>
+{{!-- 
+       Last 24hours: {{coinbasesLastDay.length}}<br/>
+       Last 7 days: {{coinbasesLastWeek.length}}<br/>
+       Last Month: {{coinbasesLastMonth.length}} / {{showLastMonth}}<br/>
+       Last 2 Months: {{coinbasesLastTwoMonths.length}} / {{showLastTwoMonth}}<br/>
+       {{!-- Last 3 Months: {{coinbasesLastThreeMonths.length}}<br/>
+       Last 6 Months: {{coinbasesLastSixMonths.length}}<br/>
+       Last 9 Months: {{coinbasesLastNineMonths.length}}<br/>
+       Last year: {{coinbasesLastYear.length}}<br/> --}}
+       {{!-- Last Date: {{lastCoinbaseDate}}<br/>
+       total coinbases: {{this.thetaSdk.coinbases.length}} --}}

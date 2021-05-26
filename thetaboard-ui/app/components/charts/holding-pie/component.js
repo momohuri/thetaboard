@@ -29,7 +29,7 @@ export default class HoldingPieComponent extends Component {
     let element = document.getElementById('pieChartExample');
     if (!element) return;
     element.remove(); // this is my <canvas> element
-    $('#holding-container').append('<canvas id="pieChartExample" height="266"></canvas>');
+    $('#holding-container').append('<canvas id="pieChartExample" height="300"></canvas>');
     element = document.getElementById('pieChartExample');
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -37,29 +37,37 @@ export default class HoldingPieComponent extends Component {
       currency: 'USD',
     });
 
+    const numberWithCommas = function(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     const guardian = this.thetaSdk.wallets.filter((x) => x.type === 'guardian');
     let guardian_value = 0;
+    let guardian_amount = 0;
     if (guardian.length > 0) {
       guardian_value = guardian.reduce((a, b) => a + b.value, 0);
+      guardian_amount = guardian.reduce((a, b) => a + b.amount, 0);
     }
+
+    let theta_value = this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta').reduce((a, b) => a + b.value, 0);
+    let theta_amount = this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'theta').reduce((a, b) => a + b.amount, 0);
+    let tfuel_value = this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'tfuel').reduce((a, b) => a + b.value, 0);
+    let tfuel_amount = this.thetaSdk.wallets.filter((x) => x.type === 'wallet' && x.currency === 'tfuel').reduce((a, b) => a + b.amount, 0);
+
     const types = [
       {
-        label: 'Guardian',
+        label: `Guardian (${numberWithCommas(guardian_amount.toFixed(2))})`,
         value: guardian_value,
         color: '#24bac5',
       },
       {
-        label: 'Theta',
-        value: this.thetaSdk.wallets
-          .filter((x) => x.type === 'wallet' && x.currency === 'theta')
-          .reduce((a, b) => a + b.value, 0),
+        label: `Theta (${numberWithCommas(theta_amount.toFixed(2))})`,
+        value: theta_value,
         color: '#2BB7E5',
       },
       {
-        label: 'Tfuel',
-        value: this.thetaSdk.wallets
-          .filter((x) => x.type === 'wallet' && x.currency === 'tfuel')
-          .reduce((a, b) => a + b.value, 0),
+        label: `Tfuel (${numberWithCommas(tfuel_amount.toFixed(2))})`,
+        value: tfuel_value,
         color: '#FFA500',
       },
     ];

@@ -111,6 +111,11 @@ div.card.card-chart.card-holdings div.card-body.pie-chart-card-body{
     width: 100px; 
 }
 
+.main-loader.rotate.coinbases {
+  width: 40px; 
+  margin-top: 30px;
+}
+
 .rotate {
     animation: rotation 2s infinite linear;
   }
@@ -425,6 +430,10 @@ iv.AccordionToggle .author.border-right {
   min-height: 390px;
 }
 
+.row .card .card-body.card-min-412 {
+  min-height: 412px;
+}
+
 .row .card .card-body.card-min-750 {
   min-height: 750px;
 }
@@ -672,6 +681,18 @@ form.domain-available-container label.emphesized {
 
 
 @media screen and (max-width: 768px) {
+  .table-responsive.transac-history-table,
+  .table-responsive.wallet-list-table,
+  .table-responsive.transac-history-table .table>thead>tr>th,
+  .table-responsive.wallet-list-table .table>thead>tr>th  {
+    font-size: 0.8em;
+  }
+
+  .table-responsive.transac-history-table .a-elipsis,
+  .table-responsive.wallet-list-table .a-elipsis {
+    display: inline;
+  }
+
   .main-panel .content #faq-page, .main-panel .content #domain-page-content {
       padding-left: 0px;
       padding-right: 0px;
@@ -782,4 +803,8 @@ form.domain-available-container label.emphesized {
 button.btn.btn-fill.btn-primary.connect-wallet-offer-button.refresh-offer {
   display: block;
   margin: auto;
+}
+
+.coinbases {
+  color:rgba(255, 255, 255, .8)
 }

@@ -3,14 +3,13 @@
         <h4 class="card-title"> Holdings</h4>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive wallet-list-table">
         <table class="table">
             <thead>
             <tr>
             <th class="text-center">#</th>
             <th class="text-center d-none d-sm-none d-md-table-cell">Type</th>
             <th class="text-center">Wallet Address</th>
-            <th class="text-center d-none d-sm-none d-md-table-cell">Node Address</th>
             <th class="text-center d-none d-sm-none d-md-none d-lg-table-cell">Market Price</th>
             <th class="text-center">Amount</th>
             <th class="text-center">In $</th>
@@ -21,18 +20,19 @@
             <tr>
                 <td class="text-center">
                 <img src="{{rootURL}}assets/img/logo/{{balance.currency}}.png"
-                        class="img-fluid rounded-circle" style="width: 20px;">
+                        class="img-fluid rounded-circle" style="width: 20px;min-width: 20px;">
                 </td>
                 <td class="text-center d-none d-sm-none d-md-table-cell">{{balance.type}}</td>
                 <td class="text-center ">
                 <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.wallet_address}}" {{shortener balance.wallet_address}}>
-                {{balance.wallet_address}} 
+                {{balance.wallet_address}}
                 </a>
-                </td>
-                <td class="text-center d-none d-sm-none d-md-table-cell">
-                <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.node_address}}" {{shortener balance.node_address}}>
-                    {{balance.node_address}}
-                </a>
+                {{#if balance.node_address}}
+                    <br/>Node Address:<br/>
+                    <a class="a-elipsis" href="{{explorerEndpoint}}/account/{{balance.node_address}}" {{shortener balance.node_address}}>
+                        {{balance.node_address}}
+                    </a>
+                {{/if}}
                 </td>
                 <td class="text-center d-none d-sm-none d-md-none d-lg-table-cell">{{format-number balance.market_price style='currency' currency='USD'}}</td>
                 <td class="text-center">{{format-number balance.amount}}</td>

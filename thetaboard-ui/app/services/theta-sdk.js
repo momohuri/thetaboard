@@ -14,6 +14,8 @@ export default class ThetaSdkService extends Service {
     this.downloadProgress = '';
     this.wallets = [];
     this.transactions = [];
+    this.coinbases = [];
+    this.coinbasesLoaded = false;
     this.pagination = {};
     this.currentAccount = '';
     this.currentAccountDomainList = [];
@@ -29,6 +31,8 @@ export default class ThetaSdkService extends Service {
   @tracked prices;
   @tracked pagination;
   @tracked transactions;
+  @tracked coinbases;
+  @tracked coinbasesLoaded;
   @tracked currentAccountDomainList
 
   get envManager() {
@@ -196,6 +200,47 @@ export default class ThetaSdkService extends Service {
       this.pagination = transactionList.pagination;
     }
     return transactionList;
+  }
+
+  async getCoinbases(accounts, pageNumber = 1) {
+    let url = `${this.envManager.config.explorerEndpoint}:8443/api/accounttx/${accounts[0]}/?type=-1&pageNumber=${pageNumber}&limitNumber=90&isEqualType=true&types=["0"]`;
+    const coinbases = await fetch(url);
+    if (coinbases.status == 200) {
+      const result = await coinbases.json();
+      return result.body;
+    }
+    return [];
+  }
+
+  async getAllCoinbases(accounts) {
+    this.coinbasesLoaded = false;
+    const wei_divider = 1000000000000000000;
+    let pageNumber = 1;
+    let coinbaseList = [];
+    let keepFectching = true;
+    while (keepFectching && pageNumber < 5) {
+      let coinbases = await this.getCoinbases(accounts, pageNumber);
+      if (!coinbases.length) {
+        keepFectching = false;
+        break;
+      }
+      if (coinbases.length != 90) {
+        keepFectching = false;
+      }
+      coinbases.map((x) => {
+        const to = x["data"]["outputs"].filter(x => x['address'].toUpperCase() === accounts['0'].toUpperCase())[0];
+        coinbaseList.push({
+          "timestamp": x["timestamp"],
+          "amount": to["coins"]["tfuelwei"] / wei_divider,
+          "value": to["coins"]["tfuelwei"] / wei_divider * this.prices.tfuel.price
+        });
+      });
+      coinbases = [];
+      pageNumber++;
+    }
+    this.coinbases = coinbaseList;
+    this.coinbasesLoaded = true;
+    return coinbaseList;
   }
 
   async getGuardianStatus() {
