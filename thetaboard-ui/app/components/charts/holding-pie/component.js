@@ -29,7 +29,7 @@ export default class HoldingPieComponent extends Component {
     let element = document.getElementById('pieChartExample');
     if (!element) return;
     element.remove(); // this is my <canvas> element
-    $('#holding-container').append('<canvas id="pieChartExample" height="266"></canvas>');
+    $('#holding-container').append('<canvas id="pieChartExample" height="300"></canvas>');
     element = document.getElementById('pieChartExample');
 
     const formatter = new Intl.NumberFormat('en-US', {
