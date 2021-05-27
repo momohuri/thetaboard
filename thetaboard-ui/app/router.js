@@ -29,6 +29,7 @@ Router.map(function () {
   this.route('guardian');
   this.route('wallet');
   this.route('domain');
+  this.route('domains');
   this.route('faq');
   this.route('deployment');
   this.route('not-found', { path: '/*path' });

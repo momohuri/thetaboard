@@ -3,7 +3,7 @@ import thetajs from "@thetalabs/theta-js";
 import web_utils from 'web3-utils';
 import ThetaWalletConnect from '@thetalabs/theta-wallet-connect';
 
-export default class DashboardRoute extends Route {
+export default class DeploymentRoute extends Route {
 
   async model() {
     const LTD = 'theta';

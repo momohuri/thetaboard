@@ -15,7 +15,7 @@ module.exports = function (defaults) {
     autoImport: {
       webpack: {
         node: {
-          Buffer: false,
+          Buffer: true,
           global: true,
           process: true,
         },
