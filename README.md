@@ -1,3 +1,7 @@
+# Project has been moved to https://github.com/thetaboard-org 
+
+
+
 # Thetaboard
 You are trying to set up your own guardian node for Theta ? You want an easy-to-use web interface to manage it ?
 You want a 360° view of you wallet, transactions, holdings, staking 
